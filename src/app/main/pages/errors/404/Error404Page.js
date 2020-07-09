@@ -7,6 +7,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Error404Page() {
+	setTimeout(
+		function () {
+			//Start the timer
+			console.log(window.entryPoint);
+			if (window.entryPoint) {
+				clearInterval();
+			}
+			var settings = {
+				user: {
+					id: 58438812,
+					permissions: ['save'],
+					auth_token:
+						'eyJhbGciOiJIUzI1NiJ9.eyJhY3Rpb24iOiJsb2dpbiIsIm1vZGVsIjoiVXNlciIsImlkIjo1ODQzODgxMiwiaWF0IjoxNTkzNzIwMjM5fQ.tr33Dd4b3vQ4x7BfdV1ZXqszVjXiMVHbbFC8rs3ak_c'
+				}
+			};
+
+			// the entryPoint function returns a Promise, which is resolved with the 'editor API' object
+			window.entryPoint(document.querySelector('#fp-editor-container'), 80949960, settings).then(function (api) {
+				window.fpEditor = api;
+			});
+			//After 1 second, set render to true
+		}.bind(this),
+		5000
+	);
+
 	return (
 		<div className="flex flex-col flex-1 items-center justify-center p-16">
 			<div className="max-w-512 text-center">
@@ -34,7 +59,8 @@ function Error404Page() {
 						}}
 					/>
 				</Paper>
-
+				<script src="https://fp-editor-cdn.floorplanner.com/latest.js" crossOrigin="anonymous"></script>
+				<div id="fp-editor-container"></div>
 				<Link className="font-medium" to="/apps/dashboards/project">
 					Go back to dashboard
 				</Link>
