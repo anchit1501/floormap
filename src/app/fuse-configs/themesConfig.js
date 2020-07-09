@@ -67,16 +67,16 @@ const themesConfig = {
 	greeny: {
 		palette: {
 			type: 'light',
-			primary: {
+			secondary: {
 				light: '#6CABD4',
 				main: '#387CA3',
-				dark: '#005074'
-			},
-			secondary: {
-				light: '#89F6CF',
-				main: '#55C39E',
-				dark: '#159270',
+				dark: '#005074',
 				contrastText: '#FFF'
+			},
+			primary: {
+				light: '#54beb0',
+				main: '#54bfb4',
+				dark: '#49a499',
 			},
 			background: {
 				paper: '#FFFFFF',
@@ -207,7 +207,27 @@ const themesConfig = {
 				default: '#121212'
 			}
 		}
-	}
+	},
+	custom: {
+		palette: {
+			type: 'light',
+			primary: {
+				light: '#053256',
+				main: '#091b2a',
+				dark: '#49a499'
+			},
+			secondary: {
+				light: '#54beb0',
+				main: '#54bfb4',
+				dark: '#49a499',
+				contrastText: '#FFF'
+			},
+			background: {
+				paper: '#FFF',
+				default: '#FFF'
+			}
+		}
+	},
 };
 
 export default themesConfig;
