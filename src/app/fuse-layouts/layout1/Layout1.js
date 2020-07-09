@@ -174,23 +174,13 @@ function Layout1(props) {
 									<FuseSuspense>{renderRoutes(routes)}</FuseSuspense>
 
 									{props.children}
-
-									{config.footer.display &&
-										config.footer.position === 'below' &&
-										config.footer.style !== 'fixed' && <FooterLayout1 />}
 								</FuseScrollbars>
-
-								{config.footer.display &&
-									config.footer.position === 'below' &&
-									config.footer.style === 'fixed' && <FooterLayout1 />}
 
 								<SettingsPanel />
 							</div>
 
 							{config.navbar.display && config.navbar.position === 'right' && <NavbarWrapperLayout1 />}
 						</div>
-
-						{config.footer.display && config.footer.position === 'above' && <FooterLayout1 />}
 					</div>
 
 					{config.rightSidePanel.display && <RightSideLayout1 />}
