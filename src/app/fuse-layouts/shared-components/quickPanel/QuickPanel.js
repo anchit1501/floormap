@@ -8,9 +8,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
-import Typography from '@material-ui/core/Typography';
 import withReducer from 'app/store/withReducer';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -28,10 +32,13 @@ function QuickPanel(props) {
 	const dispatch = useDispatch();
 	const data = useSelector(({ quickPanel }) => quickPanel.data);
 	const state = useSelector(({ quickPanel }) => quickPanel.state);
-
+	console.log(data);
 	const classes = useStyles();
 	const [checked, setChecked] = useState('notifications');
-
+	const noOfWindows = data
+		? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(item => item.type === 'val')
+				.length
+		: '';
 	const handleToggle = value => () => {
 		const currentIndex = checked.indexOf(value);
 		const newChecked = [...checked];
@@ -57,90 +64,63 @@ function QuickPanel(props) {
 			onClose={ev => dispatch(Actions.toggleQuickPanel())}
 		>
 			<FuseScrollbars>
-				<ListSubheader component="div">Today</ListSubheader>
-
-				<div className="mb-0 py-16 px-24">
-					<Typography className="mb-12 text-32" color="textSecondary">
-						{moment().format('dddd')}
-					</Typography>
-					<div className="flex">
-						<Typography className="leading-none text-32" color="textSecondary">
-							{moment().format('DD')}
-						</Typography>
-						<Typography className="leading-none text-16" color="textSecondary">
-							th
-						</Typography>
-						<Typography className="leading-none text-32" color="textSecondary">
-							{moment().format('MMMM')}
-						</Typography>
-					</div>
-				</div>
+				<ListSubheader component="div">{data ? data.project.name[0] : 0}</ListSubheader>
 				<Divider />
-				<List>
-					<ListSubheader component="div">Events</ListSubheader>
-					{data &&
-						data.events.map(event => (
-							<ListItem key={event.id}>
-								<ListItemText primary={event.title} secondary={event.detail} />
-							</ListItem>
-						))}
-				</List>
-				<Divider />
-				<List>
-					<ListSubheader component="div">Notes</ListSubheader>
-					{data &&
-						data.notes.map(note => (
-							<ListItem key={note.id}>
-								<ListItemText primary={note.title} secondary={note.detail} />
-							</ListItem>
-						))}
-				</List>
-				<Divider />
-				<List>
-					<ListSubheader component="div">Quick Settings</ListSubheader>
-					<ListItem>
-						<ListItemIcon className="min-w-40">
-							<Icon>notifications</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Notifications" />
-						<ListItemSecondaryAction>
-							<Switch
-								color="primary"
-								onChange={handleToggle('notifications')}
-								checked={checked.indexOf('notifications') !== -1}
-							/>
-						</ListItemSecondaryAction>
-					</ListItem>
-					<ListItem>
-						<ListItemIcon className="min-w-40">
-							<Icon>cloud</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Cloud Sync" />
-						<ListItemSecondaryAction>
-							<Switch
-								color="secondary"
-								onChange={handleToggle('cloudSync')}
-								checked={checked.indexOf('cloudSync') !== -1}
-							/>
-						</ListItemSecondaryAction>
-					</ListItem>
-					<ListItem>
-						<ListItemIcon className="min-w-40">
-							<Icon>brightness_high</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Retro Thrusters" />
-						<ListItemSecondaryAction>
-							<Switch
-								color="primary"
-								onChange={handleToggle('retroThrusters')}
-								checked={checked.indexOf('retroThrusters') !== -1}
-							/>
-						</ListItemSecondaryAction>
-					</ListItem>
-				</List>
+				<ExpansionPanel>
+					<ExpansionPanelSummary
+						expandIcon={<ExpandMoreIcon />}
+						aria-controls="panel1a-content"
+						id="panel1a-header"
+					>
+						<Typography className={classes.heading}>
+							{data ? data.project.floors[0].floor[0].designs[0].design[0].areas[0].area[0].name : ''}{' '}
+							Area
+						</Typography>
+					</ExpansionPanelSummary>
+					<ExpansionPanelDetails>
+						<Typography className={classes.heading}>
+							Number of Windows :{' '}
+							{data
+								? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(
+										item => item.type[0] === 'window'
+								  ).length
+								: ''}
+						</Typography>
+					</ExpansionPanelDetails>
+					<ExpansionPanelDetails>
+						<Typography className={classes.heading}>
+							No.of Doors:
+							{data
+								? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(
+										item => item.type[0] === 'door'
+								  ).length
+								: ''}
+						</Typography>
+					</ExpansionPanelDetails>
+					<ExpansionPanel>
+						<ExpansionPanelSummary
+							expandIcon={<ExpandMoreIcon />}
+							aria-controls="panel2a-content"
+							id="panel2a-header"
+						>
+							<Typography className={classes.heading}>Walls</Typography>
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<Typography>
+								No.of Walls:
+								{data ? data.project.floors[0].floor[0].designs[0].design[0].lines[0].line.length : ''}
+							</Typography>
+						</ExpansionPanelDetails>
+						<ExpansionPanelDetails>
+							<Typography>
+								Hieght of wall:
+								{data ? data.project.floors[0].floor[0].height[0]._ : ''}
+							</Typography>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
+				</ExpansionPanel>
 			</FuseScrollbars>
 		</Drawer>
 	);
 }
-
 export default withReducer('quickPanel', reducer)(React.memo(QuickPanel));
