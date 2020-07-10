@@ -1,0 +1,152 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            39.09240158007016,
+                            21.69561837411722,
+                            0
+                        ],
+                        [
+                            39.09263365064464,
+                            21.69568702742861,
+                            0
+                        ],
+                        [
+                            39.09259576945448,
+                            21.69579277516295,
+                            0
+                        ],
+                        [
+                            39.09236905474571,
+                            21.69572339571728,
+                            0
+                        ],
+                        [
+                            39.09240158007016,
+                            21.69561837411722,
+                            0
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled Polygon",
+                "styleUrl": "#falseColor010020",
+                "styleHash": "-7a4d42f2",
+                "styleMapHash": {
+                    "normal": "#falseColor130200",
+                    "highlight": "#falseColor301101"
+                },
+                "stroke": "#00bd2e",
+                "stroke-opacity": 1,
+                "stroke-width": 3,
+                "fill": "#ffff00",
+                "fill-opacity": 0.4980392156862745
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            39.0924328164322,
+                            21.69552025467597,
+                            0
+                        ],
+                        [
+                            39.09266712342169,
+                            21.69558971624918,
+                            0
+                        ],
+                        [
+                            39.09263365064464,
+                            21.69568702742861,
+                            0
+                        ],
+                        [
+                            39.09240158007016,
+                            21.69561837411722,
+                            0
+                        ],
+                        [
+                            39.0924328164322,
+                            21.69552025467597,
+                            0
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled Polygon",
+                "styleUrl": "#falseColor0100201",
+                "styleHash": "1f7be84c",
+                "styleMapHash": {
+                    "normal": "#falseColor1302000",
+                    "highlight": "#falseColor30110"
+                },
+                "stroke": "#00bd2e",
+                "stroke-opacity": 1,
+                "stroke-width": 3,
+                "fill": "#ffff00",
+                "fill-opacity": 0.4980392156862745
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            39.09246351990722,
+                            21.6954233768131,
+                            0
+                        ],
+                        [
+                            39.09270101424951,
+                            21.69548821409367,
+                            0
+                        ],
+                        [
+                            39.09266712342169,
+                            21.69558971624918,
+                            0
+                        ],
+                        [
+                            39.0924328164322,
+                            21.69552025467597,
+                            0
+                        ],
+                        [
+                            39.09246351990722,
+                            21.6954233768131,
+                            0
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Untitled Polygon",
+                "styleUrl": "#falseColor0100200",
+                "styleHash": "202b12b",
+                "styleMapHash": {
+                    "normal": "#falseColor1302001",
+                    "highlight": "#falseColor301100"
+                },
+                "stroke": "#00bd2e",
+                "stroke-opacity": 1,
+                "stroke-width": 3,
+                "fill": "#ffff00",
+                "fill-opacity": 0.4980392156862745
+            }
+        }
+    ]
+}
