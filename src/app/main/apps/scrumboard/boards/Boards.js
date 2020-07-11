@@ -54,10 +54,10 @@ function Boards(props) {
 
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
-			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24">
+			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24" style={{margin:'10%'}}>
 				<FuseAnimate>
-					<Typography className="mt-44 sm:mt-88 sm:py-24 text-32 sm:text-40 font-300" color="inherit">
-						Scrumboard App
+					<Typography variant="h2" className="mt-44 sm:mt-88 sm:py-24 text-32 sm:text-40 font-300" color="inherit">
+						Your projects 
 					</Typography>
 				</FuseAnimate>
 
@@ -72,14 +72,14 @@ function Boards(props) {
 						{boards.map(board => (
 							<div className="w-224 h-224 p-16" key={board.id}>
 								<Link
-									to={`/apps/scrumboard/boards/${board.id}/${board.uri}`}
+									to={`/apps/dashboard/boards/${board.id}/${board.uri}`}
 									className={clsx(
 										classes.board,
 										'flex flex-col items-center justify-center w-full h-full rounded py-24'
 									)}
 									role="button"
 								>
-									<Icon className="text-56">assessment</Icon>
+									<img src={board.thumbnail_3d}/>
 									<Typography className="text-16 font-300 text-center pt-16 px-32" color="inherit">
 										{board.name}
 									</Typography>
