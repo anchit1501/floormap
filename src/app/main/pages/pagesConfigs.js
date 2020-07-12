@@ -10,6 +10,7 @@ import ResetPassword2PageConfig from './auth/reset-password-2/ResetPassword2Page
 import ResetPasswordPageConfig from './auth/reset-password/ResetPasswordPageConfig';
 import ComingSoonPageConfig from './coming-soon/ComingSoonPageConfig';
 import Error404PageConfig from './errors/404/Error404PageConfig';
+import ArchitectConfig from './arrchitect/architectConfig';
 import Error500PageConfig from './errors/500/Error500PageConfig';
 import FaqPageConfig from './faq/FaqPageConfig';
 import CompactInvoicePageConfig from './invoices/compact/CompactInvoicePageConfig';
@@ -36,6 +37,7 @@ const pagesConfigs = [
 	ResetPassword2PageConfig,
 	ComingSoonPageConfig,
 	Error404PageConfig,
+	ArchitectConfig,
 	Error500PageConfig,
 	MaintenancePageConfig,
 	ModernInvoicePageConfig,

@@ -14,6 +14,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
 import withReducer from 'app/store/withReducer';
 import moment from 'moment';
@@ -119,6 +120,9 @@ function QuickPanel(props) {
 						</ExpansionPanelDetails>
 					</ExpansionPanel>
 				</ExpansionPanel>
+				<Button variant="contained" color="primary">
+					Primary
+				</Button>
 			</FuseScrollbars>
 		</Drawer>
 	);
