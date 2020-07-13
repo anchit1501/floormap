@@ -3,9 +3,10 @@ import Icon from '@material-ui/core/Icon';
 import Input from '@material-ui/core/Input';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Link } from 'react-router-dom';
-
+import {createBrowserHistory} from 'history'
+const hist = createBrowserHistory()
 function Error404Page(props) {
 	const id = props.match.params.id
 	setTimeout(
@@ -32,7 +33,13 @@ function Error404Page(props) {
 		}.bind(this),
 		3000
 	);
-
+	useEffect(() => {
+	    let navbar = document.querySelector('#fuse-navbar');
+	    navbar.style.display='none'
+	    return () => {
+	    	navbar.style.display='block'
+	    }
+	}, [])
 	return (
 		<div className="flex flex-col flex-1 items-center justify-center p-16">
 			<div id="fp-editor-container" style={{ width: '100%', height: '100%', marginTop: '64px' }}></div>

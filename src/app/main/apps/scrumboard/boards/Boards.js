@@ -78,7 +78,6 @@ function Boards(props) {
 			dispatch(Actions.resetBoards());
 		};
 	}, [dispatch]);
-
 	return (
 		<div className={clsx(classes.root, 'flex flex-grow flex-shrink-0 flex-col items-center')}>
 			<div className="flex flex-grow flex-shrink-0 flex-col items-center container px-16 md:px-24" style={{margin:'10%'}}>
@@ -89,15 +88,12 @@ function Boards(props) {
 				</FuseAnimate>
 
 				<div>
-					<FuseAnimateGroup
-						className="flex flex-wrap w-full justify-center py-32 px-16"
-						enter={{
-							animation: 'transition.slideUpBigIn',
-							duration: 300
-						}}
-					>
+					
+					<div className="flex flex-wrap w-full justify-center py-32 px-16"
+							>
+
 						{boards.map(board => (
-							<div className="w-224 h-224 p-16" key={board.id} onClick={()=>window.location.href=`/project/${board.id}`}>
+							<div className="w-224 h-224 p-16" key={board.id} >
 								<Link
 									to={`/project/${board.id}`}
 									className={clsx(
@@ -106,7 +102,7 @@ function Boards(props) {
 									)}
 									role="button"
 								>
-									<img src={board.thumbnail_3d}/>
+									<img src={board.thumbnail_3d?board.thumbnail_3d:board.thumbnail}/>
 									<Typography className="text-16 font-300 text-center pt-16 px-32" color="inherit">
 										{board.name}
 									</Typography>
@@ -149,7 +145,7 @@ function Boards(props) {
 								</div>
 							</Fade>
 						</Modal>
-					</FuseAnimateGroup>
+					</div>
 				</div>
 			</div>
 		</div>

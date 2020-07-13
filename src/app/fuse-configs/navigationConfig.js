@@ -8,26 +8,32 @@ import tr from './navigation-i18n/tr';
 import store from '../store'
 
 setTimeout(()=>{
-	let projects = getProtectedThing()
-	console.log(projects)
-	let projectsArray = []
-	projects.map(project=>{
-		let {id, name} = project
-		id = id.toString()
-		projectsArray.push({
-						id: id,
-						title: name,
-						type: 'item',
-						url: `/project/${id}`
-					})
-	})
-	navigationConfig[0].children[1].children=(projectsArray)
-},5000)
+	let state = getState()
+	if(state.scrumboardApp!==undefined){
+		let projects = state.scrumboardApp.boards
+	
+		let projectsArray = []
+		projects.map(project=>{
+			let {id, name} = project
+			id = id.toString()
+			projectsArray.push({
+							id: id,
+							title: name,
+							type: 'item',
+							url: `/project/${id}`
+						})
+		})
+		navigationConfig[0].children[1].children=(projectsArray)
+	}
+	
+},3000)
 
-function getProtectedThing() {
+function getState() {
   const state = store.getState();
-  return (state.scrumboardApp.boards)
+  console.log(state)
+  return (state)
 }
+
 i18next.addResourceBundle('en', 'navigation', en);
 i18next.addResourceBundle('tr', 'navigation', tr);
 i18next.addResourceBundle('ar', 'navigation', ar);
@@ -73,59 +79,59 @@ const navigationConfig = [
 			// 	icon: 'today',
 			// 	url: '/apps/calendar'
 			// },
-			// {
-			// 	id: 'e-commerce',
-			// 	title: 'E-Commerce',
-			// 	translate: 'ECOMMERCE',
-			// 	type: 'collapse',
-			// 	icon: 'shopping_cart',
-			// 	url: '/apps/e-commerce',
-			// 	children: [
-			// 		{
-			// 			id: 'e-commerce-products',
-			// 			title: 'Products',
-			// 			type: 'item',
-			// 			url: '/apps/e-commerce/products',
-			// 			exact: true
-			// 		},
-			// 		{
-			// 			id: 'e-commerce-product-detail',
-			// 			title: 'Product Detail',
-			// 			type: 'item',
-			// 			url: '/apps/e-commerce/products/1/a-walk-amongst-friends-canvas-print',
-			// 			exact: true
-			// 		},
-			// 		{
-			// 			id: 'e-commerce-new-product',
-			// 			title: 'New Product',
-			// 			type: 'item',
-			// 			url: '/apps/e-commerce/products/new',
-			// 			exact: true
-			// 		},
-			// 		{
-			// 			id: 'e-commerce-orders',
-			// 			title: 'Orders',
-			// 			type: 'item',
-			// 			url: '/apps/e-commerce/orders',
-			// 			exact: true
-			// 		},
-			// 		{
-			// 			id: 'e-commerce-order-detail',
-			// 			title: 'Order Detail',
-			// 			type: 'item',
-			// 			url: '/apps/e-commerce/orders/1',
-			// 			exact: true
-			// 		}
-			// 	]
-			// },
-			// {
-			// 	id: 'academy',
-			// 	title: 'Academy',
-			// 	translate: 'ACADEMY',
-			// 	type: 'item',
-			// 	icon: 'school',
-			// 	url: '/apps/academy'
-			// },
+			{
+				id: 'e-commerce',
+				title: 'E-Commerce',
+				translate: 'ECOMMERCE',
+				type: 'collapse',
+				icon: 'shopping_cart',
+				url: '/apps/e-commerce',
+				children: [
+					{
+						id: 'e-commerce-products',
+						title: 'Products',
+						type: 'item',
+						url: '/apps/e-commerce/products',
+						exact: true
+					},
+					{
+						id: 'e-commerce-product-detail',
+						title: 'Product Detail',
+						type: 'item',
+						url: '/apps/e-commerce/products/1/a-walk-amongst-friends-canvas-print',
+						exact: true
+					},
+					{
+						id: 'e-commerce-new-product',
+						title: 'New Product',
+						type: 'item',
+						url: '/apps/e-commerce/products/new',
+						exact: true
+					},
+					{
+						id: 'e-commerce-orders',
+						title: 'Orders',
+						type: 'item',
+						url: '/apps/e-commerce/orders',
+						exact: true
+					},
+					{
+						id: 'e-commerce-order-detail',
+						title: 'Order Detail',
+						type: 'item',
+						url: '/apps/e-commerce/orders/1',
+						exact: true
+					}
+				]
+			},
+			{
+				id: 'academy',
+				title: 'Academy',
+				translate: 'ACADEMY',
+				type: 'item',
+				icon: 'school',
+				url: '/apps/academy'
+			},
 			// {
 			// 	id: 'mail',
 			// 	title: 'Mail',
@@ -705,32 +711,32 @@ const navigationConfig = [
 	// 				}
 	// 			]
 	// 		},
-	// 		{
-	// 			id: 'authentication-doc',
-	// 			title: 'Authentication',
-	// 			type: 'collapse',
-	// 			icon: 'import_contacts',
-	// 			children: [
-	// 				{
-	// 					id: 'jwt-auth-doc',
-	// 					title: 'JWT',
-	// 					type: 'item',
-	// 					url: '/documentation/authentication/jwt'
-	// 				},
-	// 				{
-	// 					id: 'firebase-auth-doc',
-	// 					title: 'Firebase',
-	// 					type: 'item',
-	// 					url: '/documentation/authentication/firebase'
-	// 				},
-	// 				{
-	// 					id: 'auth0-auth-doc',
-	// 					title: 'Auth0',
-	// 					type: 'item',
-	// 					url: '/documentation/authentication/auth0'
-	// 				}
-	// 			]
-	// 		},
+			{
+				id: 'authentication-doc',
+				title: 'Authentication',
+				type: 'collapse',
+				icon: 'import_contacts',
+				children: [
+					{
+						id: 'jwt-auth-doc',
+						title: 'JWT',
+						type: 'item',
+						url: '/documentation/authentication/jwt'
+					},
+					{
+						id: 'firebase-auth-doc',
+						title: 'Firebase',
+						type: 'item',
+						url: '/documentation/authentication/firebase'
+					},
+					{
+						id: 'auth0-auth-doc',
+						title: 'Auth0',
+						type: 'item',
+						url: '/documentation/authentication/auth0'
+					}
+				]
+			},
 	// 		{
 	// 			id: 'fuse-components',
 	// 			title: 'Fuse Components',
@@ -882,83 +888,83 @@ const navigationConfig = [
 	// 	type: 'divider',
 	// 	id: 'divider-1'
 	// },
-	// {
-	// 	id: 'auth',
-	// 	title: 'Auth',
-	// 	type: 'group',
-	// 	icon: 'apps',
-	// 	children: [
-	// 		{
-	// 			id: 'login',
-	// 			title: 'Login',
-	// 			type: 'item',
-	// 			url: '/login',
-	// 			auth: authRoles.onlyGuest,
-	// 			icon: 'lock'
-	// 		},
-	// 		{
-	// 			id: 'register',
-	// 			title: 'Register',
-	// 			type: 'item',
-	// 			url: '/register',
-	// 			auth: authRoles.onlyGuest,
-	// 			icon: 'person_add'
-	// 		},
-	// 		{
-	// 			id: 'logout',
-	// 			title: 'Logout',
-	// 			type: 'item',
-	// 			auth: authRoles.user,
-	// 			url: '/logout',
-	// 			icon: 'exit_to_app'
-	// 		},
-	// 		{
-	// 			id: 'auth-admin-example',
-	// 			title: 'Admin: Auth protected page',
-	// 			type: 'item',
-	// 			url: '/auth/admin-role-example',
-	// 			icon: 'security'
-	// 		},
-	// 		{
-	// 			id: 'only-admin-navigation-item',
-	// 			title: 'Nav item only for Admin',
-	// 			type: 'item',
-	// 			auth: authRoles.admin,
-	// 			url: '/auth/admin-role-example',
-	// 			icon: 'verified_user'
-	// 		},
-	// 		{
-	// 			id: 'auth-staff-example',
-	// 			title: 'Staff: Auth protected page',
-	// 			type: 'item',
-	// 			url: '/auth/staff-role-example',
-	// 			icon: 'security'
-	// 		},
-	// 		{
-	// 			id: 'only-staff-navigation-item',
-	// 			title: 'Nav item only for Staff',
-	// 			type: 'item',
-	// 			auth: authRoles.staff,
-	// 			url: '/auth/staff-role-example',
-	// 			icon: 'verified_user'
-	// 		},
-	// 		{
-	// 			id: 'auth-guest-example',
-	// 			title: 'Guest: Auth protected page',
-	// 			type: 'item',
-	// 			url: '/auth/guest-role-example',
-	// 			icon: 'security'
-	// 		},
-	// 		{
-	// 			id: 'only-guest-navigation-item',
-	// 			title: 'Nav item only for Guest',
-	// 			type: 'item',
-	// 			auth: authRoles.onlyGuest,
-	// 			url: '/auth/guest-role-example',
-	// 			icon: 'verified_user'
-	// 		}
-	// 	]
-	// },
+	{
+		id: 'auth',
+		title: 'Auth',
+		type: 'group',
+		icon: 'apps',
+		children: [
+			{
+				id: 'login',
+				title: 'Login',
+				type: 'item',
+				url: '/login',
+				auth: authRoles.onlyGuest,
+				icon: 'lock'
+			},
+			{
+				id: 'register',
+				title: 'Register',
+				type: 'item',
+				url: '/register',
+				auth: authRoles.onlyGuest,
+				icon: 'person_add'
+			},
+			{
+				id: 'logout',
+				title: 'Logout',
+				type: 'item',
+				auth: authRoles.user,
+				url: '/logout',
+				icon: 'exit_to_app'
+			},
+			{
+				id: 'auth-admin-example',
+				title: 'Admin: Auth protected page',
+				type: 'item',
+				url: '/auth/admin-role-example',
+				icon: 'security'
+			},
+			{
+				id: 'only-admin-navigation-item',
+				title: 'Nav item only for Admin',
+				type: 'item',
+				auth: authRoles.admin,
+				url: '/auth/admin-role-example',
+				icon: 'verified_user'
+			},
+			{
+				id: 'auth-staff-example',
+				title: 'Staff: Auth protected page',
+				type: 'item',
+				url: '/auth/staff-role-example',
+				icon: 'security'
+			},
+			{
+				id: 'only-staff-navigation-item',
+				title: 'Nav item only for Staff',
+				type: 'item',
+				auth: authRoles.staff,
+				url: '/auth/staff-role-example',
+				icon: 'verified_user'
+			},
+			{
+				id: 'auth-guest-example',
+				title: 'Guest: Auth protected page',
+				type: 'item',
+				url: '/auth/guest-role-example',
+				icon: 'security'
+			},
+			{
+				id: 'only-guest-navigation-item',
+				title: 'Nav item only for Guest',
+				type: 'item',
+				auth: authRoles.onlyGuest,
+				url: '/auth/guest-role-example',
+				icon: 'verified_user'
+			}
+		]
+	},
 	// {
 	// 	type: 'divider',
 	// 	id: 'divider-2'
