@@ -111,6 +111,10 @@ input:-webkit-autofill {
     --dark: #54bfb4 !important;
     --dark-darkened: #54bfb4 !important;
 }
+.fp___label{
+    font-size: large !important;
+    font-family: Muli, Roboto, Helvetica Neue, Arial, sans-serif !important;
+}
 @import 'print.css';
 
 @import 'tables.css';
