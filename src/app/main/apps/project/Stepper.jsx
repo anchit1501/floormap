@@ -10,6 +10,8 @@ import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import View from './View';
+import Architect from '../../pages/arrchitect/architect';
+
 const QontoConnector = withStyles({
 	alternativeLabel: {
 		top: 5,
@@ -107,7 +109,7 @@ function getStepContent(step) {
 		case 1:
 			return 'What is an ad group anyways?';
 		case 2:
-			return 'This is the bit I really care about!';
+			return <Architect />;
 		default:
 			return 'Unknown step';
 	}
