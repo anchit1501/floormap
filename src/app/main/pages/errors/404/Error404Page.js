@@ -6,7 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Error404Page() {
+function Error404Page(props) {
+	const id = props.match.params.id
 	setTimeout(
 		function () {
 			//Start the timer
@@ -24,7 +25,7 @@ function Error404Page() {
 			};
 
 			// the entryPoint function returns a Promise, which is resolved with the 'editor API' object
-			window.entryPoint(document.querySelector('#fp-editor-container'), 80949960, settings).then(function (api) {
+			window.entryPoint(document.querySelector('#fp-editor-container'), id, settings).then(function (api) {
 				window.fpEditor = api;
 			});
 			//After 1 second, set render to true
