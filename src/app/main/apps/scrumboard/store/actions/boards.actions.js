@@ -15,7 +15,6 @@ export function getBoards() {
 	});
 	request1.then(response=>console.log(response))
 	const request = axios.get('/api/scrumboard-app/boards');
-	request.then(response=>console.log(response))
 	return dispatch =>
 		request1.then(response =>
 			dispatch({
