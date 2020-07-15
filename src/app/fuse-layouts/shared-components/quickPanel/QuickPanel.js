@@ -22,6 +22,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Actions from './store/actions/index';
 import reducer from './store/reducers';
+import { createBrowserHistory } from 'history';
+const hist = createBrowserHistory();
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -30,6 +32,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function QuickPanel(props) {
+	console.log(props);
 	const dispatch = useDispatch();
 	const data = useSelector(({ quickPanel }) => quickPanel.data);
 	const state = useSelector(({ quickPanel }) => quickPanel.state);

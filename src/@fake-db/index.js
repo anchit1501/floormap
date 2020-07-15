@@ -19,6 +19,7 @@ import './db/scrumboard-db';
 import './db/search-db';
 import './db/todo-db';
 import './db/architect-db';
+import './db/project-db';
 import mock from './mock';
 
 mock.onAny().passThrough();

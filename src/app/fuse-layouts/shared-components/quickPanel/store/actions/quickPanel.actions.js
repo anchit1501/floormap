@@ -4,7 +4,7 @@ export const TOGGLE_QUICK_PANEL = '[QUICK PANEL] TOGGLE QUICK PANEL';
 export const GET_QUICK_PANEL_DATA = '[QUICK PANEL] GET DATA';
 
 export function getQuickPanelData() {
-	const request = axios.get('https://floorplanner.com/api/v2/projects/80949960/download.json', {
+	const request = axios.get('https://floorplanner.com/api/v2/projects/81476919/download.json', {
 		auth: {
 			username: '9d2dc53e34994a7ea8b16b4292dab6cbefcb4cf4',
 			password: 'EcbWyhc8.-Jg7@TFmqdqY2uHb'
@@ -18,11 +18,63 @@ export function getQuickPanelData() {
 			parser.parseString(response.data, function (err, result) {
 				fpData = result;
 			});
+			var Obj = {
+				id: fpData.project.id[0]._,
+				name: fpData.project.name[0],
+				floors: {
+					TotalFloors: fpData.project.floors[0].floor.length,
+					floor: getFloor(fpData.project.floors[0].floor)
+				}
+			};
+			console.log(Obj);
+			axios.post('/api/Project/addDetails', { Obj }).then(rep => {
+				console.log(rep);
+			});
+			// axios.get('/api/Project/getDetails', { Obj }).then(rep => {
+			// 	console.log(rep);
+			// });
 			dispatch({
 				type: GET_QUICK_PANEL_DATA,
 				payload: fpData
 			});
 		});
+}
+
+function getFloor(val) {
+	let tempArr = [];
+	val.map(item => {
+		tempArr.push({
+			name: item.name[0],
+			area: getAreas(item.designs[0].design[0].areas[0].area),
+			walls: getwalls(item.designs[0].design[0].lines[0].line),
+			Objects: getObjects(item.designs[0].design[0].objects[0].object)
+		});
+	});
+	return tempArr;
+}
+
+function getAreas(val) {
+	let tempArr = [];
+	val.map(item => {
+		tempArr.push({ name: item.name, point: item.points[0] });
+	});
+	return tempArr;
+}
+
+function getwalls(val) {
+	let tempArr = [];
+	val.map(item => {
+		tempArr.push({ thickness: item.thickness[0], point: item.points[0] });
+	});
+	return tempArr;
+}
+
+function getObjects(val) {
+	let tempArr = [];
+	val.map(item => {
+		tempArr.push({ name: item.type[0], point: item.points[0], size: item.size[0] });
+	});
+	return tempArr;
 }
 
 export function toggleQuickPanel() {
