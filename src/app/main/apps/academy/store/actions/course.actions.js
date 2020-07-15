@@ -22,7 +22,7 @@ export function saveCourse(data) {
 
 	return dispatch =>
 		request.then(response => {
-			dispatch(showMessage({ message: 'Course Saved' }));
+			dispatch(showMessage({ message: 'Project Saved' }));
 
 			return dispatch({
 				type: SAVE_COURSE,
@@ -37,7 +37,7 @@ export function updateCourse(data) {
 		const request = axios.post('/api/academy-app/course/update', { id, ...data });
 
 		request.then(response => {
-			dispatch(showMessage({ message: 'Course Updated' }));
+			dispatch(showMessage({ message: 'Project Updated' }));
 
 			return dispatch({
 				type: UPDATE_COURSE,

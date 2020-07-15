@@ -427,26 +427,14 @@ const academyDB = {
 	categories: [
 		{
 			id: 0,
-			value: 'web',
-			label: 'Web',
-			color: blue[500]
-		},
-		{
-			id: 1,
-			value: 'firebase',
-			label: 'Firebase',
+			value: 'pending',
+			label: 'Pending',
 			color: amber[500]
 		},
 		{
-			id: 2,
-			value: 'cloud',
-			label: 'Cloud',
-			color: blueGrey[500]
-		},
-		{
-			id: 3,
-			value: 'android',
-			label: 'Android',
+			id: 1,
+			value: 'completed',
+			label: 'Completed',
 			color: green[500]
 		}
 	],

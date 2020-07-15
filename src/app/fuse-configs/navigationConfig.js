@@ -70,7 +70,14 @@ const navigationConfig = [
 					}
 				]
 			},
-			
+			{
+				id: 'academy',
+				title: 'Architect',
+				translate: 'Architect',
+				type: 'item',
+				icon: 'school',
+				url: '/apps/architect'
+			},
 			// {
 			// 	id: 'calendar',
 			// 	title: 'Calendar',
@@ -87,13 +94,13 @@ const navigationConfig = [
 				icon: 'shopping_cart',
 				url: '/apps/e-commerce',
 				children: [
-					{
-						id: 'e-commerce-products',
-						title: 'Products',
-						type: 'item',
-						url: '/apps/e-commerce/products',
-						exact: true
-					},
+					// {
+					// 	id: 'e-commerce-products',
+					// 	title: 'Products',
+					// 	type: 'item',
+					// 	url: '/apps/e-commerce/products',
+					// 	exact: true
+					// },
 					{
 						id: 'e-commerce-product-detail',
 						title: 'Product Detail',
@@ -108,13 +115,13 @@ const navigationConfig = [
 						url: '/apps/e-commerce/products/new',
 						exact: true
 					},
-					{
-						id: 'e-commerce-orders',
-						title: 'Orders',
-						type: 'item',
-						url: '/apps/e-commerce/orders',
-						exact: true
-					},
+					// {
+					// 	id: 'e-commerce-orders',
+					// 	title: 'Orders',
+					// 	type: 'item',
+					// 	url: '/apps/e-commerce/orders',
+					// 	exact: true
+					// },
 					{
 						id: 'e-commerce-order-detail',
 						title: 'Order Detail',
@@ -124,14 +131,7 @@ const navigationConfig = [
 					}
 				]
 			},
-			{
-				id: 'academy',
-				title: 'Academy',
-				translate: 'ACADEMY',
-				type: 'item',
-				icon: 'school',
-				url: '/apps/academy'
-			},
+			
 			// {
 			// 	id: 'mail',
 			// 	title: 'Mail',

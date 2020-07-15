@@ -11,12 +11,12 @@ const AcademyAppConfig = {
 			component: React.lazy(() => import('./course/Course'))
 		},
 		{
-			path: '/apps/academy/courses',
+			path: '/apps/architect/projects',
 			component: React.lazy(() => import('./courses/Courses'))
 		},
 		{
-			path: '/apps/academy',
-			component: () => <Redirect to="/apps/academy/courses" />
+			path: '/apps/architect',
+			component: () => <Redirect to="/apps/architect/projects" />
 		}
 	]
 };
