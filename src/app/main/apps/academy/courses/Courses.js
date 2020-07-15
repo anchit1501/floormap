@@ -23,6 +23,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as Actions from '../store/actions';
 import reducer from '../store/reducers';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import ProjectSteppers from '../../project/ProjectStepper.jsx';
 
 const useStyles = makeStyles(theme => ({
 	header: {
@@ -38,10 +42,33 @@ const useStyles = makeStyles(theme => ({
 		width: 512,
 		height: 512,
 		pointerEvents: 'none'
+	},
+	modal: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	paper: {
+		backgroundColor: theme.palette.background.paper,
+		border: '2px solid #000',
+		boxShadow: theme.shadows[5],
+		padding: theme.spacing(2, 4, 3),
+		height: '95vh',
+		width: '90vw',
+		overflow: 'scroll'
 	}
 }));
 
 function Courses(props) {
+	const [open, setOpen] = React.useState(false);
+
+	const handleOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
 	const dispatch = useDispatch();
 	const courses = useSelector(({ academyApp }) => academyApp.courses.data);
 	const categories = useSelector(({ academyApp }) => academyApp.courses.categories);
@@ -64,10 +91,10 @@ function Courses(props) {
 			}
 
 			return _.filter(courses, item => {
-				if (selectedCategory !== 'all' && item.category !== selectedCategory) {
+				if (selectedCategory !== 'all' && item.status !== selectedCategory) {
 					return false;
 				}
-				return item.title.toLowerCase().includes(searchText.toLowerCase());
+				return item.name.toLowerCase().includes(searchText.toLowerCase());
 			});
 		}
 
@@ -94,9 +121,26 @@ function Courses(props) {
 				return 'CONTINUE';
 		}
 	}
-
 	return (
 		<div className="flex flex-col flex-auto flex-shrink-0 w-full">
+			<Modal
+							aria-labelledby="transition-modal-title"
+							aria-describedby="transition-modal-description"
+							className={classes.modal}
+							open={open}
+							onClose={handleClose}
+							closeAfterTransition
+							BackdropComponent={Backdrop}
+							BackdropProps={{
+								timeout: 500
+							}}
+						>
+							<Fade in={open}>
+								<div className={classes.paper}>
+									<ProjectSteppers />
+								</div>
+							</Fade>
+						</Modal>
 			<div
 				className={clsx(
 					classes.header,
@@ -105,14 +149,13 @@ function Courses(props) {
 			>
 				<FuseAnimate animation="transition.slideUpIn" duration={400} delay={100}>
 					<Typography color="inherit" className="text-24 sm:text-40 font-light">
-						WELCOME TO ACADEMY
+						WELCOME TO YOUR WORLD OF ARCHITECTURE!
 					</Typography>
 				</FuseAnimate>
 				<FuseAnimate duration={400} delay={600}>
 					<Typography variant="subtitle1" color="inherit" className="mt-8 sm:mt-16 mx-auto max-w-512">
 						<span className="opacity-75">
-							Our courses will step you through the process of building a small application, or adding a
-							new feature to an existing application.
+							The dashboard will help you through the process of tracking your new and existing projects. It also lets you track and update the progress of your projects.
 						</span>
 					</Typography>
 				</FuseAnimate>
@@ -121,7 +164,7 @@ function Courses(props) {
 			<div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24">
 				<div className="flex flex-col flex-shrink-0 sm:flex-row items-center justify-between py-24">
 					<TextField
-						label="Search for a course"
+						label="Search for a project"
 						placeholder="Enter a keyword..."
 						className="flex w-full sm:w-320 mb-16 sm:mb-0 mx-16"
 						value={searchText}
@@ -169,7 +212,7 @@ function Courses(props) {
 								className="flex flex-wrap py-24"
 							>
 								{filteredData.map(course => {
-									const category = categories.find(_cat => _cat.value === course.category);
+									const category = categories.find(_cat => _cat.value === course.status);
 									return (
 										<div className="w-full pb-24 sm:w-1/2 lg:w-1/3 sm:p-16" key={course.id}>
 											<Card elevation={1} className="flex flex-col h-256">
@@ -181,34 +224,21 @@ function Courses(props) {
 													}}
 												>
 													<Typography className="font-medium truncate" color="inherit">
-														{category.label}
+														{course.name}
 													</Typography>
 													<div className="flex items-center justify-center opacity-75">
-														<Icon className="text-20 mx-8" color="inherit">
-															access_time
-														</Icon>
 														<div className="text-16 whitespace-no-wrap">
-															{course.length}
-															min
+															{category.label}
+															
 														</div>
 													</div>
 												</div>
-												<CardContent className="flex flex-col flex-auto items-center justify-center">
-													<Typography className="text-center text-16 font-400">
-														{course.title}
-													</Typography>
-													<Typography
-														className="text-center text-13 font-600 mt-4"
-														color="textSecondary"
-													>
-														{course.updated}
-													</Typography>
+												<CardContent className="flex flex-col flex-auto items-center justify-center" style={{background:`url(${course.thumbnail_3d?course.thumbnail_3d:course.thumbnail})`, backgroundSize:'cover'}}>
 												</CardContent>
 												<Divider />
 												<CardActions className="justify-center">
 													<Button
-														to={`/apps/academy/courses/${course.id}/${course.slug}`}
-														component={Link}
+														onClick={handleOpen}
 														className="justify-start px-32"
 														color="secondary"
 													>
