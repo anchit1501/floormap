@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import View from './View';
 import Architect from '../../pages/arrchitect/architect';
+import LayoutCard from './layout';
 
 const QontoConnector = withStyles({
 	alternativeLabel: {
@@ -99,7 +100,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-	return ['Select Location', 'Select Layout', 'Choose a Contractor'];
+	return ['Select Location', 'Select Layout'];
 }
 
 function getStepContent(step) {
@@ -107,9 +108,9 @@ function getStepContent(step) {
 		case 0:
 			return <View />;
 		case 1:
-			return 'What is an ad group anyways?';
-		case 2:
-			return <Architect />;
+			return <LayoutCard />;
+		// case 2:
+		// 	return <Architect />;
 		default:
 			return 'Unknown step';
 	}
@@ -152,18 +153,18 @@ export default function CustomizedSteppers() {
 						</Button>
 					</div>
 				) : (
-					<div>
-						<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
 						<div>
-							<Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-								Back
+							<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+							<div>
+								<Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+									Back
 							</Button>
-							<Button variant="contained" color="primary" onClick={handleNext} className={classes.button}>
-								{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-							</Button>
+								<Button variant="contained" color="primary" onClick={handleNext} className={classes.button}>
+									{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+								</Button>
+							</div>
 						</div>
-					</div>
-				)}
+					)}
 			</div>
 		</div>
 	);
