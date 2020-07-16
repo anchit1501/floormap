@@ -15,14 +15,15 @@ import React, { useEffect, useState } from 'react';
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		background: `radial-gradient(${darken(theme.palette.primary.dark, 0.5)} 0%, ${theme.palette.primary.dark} 80%)`
+		background: `radial-gradient(${darken(theme.palette.primary.dark, 0.5)} 0%, ${theme.palette.primary.dark} 80%)`,
+		padding: '200px 0 100px 0'
 	},
 	divider: {
 		backgroundColor: theme.palette.divider
 	}
 }));
 
-function ModernInvoicePage() {
+function OrderInvoice() {
 	const classes = useStyles();
 	const [invoice, setInvoice] = useState(null);
 	const formatter = new Intl.NumberFormat('en-US', {
@@ -395,7 +396,7 @@ function ModernInvoicePage() {
 	);
 }
 
-export default ModernInvoicePage;
+export default OrderInvoice;
 
 /**
 

@@ -23,43 +23,73 @@ const invoicesDB = {
 			services: [
 				{
 					id: '1',
-					title: 'Prototype & Design',
+					title: 'Wall',
 					detail:
 						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus accumsan, quam sed eleifend imperdiet.',
-					unit: 'Hour',
+					unit: 'sqm',
 					unitPrice: '12.00',
 					quantity: '240',
 					total: '2880'
 				},
 				{
 					id: '2',
-					title: 'Coding',
+					title: 'Wall',
 					detail:
-						'Vestibulum ligula sem, rutrum et libero id, porta vehicula metus. Cras dapibus neque sit amet laoreet vestibulum.',
-					unit: 'Hour',
-					unitPrice: '10.50',
-					quantity: '350',
-					total: '3675'
+						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus accumsan, quam sed eleifend imperdiet.',
+					unit: 'sqm',
+					unitPrice: '12.00',
+					quantity: '240',
+					total: '2880'
 				},
 				{
 					id: '3',
-					title: 'Testing',
+					title: 'Wall',
 					detail:
-						'Pellentesque luctus efficitur neque in finibus. Integer ut nunc in augue maximus porttitor id id nulla. In vitae erat.',
-					unit: 'Hour',
-					unitPrice: '4.00',
-					quantity: '50',
-					total: '200'
+						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus accumsan, quam sed eleifend imperdiet.',
+					unit: 'sqm',
+					unitPrice: '12.00',
+					quantity: '240',
+					total: '2880'
 				},
 				{
 					id: '4',
-					title: 'Documentation & Training',
+					title: 'Wall',
+					detail:
+						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus accumsan, quam sed eleifend imperdiet.',
+					unit: 'sqm',
+					unitPrice: '12.00',
+					quantity: '240',
+					total: '2880'
+				},
+				{
+					id: '5',
+					title: 'Wall',
+					detail:
+						'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus accumsan, quam sed eleifend imperdiet.',
+					unit: 'sqm',
+					unitPrice: '12.00',
+					quantity: '240',
+					total: '2880'
+				},
+				{
+					id: '6',
+					title: 'Doors',
+					detail:
+						'Vestibulum ligula sem, rutrum et libero id, porta vehicula metus. Cras dapibus neque sit amet laoreet vestibulum.',
+					unit: 'Unit',
+					unitPrice: '100.00',
+					quantity: '2',
+					total: '200'
+				},
+				{
+					id: '7',
+					title: 'Windows',
 					detail:
 						'Pellentesque luctus efficitur neque in finibus. Integer ut nunc in augue maximus porttitor id id nulla. In vitae erat.',
-					unit: 'Hour',
-					unitPrice: '6.50',
-					quantity: '260',
-					total: '1690'
+					unit: 'Unit',
+					unitPrice: '25.00',
+					quantity: '2',
+					total: '50'
 				}
 			],
 			subtotal: '8445',

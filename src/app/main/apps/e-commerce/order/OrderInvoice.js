@@ -67,11 +67,11 @@ const OrderInvoice = props => {
 													INVOICE
 												</Typography>
 											</td>
-											<td className="pb-4 px-8">
+											{/* <td className="pb-4 px-8">
 												<Typography className="font-light" variant="h6" color="inherit">
 													{props.order.reference}
 												</Typography>
-											</td>
+											</td> */}
 										</tr>
 									</tbody>
 								</table>

@@ -20,6 +20,7 @@ import './db/search-db';
 import './db/todo-db';
 import './db/architect-db';
 import './db/project-db';
+import './db/report-db'
 import mock from './mock';
 
 mock.onAny().passThrough();
