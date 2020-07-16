@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Actions from './store/actions/index';
 import reducer from './store/reducers';
 import { createBrowserHistory } from 'history';
+import ArchitectDialog from './ArchitectDialog'
 const hist = createBrowserHistory();
 
 const useStyles = makeStyles(theme => ({
@@ -41,7 +42,7 @@ function QuickPanel(props) {
 	const [checked, setChecked] = useState('notifications');
 	const noOfWindows = data
 		? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(item => item.type === 'val')
-				.length
+			.length
 		: '';
 	const handleToggle = value => () => {
 		const currentIndex = checked.indexOf(value);
@@ -86,8 +87,8 @@ function QuickPanel(props) {
 							Number of Windows :{' '}
 							{data
 								? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(
-										item => item.type[0] === 'window'
-								  ).length
+									item => item.type[0] === 'window'
+								).length
 								: ''}
 						</Typography>
 					</ExpansionPanelDetails>
@@ -96,8 +97,8 @@ function QuickPanel(props) {
 							No.of Doors:
 							{data
 								? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(
-										item => item.type[0] === 'door'
-								  ).length
+									item => item.type[0] === 'door'
+								).length
 								: ''}
 						</Typography>
 					</ExpansionPanelDetails>
@@ -126,6 +127,7 @@ function QuickPanel(props) {
 				<Button variant="contained" color="primary">
 					Primary
 				</Button>
+				<ArchitectDialog />
 			</FuseScrollbars>
 		</Drawer>
 	);
