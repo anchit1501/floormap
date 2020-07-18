@@ -14,6 +14,7 @@ export const COPY_BOARD = '[SCRUMBOARD APP] COPY BOARD';
 export const RENAME_BOARD = '[SCRUMBOARD APP] RENAME BOARD';
 export const CHANGE_BOARD_SETTINGS = '[SCRUMBOARD APP] CHANGE BOARD SETTINGS';
 export const RESET_BOARD = '[SCRUMBOARD APP] RESET BOARD';
+export const SET_CURRENT_PROJECT = '[SCRUMBOARD APP] CURRENT PROJECT';
 export const ORDER_LIST = '[SCRUMBOARD APP] ORDER LIST';
 export const ORDER_CARD = '[SCRUMBOARD APP] ORDER CARD';
 export const ADD_CARD = '[SCRUMBOARD APP] ADD CARD';
@@ -53,6 +54,13 @@ export function getBoard(params) {
 export function resetBoard() {
 	return {
 		type: RESET_BOARD
+	};
+}
+
+export function setCurrentProject(val) {
+	return {
+		type: SET_CURRENT_PROJECT,
+		payload: val
 	};
 }
 

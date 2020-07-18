@@ -99,6 +99,12 @@ const boardReducer = (state = initialState, action) => {
 				name: action.boardTitle
 			};
 		}
+		case Actions.SET_CURRENT_PROJECT: {
+			return {
+				...state,
+				currentProject: action.payload
+			};
+		}
 		default:
 			return state;
 	}

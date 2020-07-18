@@ -1,5 +1,7 @@
+import history from '@history';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Stepper from '@material-ui/core/Stepper';
@@ -10,8 +12,8 @@ import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import View from './View';
-import Architect from '../../pages/arrchitect/architect';
 import LayoutCard from './layout';
+import Axios from 'axios';
 
 const QontoConnector = withStyles({
 	alternativeLabel: {
@@ -124,7 +126,40 @@ export default function CustomizedSteppers() {
 	const handleNext = () => {
 		setActiveStep(prevActiveStep => prevActiveStep + 1);
 	};
-
+	const projectId = useSelector(({ scrumboardApp }) => scrumboardApp.board);
+	const handleRedirect = () => {
+		const request = Axios.post(
+			'https://floorplanner.com/api/v2//projects/' + projectId.currentProject + '/duplicate.json',
+			{},
+			{
+				auth: {
+					username: '9d2dc53e34994a7ea8b16b4292dab6cbefcb4cf4',
+					password: 'EcbWyhc8.-Jg7@TFmqdqY2uHb'
+				}
+			}
+		).then(response => {
+			console.log(response.data.id);
+			Axios.post(
+				'https://floorplanner.com/api/v2//projects/' + response.data.id + '.json',
+				{
+					project: {
+						name: 'My house' + response.data.id
+					}
+				},
+				{
+					auth: {
+						username: '9d2dc53e34994a7ea8b16b4292dab6cbefcb4cf4',
+						password: 'EcbWyhc8.-Jg7@TFmqdqY2uHb'
+					}
+				}
+			).then(resp => {
+				if (resp.status === 200) {
+					history.push('/project/' + response.data.id);
+				}
+			});
+		});
+		console.log(projectId.currentProject);
+	};
 	const handleBack = () => {
 		setActiveStep(prevActiveStep => prevActiveStep - 1);
 	};
@@ -153,18 +188,23 @@ export default function CustomizedSteppers() {
 						</Button>
 					</div>
 				) : (
+					<div>
+						<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
 						<div>
-							<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-							<div>
-								<Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-									Back
+							<Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+								Back
 							</Button>
-								<Button variant="contained" color="primary" onClick={handleNext} className={classes.button}>
-									{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-								</Button>
-							</div>
+							<Button
+								variant="contained"
+								color="primary"
+								onClick={activeStep === steps.length - 1 ? handleRedirect : handleNext}
+								className={classes.button}
+							>
+								{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+							</Button>
 						</div>
-					)}
+					</div>
+				)}
 			</div>
 		</div>
 	);

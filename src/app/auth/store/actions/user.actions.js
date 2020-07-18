@@ -8,6 +8,7 @@ import * as FuseActions from 'app/store/actions/fuse';
 import firebase from 'firebase/app';
 
 export const SET_USER_DATA = '[USER] SET DATA';
+export const SET_PROJECT_ARCHITECT = '[USER] PROJECT ARCHITECT';
 export const REMOVE_USER_DATA = '[USER] REMOVE DATA';
 export const USER_LOGGED_OUT = '[USER] LOGGED OUT';
 
@@ -89,10 +90,14 @@ export function setUserData(user) {
 		/*
         You can redirect the logged-in user to a specific route depending on his role
          */
-
+		if (user.role === 'staff') {
+			history.location.state = {
+				redirectUrl: '/apps/architect/projects' // for example 'apps/academy'
+			};
+		}
 		// history.location.state = {
-		//     redirectUrl: user.redirectUrl // for example 'apps/academy'
-		// }
+		// 	redirectUrl: '/apps/architect/projects' // for example 'apps/academy'
+		// };
 
 		/*
         Set User Settings
@@ -123,6 +128,12 @@ export function updateUserSettings(settings) {
 	};
 }
 
+export function setProjectArchitect(val) {
+	return {
+		type: SET_PROJECT_ARCHITECT,
+		payload: val
+	};
+}
 /**
  * Update User Shortcuts
  */

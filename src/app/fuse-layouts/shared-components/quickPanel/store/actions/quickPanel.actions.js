@@ -1,43 +1,48 @@
 import axios from 'axios';
 import xml2js from 'xml2js';
+import history from '@history';
+
 export const TOGGLE_QUICK_PANEL = '[QUICK PANEL] TOGGLE QUICK PANEL';
 export const GET_QUICK_PANEL_DATA = '[QUICK PANEL] GET DATA';
 
 export function getQuickPanelData() {
-	const request = axios.get('https://floorplanner.com/api/v2/projects/81476919/download.json', {
-		auth: {
-			username: '9d2dc53e34994a7ea8b16b4292dab6cbefcb4cf4',
-			password: 'EcbWyhc8.-Jg7@TFmqdqY2uHb'
-		}
-	});
-	const parser = new xml2js.Parser();
-	var fpData = {};
+	if (window.fpEditor) {
+		const id = window.fpEditor.project.id;
+		const request = axios.get('https://floorplanner.com/api/v2/projects/' + id + '/download.json', {
+			auth: {
+				username: '9d2dc53e34994a7ea8b16b4292dab6cbefcb4cf4',
+				password: 'EcbWyhc8.-Jg7@TFmqdqY2uHb'
+			}
+		});
+		const parser = new xml2js.Parser();
+		var fpData = {};
 
-	return dispatch =>
-		request.then(response => {
-			parser.parseString(response.data, function (err, result) {
-				fpData = result;
+		return dispatch =>
+			request.then(response => {
+				parser.parseString(response.data, function (err, result) {
+					fpData = result;
+				});
+				var Obj = {
+					id: fpData.project.id[0]._,
+					name: fpData.project.name[0],
+					floors: {
+						TotalFloors: fpData.project.floors[0].floor.length,
+						floor: getFloor(fpData.project.floors[0].floor)
+					}
+				};
+				dispatch({
+					type: GET_QUICK_PANEL_DATA,
+					payload: Obj
+				});
 			});
-			var Obj = {
-				id: fpData.project.id[0]._,
-				name: fpData.project.name[0],
-				floors: {
-					TotalFloors: fpData.project.floors[0].floor.length,
-					floor: getFloor(fpData.project.floors[0].floor)
-				}
-			};
-			console.log(Obj);
-			axios.post('/api/Project/addDetails', { Obj }).then(rep => {
-				console.log(rep);
-			});
-			// axios.get('/api/Project/getDetails', { Obj }).then(rep => {
-			// 	console.log(rep);
-			// });
+	} else {
+		console.log('xyz');
+		return dispatch =>
 			dispatch({
 				type: GET_QUICK_PANEL_DATA,
-				payload: Obj
+				payload: null
 			});
-		});
+	}
 }
 
 function getFloor(val) {

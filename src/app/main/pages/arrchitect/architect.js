@@ -19,6 +19,7 @@ import Grid from '@material-ui/core/Grid';
 import withReducer from 'app/store/withReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import * as UserActions from '../../../../app/auth/store/actions';
 import * as Actions from './store/actions/index';
 import reducer from './store/reducers';
 const useStyles = makeStyles(theme => ({
@@ -58,11 +59,14 @@ function Architect() {
 	const dispatch = useDispatch();
 	const architectData = useSelector(({ architect }) => architect.data);
 	const [active, setactive] = React.useState(null);
-	console.log(architectData);
 	// const handleExpandClick = () => {
 	// 	console.log(expanded);
 	// 	setExpanded(!expanded);
 	// };
+
+	const handleClick = id => {
+		dispatch(UserActions.setProjectArchitect(id));
+	};
 	useEffect(() => {
 		dispatch(Actions.getArchitectData());
 	}, [dispatch]);
@@ -77,6 +81,7 @@ function Architect() {
 									<Card
 										onClick={() => {
 											setactive(i);
+											handleClick(value.id);
 										}}
 										key={i}
 										className={active === i ? classes.root1 : classes.root}

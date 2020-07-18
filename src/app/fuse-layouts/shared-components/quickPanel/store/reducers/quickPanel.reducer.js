@@ -8,6 +8,7 @@ const initialState = {
 const quickPanel = (state = initialState, action) => {
 	switch (action.type) {
 		case Actions.GET_QUICK_PANEL_DATA: {
+			console.log(action.payload);
 			return {
 				...state,
 				data: action.payload

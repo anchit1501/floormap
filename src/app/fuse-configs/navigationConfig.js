@@ -5,39 +5,37 @@ import ar from './navigation-i18n/ar';
 import en from './navigation-i18n/en';
 import tr from './navigation-i18n/tr';
 
-import store from '../store'
+import store from '../store';
 
-setTimeout(()=>{
-	let state = getState()
-	if(state.scrumboardApp!==undefined){
-		let projects = state.scrumboardApp.boards
-	
-		let projectsArray = []
-		projects.map(project=>{
-			let {id, name} = project
-			id = id.toString()
+setTimeout(() => {
+	let state = getState();
+	if (state.scrumboardApp !== undefined) {
+		let projects = state.scrumboardApp.boards;
+
+		let projectsArray = [];
+		projects.map(project => {
+			let { id, name } = project;
+			id = id.toString();
 			projectsArray.push({
-							id: id,
-							title: name,
-							type: 'item',
-							url: `/project/${id}`
-						})
-		})
-		navigationConfig[0].children[1].children=(projectsArray)
+				id: id,
+				title: name,
+				type: 'item',
+				url: `/project/${id}`
+			});
+		});
+		navigationConfig[0].children[1].children = projectsArray;
 	}
-	
-},3000)
+}, 3000);
 
 function getState() {
-  const state = store.getState();
-  console.log(state)
-  return (state)
+	const state = store.getState();
+	console.log(state);
+	return state;
 }
 
 i18next.addResourceBundle('en', 'navigation', en);
 i18next.addResourceBundle('tr', 'navigation', tr);
 i18next.addResourceBundle('ar', 'navigation', ar);
-
 
 const navigationConfig = [
 	{
@@ -130,8 +128,8 @@ const navigationConfig = [
 						exact: true
 					}
 				]
-			},
-			
+			}
+
 			// {
 			// 	id: 'mail',
 			// 	title: 'Mail',
@@ -187,7 +185,7 @@ const navigationConfig = [
 			// 		fg: '#FFFFFF'
 			// 	}
 			// },
-			
+
 			// {
 			// 	id: 'notes',
 			// 	title: 'Notes',
@@ -711,32 +709,32 @@ const navigationConfig = [
 	// 				}
 	// 			]
 	// 		},
+	{
+		id: 'authentication-doc',
+		title: 'Authentication',
+		type: 'collapse',
+		icon: 'import_contacts',
+		children: [
 			{
-				id: 'authentication-doc',
-				title: 'Authentication',
-				type: 'collapse',
-				icon: 'import_contacts',
-				children: [
-					{
-						id: 'jwt-auth-doc',
-						title: 'JWT',
-						type: 'item',
-						url: '/documentation/authentication/jwt'
-					},
-					{
-						id: 'firebase-auth-doc',
-						title: 'Firebase',
-						type: 'item',
-						url: '/documentation/authentication/firebase'
-					},
-					{
-						id: 'auth0-auth-doc',
-						title: 'Auth0',
-						type: 'item',
-						url: '/documentation/authentication/auth0'
-					}
-				]
+				id: 'jwt-auth-doc',
+				title: 'JWT',
+				type: 'item',
+				url: '/documentation/authentication/jwt'
 			},
+			{
+				id: 'firebase-auth-doc',
+				title: 'Firebase',
+				type: 'item',
+				url: '/documentation/authentication/firebase'
+			},
+			{
+				id: 'auth0-auth-doc',
+				title: 'Auth0',
+				type: 'item',
+				url: '/documentation/authentication/auth0'
+			}
+		]
+	},
 	// 		{
 	// 			id: 'fuse-components',
 	// 			title: 'Fuse Components',
@@ -949,6 +947,14 @@ const navigationConfig = [
 				icon: 'verified_user'
 			},
 			{
+				id: 'only-staff-navigation-item',
+				title: 'Nav item only for Staff',
+				type: 'item',
+				auth: authRoles.staff,
+				url: '/apps/architect/projects',
+				icon: 'verified_user'
+			},
+			{
 				id: 'auth-guest-example',
 				title: 'Guest: Auth protected page',
 				type: 'item',
@@ -964,7 +970,7 @@ const navigationConfig = [
 				icon: 'verified_user'
 			}
 		]
-	},
+	}
 	// {
 	// 	type: 'divider',
 	// 	id: 'divider-2'
