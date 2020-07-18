@@ -35,7 +35,7 @@ export function getQuickPanelData() {
 			// });
 			dispatch({
 				type: GET_QUICK_PANEL_DATA,
-				payload: fpData
+				payload: Obj
 			});
 		});
 }
@@ -46,7 +46,7 @@ function getFloor(val) {
 		tempArr.push({
 			name: item.name[0],
 			area: getAreas(item.designs[0].design[0].areas[0].area),
-			walls: getwalls(item.designs[0].design[0].lines[0].line),
+			walls: getwalls(item),
 			Objects: getObjects(item.designs[0].design[0].objects[0].object)
 		});
 	});
@@ -62,11 +62,26 @@ function getAreas(val) {
 }
 
 function getwalls(val) {
+	let val1 = val.designs[0].design[0].lines[0].line;
 	let tempArr = [];
-	val.map(item => {
-		tempArr.push({ thickness: item.thickness[0], point: item.points[0] });
+	val1.map(item => {
+		tempArr.push({
+			thickness: item.thickness[0],
+			height: val.height[0]._,
+			length: getlength(item.points[0].split(',')[0])
+		});
 	});
 	return tempArr;
+}
+
+function getlength(val) {
+	const tempArr = val.split(' ');
+	for (let i = 0; i <= 3; i++) {
+		if (parseFloat(tempArr[i + 3]) - parseFloat(tempArr[i]) != 0) {
+			return Math.abs(parseFloat(tempArr[i + 3]) - parseFloat(tempArr[i])).toFixed(2);
+		}
+	}
+	return 0;
 }
 
 function getObjects(val) {
