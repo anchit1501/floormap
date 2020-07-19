@@ -39,7 +39,7 @@ export default function LayoutCard() {
 		dispatch(ScrumBoardActions.setCurrentProject(val));
 	};
 
-	const arr = [81538917, 81456675];
+	const arr = [81538917, 80813949];
 	return arr.map(value => (
 		<Grid key={value} item>
 			<Card

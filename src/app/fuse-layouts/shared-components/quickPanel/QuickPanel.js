@@ -66,11 +66,9 @@ function QuickPanel(props) {
 			classes={{ paper: classes.root }}
 			open={state}
 			anchor="right"
-			onClick={ev => {
-				dispatch(Actions.getQuickPanelData());
-			}}
 			onClose={ev => {
 				dispatch(Actions.toggleQuickPanel());
+				dispatch(Actions.getQuickPanelData());
 			}}
 		>
 			<FuseScrollbars>
@@ -87,18 +85,24 @@ function QuickPanel(props) {
 									<Typography className={classes.heading}>{floor.name}</Typography>
 								</ExpansionPanelSummary>
 
-								{window.fpEditor
-									? window.fpEditor.meta.areas.map(area => (
+								{floor.area
+									? floor.area.map(area => (
 											<ExpansionPanel>
 												<ExpansionPanelSummary
 													expandIcon={<ExpandMoreIcon />}
 													aria-controls="panel1a-content"
 													id="panel1a-header"
 												>
-													<Typography className={classes.heading}>{area.name}</Typography>
+													<Typography className={classes.heading}>{area.name[0]}</Typography>
 												</ExpansionPanelSummary>
 												<ExpansionPanelDetails>
-													<Typography>Area : {area.sqm.toFixed(2)} SQM</Typography>
+													<Typography>Length : {area.point.length} M</Typography>
+												</ExpansionPanelDetails>
+												<ExpansionPanelDetails>
+													<Typography>Width : {area.point.width} M</Typography>
+												</ExpansionPanelDetails>
+												<ExpansionPanelDetails>
+													<Typography>Area : {area.point.area} SQM</Typography>
 												</ExpansionPanelDetails>
 											</ExpansionPanel>
 									  ))

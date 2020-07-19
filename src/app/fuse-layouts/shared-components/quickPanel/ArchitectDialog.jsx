@@ -7,6 +7,8 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Architect from '../../../main/pages/arrchitect/architect';
 
@@ -51,11 +53,39 @@ const DialogActions = withStyles(theme => ({
 
 export default function ArchitectDialog() {
 	const [open, setOpen] = React.useState(false);
-
+	const Projectdata = useSelector(({ quickPanel }) => quickPanel.data);
+	const UserData = useSelector(({ auth }) => auth.user);
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
 	const handleClose = () => {
+		Axios.get('http://localhost:3001/project/')
+			.then(resp => {
+				let filteredArray = resp.data.filter(item => {
+					return parseInt(item.id) === parseInt(Projectdata.id);
+				});
+
+				if (filteredArray.length > 0) {
+					Axios.put('http://localhost:3001/project/' + Projectdata.id, {
+						...filteredArray[0],
+						data: Projectdata
+					}).then(resp => {
+						console.log(resp);
+					});
+				} else {
+					Axios.post('http://localhost:3001/project/', {
+						id: Projectdata.id,
+						...UserData,
+						data: Projectdata
+					}).then(resp => {
+						console.log(resp);
+					});
+				}
+			})
+			.then(resp => {
+				console.log(resp);
+			});
+		console.log(Projectdata);
 		setOpen(false);
 	};
 

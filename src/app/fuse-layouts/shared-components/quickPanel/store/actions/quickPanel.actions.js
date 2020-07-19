@@ -61,7 +61,9 @@ function getFloor(val) {
 function getAreas(val) {
 	let tempArr = [];
 	val.map(item => {
-		tempArr.push({ name: item.name, point: item.points[0] });
+		if (item.points[0].split(',').length === 4) {
+			tempArr.push({ name: item.name, point: getArea(item.points[0]) });
+		}
 	});
 	return tempArr;
 }
@@ -72,8 +74,7 @@ function getwalls(val) {
 	val1.map(item => {
 		tempArr.push({
 			thickness: item.thickness[0],
-			height: val.height[0]._,
-			length: getlength(item.points[0].split(',')[0])
+			height: val.height[0]._
 		});
 	});
 	return tempArr;
@@ -91,12 +92,39 @@ function getlength(val) {
 
 function getObjects(val) {
 	let tempArr = [];
+	console.log(val);
 	val.map(item => {
-		tempArr.push({ name: item.type[0], point: item.points[0], size: item.size[0] });
+		tempArr.push({ name: item.type[0], area: item.points[0], size: item.size[0] });
 	});
 	return tempArr;
 }
 
+function getArea(val) {
+	console.log(val);
+	let temparr = val.split(',');
+	console.log(temparr);
+	let arr1 = temparr[0].split(' ');
+	let arr2 = temparr[1].split(' ');
+	let arr3 = temparr[2].split(' ');
+	if (arr1[0] === arr2[0]) {
+		return {
+			length: getlength(temparr[0]),
+			width: getlength(temparr[2]),
+			area: parseFloat(getlength(temparr[0])) * parseFloat(getlength(temparr[2]))
+		};
+	} else {
+		return {
+			length: getlength(temparr[0]),
+			width: getlength(temparr[1]),
+			area: parseFloat(getlength(temparr[0])) * parseFloat(getlength(temparr[1]))
+		};
+	}
+	// return {};
+	// let tempArr = [];
+	// val.map(item => {
+	// 	tempArr.push({ name: item.type[0], area: getAreas(), size: item.size[0] });
+	// });
+}
 export function toggleQuickPanel() {
 	return {
 		type: TOGGLE_QUICK_PANEL
