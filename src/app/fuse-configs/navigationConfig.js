@@ -86,51 +86,51 @@ const navigationConfig = [
 			// 	icon: 'today',
 			// 	url: '/apps/calendar'
 			// },
-			{
-				id: 'e-commerce',
-				title: 'E-Commerce',
-				translate: 'ECOMMERCE',
-				type: 'collapse',
-				icon: 'shopping_cart',
-				url: '/apps/e-commerce',
-				children: [
-					// {
-					// 	id: 'e-commerce-products',
-					// 	title: 'Products',
-					// 	type: 'item',
-					// 	url: '/apps/e-commerce/products',
-					// 	exact: true
-					// },
-					{
-						id: 'e-commerce-product-detail',
-						title: 'Product Detail',
-						type: 'item',
-						url: '/apps/e-commerce/products/1/a-walk-amongst-friends-canvas-print',
-						exact: true
-					},
-					{
-						id: 'e-commerce-new-product',
-						title: 'New Product',
-						type: 'item',
-						url: '/apps/e-commerce/products/new',
-						exact: true
-					},
-					// {
-					// 	id: 'e-commerce-orders',
-					// 	title: 'Orders',
-					// 	type: 'item',
-					// 	url: '/apps/e-commerce/orders',
-					// 	exact: true
-					// },
-					{
-						id: 'e-commerce-order-detail',
-						title: 'Order Detail',
-						type: 'item',
-						url: '/apps/e-commerce/orders/1',
-						exact: true
-					}
-				]
-			},
+			// {
+			// 	id: 'e-commerce',
+			// 	title: 'E-Commerce',
+			// 	translate: 'ECOMMERCE',
+			// 	type: 'collapse',
+			// 	icon: 'shopping_cart',
+			// 	url: '/apps/e-commerce',
+			// 	children: [
+			// 		// {
+			// 		// 	id: 'e-commerce-products',
+			// 		// 	title: 'Products',
+			// 		// 	type: 'item',
+			// 		// 	url: '/apps/e-commerce/products',
+			// 		// 	exact: true
+			// 		// },
+			// 		{
+			// 			id: 'e-commerce-product-detail',
+			// 			title: 'Product Detail',
+			// 			type: 'item',
+			// 			url: '/apps/e-commerce/products/1/a-walk-amongst-friends-canvas-print',
+			// 			exact: true
+			// 		},
+			// 		{
+			// 			id: 'e-commerce-new-product',
+			// 			title: 'New Product',
+			// 			type: 'item',
+			// 			url: '/apps/e-commerce/products/new',
+			// 			exact: true
+			// 		},
+			// 		// {
+			// 		// 	id: 'e-commerce-orders',
+			// 		// 	title: 'Orders',
+			// 		// 	type: 'item',
+			// 		// 	url: '/apps/e-commerce/orders',
+			// 		// 	exact: true
+			// 		// },
+			// 		{
+			// 			id: 'e-commerce-order-detail',
+			// 			title: 'Order Detail',
+			// 			type: 'item',
+			// 			url: '/apps/e-commerce/orders/1',
+			// 			exact: true
+			// 		}
+			// 	]
+			// },
 			
 			// {
 			// 	id: 'mail',
@@ -712,6 +712,10 @@ const navigationConfig = [
 	// 			]
 	// 		},
 			{
+				type: 'divider',
+				id: 'divider-2'
+			},
+			{
 				id: 'authentication-doc',
 				title: 'Authentication',
 				type: 'collapse',
@@ -843,51 +847,51 @@ const navigationConfig = [
 	// 			icon: 'layers',
 	// 			children: [...MaterialUIComponentsNavigation]
 	// 		},
-	// 		{
-	// 			id: '3rd-party-components',
-	// 			title: '3rd Party Components',
-	// 			type: 'collapse',
-	// 			icon: 'settings_input_component',
-	// 			children: [
-	// 				{
-	// 					id: 'datatables',
-	// 					title: 'Datatables',
-	// 					type: 'collapse',
-	// 					children: [
-	// 						{
-	// 							id: 'react-table',
-	// 							title: 'React Table',
-	// 							type: 'item',
-	// 							url: '/documentation/third-party-components/datatables/react-table'
-	// 						}
-	// 					]
-	// 				},
-	// 				{
-	// 					id: 'formsy',
-	// 					title: 'Formsy',
-	// 					type: 'item',
-	// 					url: '/documentation/third-party-components/formsy'
-	// 				},
-	// 				{
-	// 					id: 'google-map-react',
-	// 					title: 'Google Map React',
-	// 					type: 'item',
-	// 					url: '/documentation/third-party-components/google-map-react'
-	// 				},
-	// 				{
-	// 					id: 'react-chartjs-2',
-	// 					title: 'React ChartJs 2',
-	// 					type: 'item',
-	// 					url: '/documentation/third-party-components/react-chartjs-2'
-	// 				}
-	// 			]
-	// 		}
+			{
+				id: '3rd-party-components',
+				title: '3rd Party Components',
+				type: 'collapse',
+				icon: 'settings_input_component',
+				children: [
+					{
+						id: 'datatables',
+						title: 'Datatables',
+						type: 'collapse',
+						children: [
+							{
+								id: 'react-table',
+								title: 'React Table',
+								type: 'item',
+								url: '/documentation/third-party-components/datatables/react-table'
+							}
+						]
+					},
+					{
+						id: 'formsy',
+						title: 'Formsy',
+						type: 'item',
+						url: '/documentation/third-party-components/formsy'
+					},
+					{
+						id: 'google-map-react',
+						title: 'Google Map React',
+						type: 'item',
+						url: '/documentation/third-party-components/google-map-react'
+					},
+					{
+						id: 'react-chartjs-2',
+						title: 'React ChartJs 2',
+						type: 'item',
+						url: '/documentation/third-party-components/react-chartjs-2'
+					}
+				]
+			},
 	// 	]
 	// },
-	// {
-	// 	type: 'divider',
-	// 	id: 'divider-1'
-	// },
+	{
+		type: 'divider',
+		id: 'divider-1'
+	},
 	{
 		id: 'auth',
 		title: 'Auth',

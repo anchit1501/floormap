@@ -13,8 +13,7 @@ export function getCourses() {
 	});
 	var status = ["pending", "completed"];
 	request1.then(response=>response.data.results.map(response=>Object.assign(response,{activeStep:0, totalSteps:5, status:status[Math.floor(Math.random() * status.length)]})))
-	request1.then(response=>console.log(response))
-
+	
 	return dispatch =>
 		request1.then(response =>
 			dispatch({
@@ -26,7 +25,6 @@ export function getCourses() {
 
 export function getCategories() {
 	const request = axios.get('/api/academy-app/categories');
-	request.then(response=>console.log(response.data))
 	return dispatch =>
 		request.then(response =>
 			dispatch({

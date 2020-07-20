@@ -26,7 +26,7 @@ import reducer from '../store/reducers';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import ProjectSteppers from '../../project/ProjectStepper.jsx';
+import ArchitectForm from '../../project/ArchitectForm';
 
 const useStyles = makeStyles(theme => ({
 	header: {
@@ -137,7 +137,7 @@ function Courses(props) {
 						>
 							<Fade in={open}>
 								<div className={classes.paper}>
-									<ProjectSteppers />
+									<ArchitectForm />
 								</div>
 							</Fade>
 						</Modal>
@@ -243,6 +243,13 @@ function Courses(props) {
 														color="secondary"
 													>
 														{buttonStatus(course)}
+													</Button>
+													<Button
+														
+														className="justify-start px-32"
+														color="secondary"
+													>
+														View Reports
 													</Button>
 												</CardActions>
 												<LinearProgress
