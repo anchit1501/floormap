@@ -23,6 +23,12 @@ const user = (state = initialState, action) => {
 				...initialState
 			};
 		}
+		case Actions.SET_PROJECT_ARCHITECT: {
+			return {
+				...state,
+				architect: action.payload
+			};
+		}
 		case Actions.USER_LOGGED_OUT: {
 			return initialState;
 		}

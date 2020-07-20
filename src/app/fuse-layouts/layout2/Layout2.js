@@ -100,8 +100,6 @@ function Layout2(props) {
 						<SettingsPanel />
 					</div>
 
-					{config.rightSidePanel.display && <RightSideLayout2 />}
-
 					<FuseMessage />
 				</div>
 			)}

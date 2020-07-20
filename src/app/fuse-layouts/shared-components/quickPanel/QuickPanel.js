@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Actions from './store/actions/index';
 import reducer from './store/reducers';
 import { createBrowserHistory } from 'history';
-import ArchitectDialog from './ArchitectDialog'
+import ArchitectDialog from './ArchitectDialog';
 const hist = createBrowserHistory();
 
 const useStyles = makeStyles(theme => ({
@@ -40,10 +40,10 @@ function QuickPanel(props) {
 	console.log(data);
 	const classes = useStyles();
 	const [checked, setChecked] = useState('notifications');
-	const noOfWindows = data
-		? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(item => item.type === 'val')
-			.length
-		: '';
+	// const noOfWindows = data
+	// 	? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(item => item.type === 'val')
+	// 			.length
+	// 	: '';
 	const handleToggle = value => () => {
 		const currentIndex = checked.indexOf(value);
 		const newChecked = [...checked];
@@ -66,68 +66,103 @@ function QuickPanel(props) {
 			classes={{ paper: classes.root }}
 			open={state}
 			anchor="right"
-			onClose={ev => dispatch(Actions.toggleQuickPanel())}
+			onClose={ev => {
+				dispatch(Actions.toggleQuickPanel());
+				dispatch(Actions.getQuickPanelData());
+			}}
 		>
 			<FuseScrollbars>
-				<ListSubheader component="div">{data ? data.project.name[0] : 0}</ListSubheader>
+				<ListSubheader component="div">{data ? data.name : ''}</ListSubheader>
 				<Divider />
-				<ExpansionPanel>
-					<ExpansionPanelSummary
-						expandIcon={<ExpandMoreIcon />}
-						aria-controls="panel1a-content"
-						id="panel1a-header"
-					>
-						<Typography className={classes.heading}>
-							{data ? data.project.floors[0].floor[0].designs[0].design[0].areas[0].area[0].name : ''}{' '}
-							Area
-						</Typography>
-					</ExpansionPanelSummary>
-					<ExpansionPanelDetails>
-						<Typography className={classes.heading}>
-							Number of Windows :{' '}
-							{data
-								? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(
-									item => item.type[0] === 'window'
-								).length
-								: ''}
-						</Typography>
-					</ExpansionPanelDetails>
-					<ExpansionPanelDetails>
-						<Typography className={classes.heading}>
-							No.of Doors:
-							{data
-								? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(
-									item => item.type[0] === 'door'
-								).length
-								: ''}
-						</Typography>
-					</ExpansionPanelDetails>
-					<ExpansionPanel>
-						<ExpansionPanelSummary
-							expandIcon={<ExpandMoreIcon />}
-							aria-controls="panel2a-content"
-							id="panel2a-header"
-						>
-							<Typography className={classes.heading}>Walls</Typography>
-						</ExpansionPanelSummary>
-						<ExpansionPanelDetails>
-							<Typography>
-								No.of Walls:
-								{data ? data.project.floors[0].floor[0].designs[0].design[0].lines[0].line.length : ''}
-							</Typography>
-						</ExpansionPanelDetails>
-						<ExpansionPanelDetails>
-							<Typography>
-								Hieght of wall:
-								{data ? data.project.floors[0].floor[0].height[0]._ : ''}
-							</Typography>
-						</ExpansionPanelDetails>
-					</ExpansionPanel>
-				</ExpansionPanel>
-				<Button variant="contained" color="primary">
-					Primary
-				</Button>
-				<ArchitectDialog />
+				{data
+					? data.floors.floor.map(floor => (
+							<ExpansionPanel>
+								<ExpansionPanelSummary
+									expandIcon={<ExpandMoreIcon />}
+									aria-controls="panel1a-content"
+									id="panel1a-header"
+								>
+									<Typography className={classes.heading}>{floor.name}</Typography>
+								</ExpansionPanelSummary>
+
+								{floor.area
+									? floor.area.map(area => (
+											<ExpansionPanel>
+												<ExpansionPanelSummary
+													expandIcon={<ExpandMoreIcon />}
+													aria-controls="panel1a-content"
+													id="panel1a-header"
+												>
+													<Typography className={classes.heading}>{area.name[0]}</Typography>
+												</ExpansionPanelSummary>
+												<ExpansionPanelDetails>
+													<Typography>Length : {area.point.length} M</Typography>
+												</ExpansionPanelDetails>
+												<ExpansionPanelDetails>
+													<Typography>Width : {area.point.width} M</Typography>
+												</ExpansionPanelDetails>
+												<ExpansionPanelDetails>
+													<Typography>Area : {area.point.area} SQM</Typography>
+												</ExpansionPanelDetails>
+											</ExpansionPanel>
+									  ))
+									: ''}
+								<ExpansionPanel>
+									<ExpansionPanelSummary
+										expandIcon={<ExpandMoreIcon />}
+										aria-controls="panel1a-content"
+										id="panel1a-header"
+									>
+										<Typography className={classes.heading}>Walls</Typography>
+									</ExpansionPanelSummary>
+
+									{floor.walls
+										? floor.walls.map((wall, i) => (
+												<ExpansionPanel>
+													<ExpansionPanelSummary
+														expandIcon={<ExpandMoreIcon />}
+														aria-controls="panel1a-content"
+														id="panel1a-header"
+													>
+														<Typography className={classes.heading}>
+															WAll {i + 1}
+														</Typography>
+													</ExpansionPanelSummary>
+													<ExpansionPanelDetails>
+														<Typography>Height : {wall.height} M</Typography>
+													</ExpansionPanelDetails>
+													<ExpansionPanelDetails>
+														<Typography>length : {wall.length} M</Typography>
+													</ExpansionPanelDetails>
+													<ExpansionPanelDetails>
+														<Typography>
+															Thickness : {parseFloat(wall.thickness).toFixed(2)} M
+														</Typography>
+													</ExpansionPanelDetails>
+													<ExpansionPanelDetails>
+														<Typography>
+															Area : {parseFloat(wall.height) * parseFloat(wall.length)}{' '}
+															SQM
+														</Typography>
+													</ExpansionPanelDetails>
+												</ExpansionPanel>
+										  ))
+										: ''}
+								</ExpansionPanel>
+								<ExpansionPanelDetails>
+									<Typography className={classes.heading}>
+										No. OF Windows : {floor.Objects.filter(item => item.name === 'window').length}
+									</Typography>
+								</ExpansionPanelDetails>
+								<ExpansionPanelDetails>
+									<Typography className={classes.heading}>
+										No. OF Doors : {floor.Objects.filter(item => item.name === 'door').length}
+									</Typography>
+								</ExpansionPanelDetails>
+							</ExpansionPanel>
+					  ))
+					: 'No data Available Yet '}
+				{data ? <ArchitectDialog /> : ''}
 			</FuseScrollbars>
 		</Drawer>
 	);

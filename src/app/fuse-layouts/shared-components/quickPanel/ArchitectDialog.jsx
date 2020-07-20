@@ -7,76 +7,106 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Architect from '../../../main/pages/arrchitect/architect';
 
-const styles = (theme) => ({
-    root: {
-        margin: 0,
-        padding: theme.spacing(2),
-    },
-    closeButton: {
-        position: 'absolute',
-        right: theme.spacing(1),
-        top: theme.spacing(1),
-        color: theme.palette.grey[500],
-    },
+const styles = theme => ({
+	root: {
+		margin: 0,
+		padding: theme.spacing(2)
+	},
+	closeButton: {
+		position: 'absolute',
+		right: theme.spacing(1),
+		top: theme.spacing(1),
+		color: theme.palette.grey[500]
+	}
 });
-const DialogTitle = withStyles(styles)((props) => {
-    const { children, classes, onClose, ...other } = props;
-    return (
-        <MuiDialogTitle disableTypography className={classes.root} {...other}>
-            <Typography variant="h6">{children}</Typography>
-            {onClose ? (
-                <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-                    <CloseIcon />
-                </IconButton>
-            ) : null}
-        </MuiDialogTitle>
-    );
+const DialogTitle = withStyles(styles)(props => {
+	const { children, classes, onClose, ...other } = props;
+	return (
+		<MuiDialogTitle disableTypography className={classes.root} {...other}>
+			<Typography variant="h6">{children}</Typography>
+			{onClose ? (
+				<IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+					<CloseIcon />
+				</IconButton>
+			) : null}
+		</MuiDialogTitle>
+	);
 });
 
-const DialogContent = withStyles((theme) => ({
-    root: {
-        padding: theme.spacing(2),
-    },
+const DialogContent = withStyles(theme => ({
+	root: {
+		padding: theme.spacing(2)
+	}
 }))(MuiDialogContent);
 
-const DialogActions = withStyles((theme) => ({
-    root: {
-        margin: 0,
-        padding: theme.spacing(1),
-    },
+const DialogActions = withStyles(theme => ({
+	root: {
+		margin: 0,
+		padding: theme.spacing(1)
+	}
 }))(MuiDialogActions);
 
 export default function ArchitectDialog() {
-    const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = React.useState(false);
+	const Projectdata = useSelector(({ quickPanel }) => quickPanel.data);
+	const UserData = useSelector(({ auth }) => auth.user);
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+	const handleClose = () => {
+		Axios.get('http://localhost:3001/project/')
+			.then(resp => {
+				let filteredArray = resp.data.filter(item => {
+					return parseInt(item.id) === parseInt(Projectdata.id);
+				});
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+				if (filteredArray.length > 0) {
+					Axios.put('http://localhost:3001/project/' + Projectdata.id, {
+						...filteredArray[0],
+						data: Projectdata
+					}).then(resp => {
+						console.log(resp);
+					});
+				} else {
+					Axios.post('http://localhost:3001/project/', {
+						id: Projectdata.id,
+						...UserData,
+						data: Projectdata
+					}).then(resp => {
+						console.log(resp);
+					});
+				}
+			})
+			.then(resp => {
+				console.log(resp);
+			});
+		console.log(Projectdata);
+		setOpen(false);
+	};
 
-    return (
-        <div>
-            <Button variant="contained" color="primary" onClick={handleClickOpen}>
-                Select Architect
-          </Button>
-            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} maxWidth="xl">
-                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Choose An Architect
-            </DialogTitle>
-                <DialogContent dividers>
-                    <Architect />
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
-                        Save changes
-          </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-    );
+	return (
+		<div>
+			<Button variant="contained" color="primary" onClick={handleClickOpen}>
+				Select Architect
+			</Button>
+			<Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} maxWidth="xl">
+				<DialogTitle id="customized-dialog-title" onClose={handleClose}>
+					Choose An Architect
+				</DialogTitle>
+				<DialogContent dividers>
+					<Architect />
+				</DialogContent>
+				<DialogActions>
+					<Button autoFocus onClick={handleClose} color="primary">
+						FINISH
+					</Button>
+				</DialogActions>
+			</Dialog>
+		</div>
+	);
 }

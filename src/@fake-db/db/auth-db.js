@@ -67,7 +67,7 @@ const authDB = {
 					layout: {
 						style: 'layout2',
 						config: {
-							mode: 'boxed',
+							// mode: 'boxed',
 							scroll: 'content',
 							navbar: {
 								display: true
@@ -77,7 +77,7 @@ const authDB = {
 								position: 'below'
 							},
 							footer: {
-								display: true,
+								display: false,
 								style: 'fixed'
 							}
 						}
