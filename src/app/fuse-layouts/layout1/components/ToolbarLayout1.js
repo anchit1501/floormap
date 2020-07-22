@@ -43,27 +43,27 @@ function ToolbarLayout1(props) {
 					)}
 
 					<div className="flex flex-1">
-						<Hidden mdDown>
+						{/* <Hidden mdDown>
 							<FuseShortcuts className="px-16" />
-						</Hidden>
+						</Hidden> */}
 					</div>
 
 					<div className="flex">
 						<UserMenu />
 
-						<div className={classes.separator} />
+						{/* <div className={classes.separator} /> */}
 
-						<FuseSearch />
+						{/* <FuseSearch /> */}
 
-						<Hidden lgUp>
+						{/* <Hidden lgUp>
 							<div className={classes.separator} />
 
 							<ChatPanelToggleButton />
-						</Hidden>
+						</Hidden> */}
 
-						<div className={classes.separator} />
+						{/* <div className={classes.separator} />
 
-						<LanguageSwitcher />
+						<LanguageSwitcher /> */}
 
 						<div className={classes.separator} />
 

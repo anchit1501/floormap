@@ -40,7 +40,7 @@ function Login() {
 
 				<FuseAnimate animation="transition.slideUpIn" delay={300}>
 					<Typography variant="h3" color="inherit" className="font-light">
-						Welcome to the FUSE!
+						Welcome to the FloorMap
 					</Typography>
 				</FuseAnimate>
 
@@ -54,12 +54,12 @@ function Login() {
 
 			<FuseAnimate animation={{ translateX: [0, '100%'] }}>
 				<Card className="w-full max-w-400 mx-auto m-16 md:m-0" square>
-					<CardContent className="flex flex-col items-center justify-center p-32 md:p-48 md:pt-128 ">
+					<CardContent className="flex flex-col mt-80 items-center justify-center p-32 md:p-48 md:pt-128 ">
 						<Typography variant="h6" className="text-center md:w-full mb-48">
 							LOGIN TO YOUR ACCOUNT
 						</Typography>
 
-						<Tabs
+						{/* <Tabs
 							value={selectedTab}
 							onChange={handleTabChange}
 							variant="fullWidth"
@@ -86,10 +86,12 @@ function Login() {
 								className="min-w-0"
 								label="Auth0"
 							/>
-						</Tabs>
+						</Tabs> */}
 
-						{selectedTab === 0 && <JWTLoginTab />}
-						{selectedTab === 1 && <FirebaseLoginTab />}
+						{/* {selectedTab === 0 && */}
+						<JWTLoginTab />
+						{/* } */}
+						{/* {selectedTab === 1 && <FirebaseLoginTab />}
 						{selectedTab === 2 && <Auth0LoginTab />}
 
 						<div className="flex flex-col items-center justify-center pt-32">
@@ -100,7 +102,7 @@ function Login() {
 							<Link className="font-medium mt-8" to="/">
 								Back to Dashboard
 							</Link>
-						</div>
+						</div> */}
 					</CardContent>
 				</Card>
 			</FuseAnimate>
