@@ -93,13 +93,13 @@ const navigationConfig = [
 			// 	icon: 'shopping_cart',
 			// 	url: '/apps/e-commerce',
 			// 	children: [
-			// 		// {
-			// 		// 	id: 'e-commerce-products',
-			// 		// 	title: 'Products',
-			// 		// 	type: 'item',
-			// 		// 	url: '/apps/e-commerce/products',
-			// 		// 	exact: true
-			// 		// },
+			// 		{
+			// 			id: 'e-commerce-products',
+			// 			title: 'Products',
+			// 			type: 'item',
+			// 			url: '/apps/e-commerce/products',
+			// 			exact: true
+			// 		},
 			// 		{
 			// 			id: 'e-commerce-product-detail',
 			// 			title: 'Product Detail',
@@ -114,13 +114,13 @@ const navigationConfig = [
 			// 			url: '/apps/e-commerce/products/new',
 			// 			exact: true
 			// 		},
-			// 		// {
-			// 		// 	id: 'e-commerce-orders',
-			// 		// 	title: 'Orders',
-			// 		// 	type: 'item',
-			// 		// 	url: '/apps/e-commerce/orders',
-			// 		// 	exact: true
-			// 		// },
+			// 		{
+			// 			id: 'e-commerce-orders',
+			// 			title: 'Orders',
+			// 			type: 'item',
+			// 			url: '/apps/e-commerce/orders',
+			// 			exact: true
+			// 		},
 			// 		{
 			// 			id: 'e-commerce-order-detail',
 			// 			title: 'Order Detail',
@@ -710,62 +710,66 @@ const navigationConfig = [
 	// 					url: '/documentation/working-with-fuse-react/ides-vscode-webstorm'
 	// 				}
 	// 			]
+	// 		}
+	// 	]
+	// },
+	// {
+	// 	id: 'authentication-doc',
+	// 	title: 'Authentication',
+	// 	type: 'collapse',
+	// 	icon: 'import_contacts',
+	// 	children: [
+	// 		{
+	// 			type: 'divider',
+	// 			id: 'divider-2'
 	// 		},
-	{
-		id: 'authentication-doc',
-		title: 'Authentication',
-		type: 'collapse',
-		icon: 'import_contacts',
-		children: [
-			{
-				type: 'divider',
-				id: 'divider-2'
-			},
-			{
-				id: 'authentication-doc',
-				title: 'Authentication',
-				type: 'collapse',
-				icon: 'import_contacts',
-				children: [
-					{
-						id: 'jwt-auth-doc',
-						title: 'JWT',
-						type: 'item',
-						url: '/documentation/authentication/jwt'
-					},
-					{
-						id: 'firebase-auth-doc',
-						title: 'Firebase',
-						type: 'item',
-						url: '/documentation/authentication/firebase'
-					},
-					{
-						id: 'auth0-auth-doc',
-						title: 'Auth0',
-						type: 'item',
-						url: '/documentation/authentication/auth0'
-					}
-				]
+	// 		{
+	// 			id: 'authentication-doc',
+	// 			title: 'Authentication',
+	// 			type: 'collapse',
+	// 			icon: 'import_contacts',
+	// 			children: [
+	// 				{
+	// 					id: 'jwt-auth-doc',
+	// 					title: 'JWT',
+	// 					type: 'item',
+	// 					url: '/documentation/authentication/jwt'
+	// 				},
+	// 				{
+	// 					id: 'firebase-auth-doc',
+	// 					title: 'Firebase',
+	// 					type: 'item',
+	// 					url: '/documentation/authentication/firebase'
+	// 				},
+	// 				{
+	// 					id: 'auth0-auth-doc',
+	// 					title: 'Auth0',
+	// 					type: 'item',
+	// 					url: '/documentation/authentication/auth0'
+	// 				}
+	// 			],
+	// 		},
+	// 		{
 
-				id: 'jwt-auth-doc',
-				title: 'JWT',
-				type: 'item',
-				url: '/documentation/authentication/jwt'
-			},
-			{
-				id: 'firebase-auth-doc',
-				title: 'Firebase',
-				type: 'item',
-				url: '/documentation/authentication/firebase'
-			},
-			{
-				id: 'auth0-auth-doc',
-				title: 'Auth0',
-				type: 'item',
-				url: '/documentation/authentication/auth0'
-			}
-		]
-	},
+	// 			id: 'jwt-auth-doc',
+	// 			title: 'JWT',
+	// 			type: 'item',
+	// 			url: '/documentation/authentication/jwt'
+	// 		},
+	// 		{
+	// 			id: 'firebase-auth-doc',
+	// 			title: 'Firebase',
+	// 			type: 'item',
+	// 			url: '/documentation/authentication/firebase'
+	// 		},
+	// 		{
+	// 			id: 'auth0-auth-doc',
+	// 			title: 'Auth0',
+	// 			type: 'item',
+	// 			url: '/documentation/authentication/auth0'
+	// 		}
+	// 	]
+	// },
 	// 		{
 	// 			id: 'fuse-components',
 	// 			title: 'Fuse Components',
@@ -865,143 +869,143 @@ const navigationConfig = [
 	// 				}
 	// 			]
 	// 		},
-	// 		{
-	// 			id: 'material-ui-components',
-	// 			title: 'Material UI Components',
-	// 			type: 'collapse',
-	// 			icon: 'layers',
-	// 			children: [...MaterialUIComponentsNavigation]
-	// 		},
 			{
-				id: '3rd-party-components',
-				title: '3rd Party Components',
+				id: 'material-ui-components',
+				title: 'Material UI Components',
 				type: 'collapse',
-				icon: 'settings_input_component',
-				children: [
-					{
-						id: 'datatables',
-						title: 'Datatables',
-						type: 'collapse',
-						children: [
-							{
-								id: 'react-table',
-								title: 'React Table',
-								type: 'item',
-								url: '/documentation/third-party-components/datatables/react-table'
-							}
-						]
-					},
-					{
-						id: 'formsy',
-						title: 'Formsy',
-						type: 'item',
-						url: '/documentation/third-party-components/formsy'
-					},
-					{
-						id: 'google-map-react',
-						title: 'Google Map React',
-						type: 'item',
-						url: '/documentation/third-party-components/google-map-react'
-					},
-					{
-						id: 'react-chartjs-2',
-						title: 'React ChartJs 2',
-						type: 'item',
-						url: '/documentation/third-party-components/react-chartjs-2'
-					}
-				]
+				icon: 'layers',
+				children: [...MaterialUIComponentsNavigation]
 			},
+			// {
+			// 	id: '3rd-party-components',
+			// 	title: '3rd Party Components',
+			// 	type: 'collapse',
+			// 	icon: 'settings_input_component',
+			// 	children: [
+			// 		{
+			// 			id: 'datatables',
+			// 			title: 'Datatables',
+			// 			type: 'collapse',
+			// 			children: [
+			// 				{
+			// 					id: 'react-table',
+			// 					title: 'React Table',
+			// 					type: 'item',
+			// 					url: '/documentation/third-party-components/datatables/react-table'
+			// 				}
+			// 			]
+			// 		},
+			// 		{
+			// 			id: 'formsy',
+			// 			title: 'Formsy',
+			// 			type: 'item',
+			// 			url: '/documentation/third-party-components/formsy'
+			// 		},
+			// 		{
+			// 			id: 'google-map-react',
+			// 			title: 'Google Map React',
+			// 			type: 'item',
+			// 			url: '/documentation/third-party-components/google-map-react'
+			// 		},
+			// 		{
+			// 			id: 'react-chartjs-2',
+			// 			title: 'React ChartJs 2',
+			// 			type: 'item',
+			// 			url: '/documentation/third-party-components/react-chartjs-2'
+			// 		}
+			// 	]
+			// },
 	// 	]
 	// },
-	{
-		type: 'divider',
-		id: 'divider-1'
-	},
-	{
-		id: 'auth',
-		title: 'Auth',
-		type: 'group',
-		icon: 'apps',
-		children: [
-			{
-				id: 'login',
-				title: 'Login',
-				type: 'item',
-				url: '/login',
-				auth: authRoles.onlyGuest,
-				icon: 'lock'
-			},
-			{
-				id: 'register',
-				title: 'Register',
-				type: 'item',
-				url: '/register',
-				auth: authRoles.onlyGuest,
-				icon: 'person_add'
-			},
-			{
-				id: 'logout',
-				title: 'Logout',
-				type: 'item',
-				auth: authRoles.user,
-				url: '/logout',
-				icon: 'exit_to_app'
-			},
-			{
-				id: 'auth-admin-example',
-				title: 'Admin: Auth protected page',
-				type: 'item',
-				url: '/auth/admin-role-example',
-				icon: 'security'
-			},
-			{
-				id: 'only-admin-navigation-item',
-				title: 'Nav item only for Admin',
-				type: 'item',
-				auth: authRoles.admin,
-				url: '/auth/admin-role-example',
-				icon: 'verified_user'
-			},
-			{
-				id: 'auth-staff-example',
-				title: 'Staff: Auth protected page',
-				type: 'item',
-				url: '/auth/staff-role-example',
-				icon: 'security'
-			},
-			{
-				id: 'only-staff-navigation-item',
-				title: 'Nav item only for Staff',
-				type: 'item',
-				auth: authRoles.staff,
-				url: '/auth/staff-role-example',
-				icon: 'verified_user'
-			},
-			{
-				id: 'only-staff-navigation-item',
-				title: 'Nav item only for Staff',
-				type: 'item',
-				auth: authRoles.staff,
-				url: '/apps/architect/projects',
-				icon: 'verified_user'
-			},
-			{
-				id: 'auth-guest-example',
-				title: 'Guest: Auth protected page',
-				type: 'item',
-				url: '/auth/guest-role-example',
-				icon: 'security'
-			},
-			{
-				id: 'only-guest-navigation-item',
-				title: 'Nav item only for Guest',
-				type: 'item',
-				auth: authRoles.onlyGuest,
-				url: '/auth/guest-role-example',
-				icon: 'verified_user'
-			}
-		]
-	}
+	// {
+	// 	type: 'divider',
+	// 	id: 'divider-1'
+	// },
+	// {
+	// 	id: 'auth',
+	// 	title: 'Auth',
+	// 	type: 'group',
+	// 	icon: 'apps',
+	// 	children: [
+	// 		{
+	// 			id: 'login',
+	// 			title: 'Login',
+	// 			type: 'item',
+	// 			url: '/login',
+	// 			auth: authRoles.onlyGuest,
+	// 			icon: 'lock'
+	// 		},
+	// 		{
+	// 			id: 'register',
+	// 			title: 'Register',
+	// 			type: 'item',
+	// 			url: '/register',
+	// 			auth: authRoles.onlyGuest,
+	// 			icon: 'person_add'
+	// 		},
+	// 		{
+	// 			id: 'logout',
+	// 			title: 'Logout',
+	// 			type: 'item',
+	// 			auth: authRoles.user,
+	// 			url: '/logout',
+	// 			icon: 'exit_to_app'
+	// 		},
+	// 		{
+	// 			id: 'auth-admin-example',
+	// 			title: 'Admin: Auth protected page',
+	// 			type: 'item',
+	// 			url: '/auth/admin-role-example',
+	// 			icon: 'security'
+	// 		},
+	// 		{
+	// 			id: 'only-admin-navigation-item',
+	// 			title: 'Nav item only for Admin',
+	// 			type: 'item',
+	// 			auth: authRoles.admin,
+	// 			url: '/auth/admin-role-example',
+	// 			icon: 'verified_user'
+	// 		},
+	// 		{
+	// 			id: 'auth-staff-example',
+	// 			title: 'Staff: Auth protected page',
+	// 			type: 'item',
+	// 			url: '/auth/staff-role-example',
+	// 			icon: 'security'
+	// 		},
+	// 		{
+	// 			id: 'only-staff-navigation-item',
+	// 			title: 'Nav item only for Staff',
+	// 			type: 'item',
+	// 			auth: authRoles.staff,
+	// 			url: '/auth/staff-role-example',
+	// 			icon: 'verified_user'
+	// 		},
+	// 		{
+	// 			id: 'only-staff-navigation-item',
+	// 			title: 'Nav item only for Staff',
+	// 			type: 'item',
+	// 			auth: authRoles.staff,
+	// 			url: '/apps/architect/projects',
+	// 			icon: 'verified_user'
+	// 		},
+	// 		{
+	// 			id: 'auth-guest-example',
+	// 			title: 'Guest: Auth protected page',
+	// 			type: 'item',
+	// 			url: '/auth/guest-role-example',
+	// 			icon: 'security'
+	// 		},
+	// 		{
+	// 			id: 'only-guest-navigation-item',
+	// 			title: 'Nav item only for Guest',
+	// 			type: 'item',
+	// 			auth: authRoles.onlyGuest,
+	// 			url: '/auth/guest-role-example',
+	// 			icon: 'verified_user'
+	// 		}
+	// 	]
+	// }
 	// {
 	// 	type: 'divider',
 	// 	id: 'divider-2'

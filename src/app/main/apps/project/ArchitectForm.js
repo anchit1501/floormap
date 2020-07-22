@@ -1,33 +1,37 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import FuseChipSelect from '@fuse/core/FuseChipSelect';
-import FuseLoading from '@fuse/core/FuseLoading';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import { useForm, useDeepCompareEffect } from '@fuse/hooks';
+import FuseLoading from '@fuse/core/FuseLoading';
+//import { useForm, useDeepCompareEffect } from '@fuse/hooks';
 import FuseUtils from '@fuse/utils';
-import _ from '@lodash';
+//import _ from '@lodash';
 import Button from '@material-ui/core/Button';
 import { orange } from '@material-ui/core/colors';
 import Icon from '@material-ui/core/Icon';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import withReducer from 'app/store/withReducer';
+//import withReducer from 'app/store/withReducer';
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState, useReducer } from 'react';
+//import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import * as Actions from '../e-commerce/store/actions';
-import reducer from '../e-commerce/store/reducers';
-import ProjectData from './ProjectData'
+//import * as Actions from '../e-commerce/store/actions';
+//import reducer from '../e-commerce/store/reducers';
 import MaUTable from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { useTable } from 'react-table';
+import printJS from 'print-js'
+import axios from 'axios';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 const EditableCell = ({
   value: initialValue,
   row: { index },
@@ -128,111 +132,203 @@ const useStyles = makeStyles(theme => ({
 		}
 	}
 }));
+const rows = [
+	{
+		id : 'Internal Plastering',
+	},
+	{
+		id : 'Internal Painting',
+	},
+	{
+		id : 'Ceramic Tiles Dry Areas',
+	},
+	{
+		id : 'Ceramic Tiles Wet Areas',
+	},
+	{
+		id : 'Staircase Work',
+	},
+	{
+		id : 'Marble Counter Tops',
+	},
+	{
+		id : 'Rolling Shutter Doors',
+	},
+	{
+		id : 'Wooden Doors',
+	},
+	{
+		id : 'Aluminuin Works',
+	},
+	{
+		id : 'Metal Works',
+	},
+	{
+		id : 'Sanitary Fixture',
+	},
+	{
+		id : 'Interlock Tiles',
+	}
+	
+]
 function ArchitectForm(props) {
-	const dispatch = useDispatch();
-	const product = useSelector(({ eCommerceApp }) => eCommerceApp.product);
-	const theme = useTheme();
-
+	
 	const classes = useStyles(props);
-	const [tabValue, setTabValue] = useState(0);
-	const { form, handleChange, setForm } = useForm(null);
-	const routeParams = useParams();
-	const tableData = [{id:1,name:'pooja'},{id:2, name:'aish'}]
-	const [data, setData] = useState(tableData)
+	
+	const [tableData, setTableData] = useState([])
+	const [column, setColumn] = useState([])
+	const [floorWiseImages, setFloorWiseImages] = useState([])
+	const [tabs, setTabs] = useState([])
+	const [tabValue, tabDisptacher] = useReducer(reducer, 0)
+	const [open, setOpen] = useState(false);
+	const [caption, setCaption] = useState('')
+	const [isCaptionSubmitted, setIsCaptionSubmitted] = useState(false)
+	const [file, setFile] = useState()
+	const [alertStatus, setAlertStatus] = useState(false)
 
-	const columns = React.useMemo(
-		() => [
-					{
-						Header: 'ID',
-						accessor: 'id'
-					},
-					{
-						Header: 'Name',
-						accessor: 'name',
-					}
-			])
+	const handleCaptionChange = (e) => {
+		setCaption(e.target.value)
+	}
+	const submitCaption = () => {
+		setIsCaptionSubmitted(!isCaptionSubmitted)
+		handleUploadChange(file)
+		handleClose()
+	}
+	const handleClickOpen = (e) => {
+		setOpen(true);
+		setFile(e.target.files[0])
+	};
+
+	const handleClose = () => {
+		setIsCaptionSubmitted(!isCaptionSubmitted)
+		setCaption('')
+	    setOpen(false);
+	};
+
+  	function reducer(state, action) {
+	  switch (action.type) {
+	    case 'setTabValue':
+	      return action.value;
+	    default:
+	      throw new Error();
+	  }
+	}
+  	const fillArray = (value, len) =>{
+				  var arr = [];
+				  for (var i = 0; i < len; i++) {
+				    arr.push(value);
+				  }
+				  return arr;
+	}
+	
+	useEffect(()=>{
+		(async () =>{
+			var matchId = props.id
+			fetch('http://localhost:3001/reports/')
+			.then(response=>response.json())
+			.then(response=>response.filter(res=>res.projectId===props.id))
+			.then(response=>{
+				//if reports for the project already exists
+				if(response.length>0){
+					//fetching report whose id is maximum - meaning the one which was entered last time 
+					let lastestReportId = (Math.max.apply(Math, response.map(function(o) { return o.id; })))
+					let report = response.filter(response=>response.id===lastestReportId)
+					const {floors, rows, columns, floorWiseImages } = report[0]
+					setTabs(floors)
+					setTableData(rows)
+					setColumn(columns)
+					setFloorWiseImages(floorWiseImages)
+				}
+				else{
+					fetch('http://localhost:3001/project/')
+					.then(response=>response.json())
+					.then(response=>response.filter(res=>res.id===matchId))
+					.then(res=>{
+						let floor = res[0].data.floors.floor
+						setTabs(floor.map(floor=>floor.name))
+					
+						let floorWiseData = []
+						for(var i=0; i<floor.length; i++){
+							let totalEntities = (floor[i].area)
+							let midResult = [{Header: '', accessor:'id'}]
+							totalEntities.map(entity=>{
+								midResult.push({
+									Header:entity.name[0],
+									accessor:entity.name[0]
+								})
+							})
+							floorWiseData.push(midResult)
+						}
+						
+						setTableData(fillArray(rows, floor.length))
+						setColumn(floorWiseData)
+						setFloorWiseImages(fillArray([], floor.length))
+					})
+				}
+			})
+
 			
+		})()
+		
+	},[])
+
 	const updateMyData = (rowIndex, columnId, value) => {
     // We also turn on the flag to not reset the page
-    setData(old =>
-      old.map((row, index) => {
-        if (index === rowIndex) {
-          return {
-            ...old[rowIndex],
-            [columnId]: value,
-          }
-        }
-        return row
-      })
-    )
-  }			
-	useDeepCompareEffect(() => {
-		function updateProductState() {
-			const { productId } = routeParams;
-
-			//if (productId === 'new') {
-				dispatch(Actions.newProduct());
-			// } else {
-			// 	dispatch(Actions.getProduct(routeParams));
-			// }
-		}
-
-		updateProductState();
-	}, [dispatch, routeParams]);
-
-	useEffect(() => {
-		if ((product.data && !form) || (product.data && form && product.data.id !== form.id)) {
-			setForm(product.data);
-		}
-	}, [form, product.data, setForm]);
-	console.log(ProjectData)
+	    setTableData(oldData =>{
+		    let old = oldData[tabValue]
+		     let newData = old.map((row, index) => {
+		     	if (index === rowIndex) {
+		      	  return {
+		            ...old[rowIndex],
+		            [columnId]: value,
+		          }
+		        }
+		        return row
+		      })
+		      oldData.splice(tabValue, 1, newData)
+		      return oldData
+	    })
+  	}
 
 	function handleChangeTab(event, value) {
-		setTabValue(value);
-	}
-
-	function handleChipChange(value, name) {
-		setForm(
-			_.set(
-				{ ...form },
-				name,
-				value.map(item => item.value)
-			)
-		);
-	}
-
-	function setFeaturedImage(id) {
-		setForm(_.set({ ...form }, 'featuredImageId', id));
+		event.preventDefault()
+		tabDisptacher({type: 'setTabValue', value:value})
 	}
 
 	function handleUploadChange(e) {
-		const file = e.target.files[0];
+		const file = e
+		//const file = e.target.files[0];
 		if (!file) {
 			return;
 		}
 		const reader = new FileReader();
 		reader.readAsBinaryString(file);
-
+		
 		reader.onload = () => {
-			setForm(
-				_.set({ ...form }, `images`, [
-					{
+					let newImageArray1 = [...floorWiseImages[tabValue], {
 						id: FuseUtils.generateGUID(),
 						url: `data:${file.type};base64,${btoa(reader.result)}`,
-						type: 'image'
-					},
-					...form.images
-				])
-			);
+						type: 'image',
+						caption:caption
+					}]
+			
+			setFloorWiseImages(old=>{
+				let newarr = old.map((old,index)=>{
+					if(index===tabValue){
+						return newImageArray1
+					}
+					else{
+						return old
+					}
+				})
+				return newarr
+			})
 		};
 
 		reader.onerror = () => {
 			console.log('error on load image');
+			alert('error loading image')
 		};
-	}
-
-	function canBeSubmitted() {
-		return form.name.length > 0 && !_.isEqual(product.data, form);
 	}
 
 	// if (
@@ -242,323 +338,139 @@ function ArchitectForm(props) {
 	// 	return <FuseLoading />;
 	// }
 	const getTabs = () => {
-		return ProjectData.floors.floor.map(floor=><Tab key={ProjectData.floors.floor.indexOf(floor)} className="h-64 normal-case" label={floor.name} />)
+		return tabs.map(floor=><Tab key={tabs.indexOf(floor)} className="h-64 normal-case" label={floor} />)
 	}
-	return (
-		<FusePageCarded
-			classes={{
-				toolbar: 'p-0',
-				header: 'min-h-72 h-72 sm:h-136 sm:min-h-136'
-			}}
-			header={
-				form && (
-					<div className="flex flex-1 w-full items-center justify-between">
-						<div className="flex flex-col items-start max-w-full">
-							
-						</div>
-						<FuseAnimate animation="transition.slideRightIn" delay={300}>
-							<Button
-								className="whitespace-no-wrap normal-case"
-								variant="contained"
-								color="secondary"
-								disabled={!canBeSubmitted()}
-								onClick={() => dispatch(Actions.saveProduct(form))}
-							>
-								Save
-							</Button>
-						</FuseAnimate>
-					</div>
-				)
-			}
-			contentToolbar={
-				<Tabs
-					value={tabValue}
-					onChange={handleChangeTab}
-					indicatorColor="primary"
-					textColor="primary"
-					variant="scrollable"
-					scrollButtons="auto"
-					classes={{ root: 'w-full h-64' }}
-				>
-					
-					{getTabs()}
-				</Tabs>
-			}
-			content={
-				form && (
-					<div className="p-16 sm:p-24 max-w-2xl">
-						{tabValue === 0 && (
-							<div>
-								<Table columns={columns} data={tableData} updateMyData={updateMyData}/>
-								<TextField
-									className="mt-8 mb-16"
-									error={form.name === ''}
-									required
-									label="Name"
-									autoFocus
-									id="name"
-									name="name"
-									value={form.name}
-									onChange={handleChange}
-									variant="outlined"
-									fullWidth
-								/>
-
-								<TextField
-									className="mt-8 mb-16"
-									id="description"
-									name="description"
-									onChange={handleChange}
-									label="Description"
-									type="text"
-									value={form.description}
-									multiline
-									rows={5}
-									variant="outlined"
-									fullWidth
-								/>
-
-								<FuseChipSelect
-									className="mt-8 mb-24"
-									value={form.categories.map(item => ({
-										value: item,
-										label: item
-									}))}
-									onChange={value => handleChipChange(value, 'categories')}
-									placeholder="Select multiple categories"
-									textFieldProps={{
-										label: 'Categories',
-										InputLabelProps: {
-											shrink: true
-										},
-										variant: 'outlined'
-									}}
-									isMulti
-								/>
-
-								<FuseChipSelect
-									className="mt-8 mb-16"
-									value={form.tags.map(item => ({
-										value: item,
-										label: item
-									}))}
-									onChange={value => handleChipChange(value, 'tags')}
-									placeholder="Select multiple tags"
-									textFieldProps={{
-										label: 'Tags',
-										InputLabelProps: {
-											shrink: true
-										},
-										variant: 'outlined'
-									}}
-									isMulti
-								/>
-							</div>
-						)}
-						{tabValue === 1 && (
-							<div>
-								<div className="flex justify-center sm:justify-start flex-wrap -mx-8">
-									<label
-										htmlFor="button-file"
+	const getTabWiseData = () => {
+		return(
+			<div>
+				<Table columns={column.length>0?column[tabValue]:[]} data={tableData!==undefined?tableData[tabValue]:[]} updateMyData={updateMyData}/>
+				<label> Images for {tabs[tabValue]} </label>
+				<div className="flex justify-center sm:justify-start flex-wrap -mx-8 py-32">
+					<label htmlFor="button-file" className={clsx(classes.productImageUpload, 'flex items-center justify-center relative w-128 h-128 rounded-4 mx-8 mb-16 overflow-hidden cursor-pointer shadow-1 hover:shadow-5')}>
+						<input accept="image/*" className="hidden" id="button-file" type="file" onChange={handleClickOpen} />
+							<Icon fontSize="large" color="action">
+								cloud_upload
+							</Icon>
+					</label>
+					{floorWiseImages.length>0 && floorWiseImages[tabValue].length>0 ?
+						 floorWiseImages[tabValue].map(media=>
+								<div key={media.id}>
+									<div
+										tabIndex={0}
 										className={clsx(
-											classes.productImageUpload,
-											'flex items-center justify-center relative w-128 h-128 rounded-4 mx-8 mb-16 overflow-hidden cursor-pointer shadow-1 hover:shadow-5'
+											classes.productImageItem,
+											'flex items-center justify-center relative w-128 h-128 rounded-4 mx-8 overflow-hidden cursor-pointer shadow-1 hover:shadow-5'
 										)}
+										
 									>
-										<input
-											accept="image/*"
-											className="hidden"
-											id="button-file"
-											type="file"
-											onChange={handleUploadChange}
-										/>
-										<Icon fontSize="large" color="action">
-											cloud_upload
-										</Icon>
-									</label>
-									{form.images.map(media => (
-										<div
-											onClick={() => setFeaturedImage(media.id)}
-											onKeyDown={() => setFeaturedImage(media.id)}
-											role="button"
-											tabIndex={0}
-											className={clsx(
-												classes.productImageItem,
-												'flex items-center justify-center relative w-128 h-128 rounded-4 mx-8 mb-16 overflow-hidden cursor-pointer shadow-1 hover:shadow-5',
-												media.id === form.featuredImageId && 'featured'
-											)}
-											key={media.id}
-										>
-											<Icon className={classes.productImageFeaturedStar}>star</Icon>
-											<img className="max-w-none w-auto h-full" src={media.url} alt="product" />
-										</div>
-									))}
+										<img className="max-w-none w-auto h-full" src={media.url} alt="product" />
+									</div>
+									<p className="w-128 mx-8 overflow-scroll">{media.caption}</p>
 								</div>
-							</div>
-						)}
-						{tabValue === 2 && (
-							<div>
-								<TextField
-									className="mt-8 mb-16"
-									label="Tax Excluded Price"
-									id="priceTaxExcl"
-									name="priceTaxExcl"
-									value={form.priceTaxExcl}
-									onChange={handleChange}
-									InputProps={{
-										startAdornment: <InputAdornment position="start">$</InputAdornment>
-									}}
-									type="number"
-									variant="outlined"
-									autoFocus
-									fullWidth
-								/>
-
-								<TextField
-									className="mt-8 mb-16"
-									label="Tax Included Price"
-									id="priceTaxIncl"
-									name="priceTaxIncl"
-									value={form.priceTaxIncl}
-									onChange={handleChange}
-									InputProps={{
-										startAdornment: <InputAdornment position="start">$</InputAdornment>
-									}}
-									type="number"
-									variant="outlined"
-									fullWidth
-								/>
-
-								<TextField
-									className="mt-8 mb-16"
-									label="Tax Rate"
-									id="taxRate"
-									name="taxRate"
-									value={form.taxRate}
-									onChange={handleChange}
-									InputProps={{
-										startAdornment: <InputAdornment position="start">$</InputAdornment>
-									}}
-									type="number"
-									variant="outlined"
-									fullWidth
-								/>
-
-								<TextField
-									className="mt-8 mb-16"
-									label="Compared Price"
-									id="comparedPrice"
-									name="comparedPrice"
-									value={form.comparedPrice}
-									onChange={handleChange}
-									InputProps={{
-										startAdornment: <InputAdornment position="start">$</InputAdornment>
-									}}
-									type="number"
-									variant="outlined"
-									fullWidth
-									helperText="Add a compare price to show next to the real price"
-								/>
-							</div>
-						)}
-						{tabValue === 3 && (
-							<div>
-								<TextField
-									className="mt-8 mb-16"
-									required
-									label="SKU"
-									autoFocus
-									id="sku"
-									name="sku"
-									value={form.sku}
-									onChange={handleChange}
-									variant="outlined"
-									fullWidth
-								/>
-
-								<TextField
-									className="mt-8 mb-16"
-									label="Quantity"
-									id="quantity"
-									name="quantity"
-									value={form.quantity}
-									onChange={handleChange}
-									variant="outlined"
-									type="number"
-									fullWidth
-								/>
-							</div>
-						)}
-						{tabValue === 4 && (
-							<div>
-								<div className="flex -mx-4">
-									<TextField
-										className="mt-8 mb-16 mx-4"
-										label="Width"
-										autoFocus
-										id="width"
-										name="width"
-										value={form.width}
-										onChange={handleChange}
-										variant="outlined"
-										fullWidth
-									/>
-
-									<TextField
-										className="mt-8 mb-16 mx-4"
-										label="Height"
-										id="height"
-										name="height"
-										value={form.height}
-										onChange={handleChange}
-										variant="outlined"
-										fullWidth
-									/>
-
-									<TextField
-										className="mt-8 mb-16 mx-4"
-										label="Depth"
-										id="depth"
-										name="depth"
-										value={form.depth}
-										onChange={handleChange}
-										variant="outlined"
-										fullWidth
-									/>
-								</div>
-
-								<TextField
-									className="mt-8 mb-16"
-									label="Weight"
-									id="weight"
-									name="weight"
-									value={form.weight}
-									onChange={handleChange}
-									variant="outlined"
-									fullWidth
-								/>
-
-								<TextField
-									className="mt-8 mb-16"
-									label="Extra Shipping Fee"
-									id="extraShippingFee"
-									name="extraShippingFee"
-									value={form.extraShippingFee}
-									onChange={handleChange}
-									variant="outlined"
-									InputProps={{
-										startAdornment: <InputAdornment position="start">$</InputAdornment>
-									}}
-									fullWidth
-								/>
-							</div>
-						)}
-					</div>
-				)
+							)
+						: undefined
+					} 
+				</div>
+			</div>
+		)
+	}
+	const handleSave = () => {
+		let opts = {projectId : props.id, floors : tabs, columns:column, rows:tableData, floorWiseImages : floorWiseImages, date:new Date()}
+		axios.post('http://localhost:3001/reports/ ', opts)
+		.then(response=>{
+			if(response.status===201){
+				setAlertStatus(true)
+				setTimeout(()=>{
+					props.handleClose()
+				},1000)
 			}
-			innerScroll
-		/>
+		})
+	}
+	if(tabs.length===0)
+		return <FuseLoading/>
+	return (
+		<div>
+			<Dialog open={alertStatus} onClose={handleClose} aria-labelledby="form-dialog-title">
+		        <DialogTitle id="form-dialog-title">Congrats !!!</DialogTitle>
+		        <DialogContent>
+		          	<DialogContentText>
+			            Report Updated Successfully !
+		          	</DialogContentText>
+			    </DialogContent>
+		    </Dialog>
+			<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+		        <DialogTitle id="form-dialog-title">Caption?</DialogTitle>
+		        <DialogContent>
+		          	<DialogContentText>
+			            Please enter caption. What is this image for? (E.g, Kitchen)
+		          	</DialogContentText>
+			          <TextField
+			            autoFocus
+			            margin="dense"
+			            id="name"
+			            label="Caption"
+			            type="caption"
+			            value={caption}
+			            fullWidth
+			            onChange={handleCaptionChange}
+			          />
+		        </DialogContent>
+		        <DialogActions>
+			          <Button onClick={handleClose} color="primary">
+			            Cancel
+			          </Button>
+			          <Button onClick={submitCaption} color="primary">
+			            Submit
+			          </Button>
+		        </DialogActions>
+		    </Dialog>
+			<FusePageCarded
+				classes={{
+					toolbar: 'p-0',
+					header: 'min-h-72 h-72 sm:h-136 sm:min-h-136'
+				}}
+				header={
+					(
+						<div className="flex flex-1 w-full items-center justify-center" style={{margin:'8%'}}>
+							
+							<FuseAnimate animation="transition.slideRightIn" delay={300}>
+								<Button
+									className="whitespace-no-wrap normal-case my-8"
+									variant="contained"
+									color="secondary"
+									onClick={handleSave}
+								>
+									save
+								</Button>
+							</FuseAnimate>
+						</div>
+					)
+				}
+				contentToolbar={
+					<Tabs
+						value={tabValue}
+						onChange={handleChangeTab}
+						indicatorColor="primary"
+						textColor="primary"
+						variant="scrollable"
+						scrollButtons="auto"
+						classes={{ root: 'w-full h-64' }}
+					>
+						
+						{getTabs()}
+					</Tabs>
+				}
+				content={
+					(
+						<div className="p-16 sm:p-24 max-w-2xl">
+							{getTabWiseData()}
+						</div>
+					)
+				}
+				innerScroll
+			/>
+		</div>
 	);
 }
 
-export default withReducer('eCommerceApp', reducer)(ArchitectForm);
+export default ArchitectForm;
