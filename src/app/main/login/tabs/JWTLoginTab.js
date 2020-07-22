@@ -47,7 +47,7 @@ function JWTLoginTab(props) {
 				onValid={enableButton}
 				onInvalid={disableButton}
 				ref={formRef}
-				className="flex flex-col justify-center w-full"
+				className="flex flex-col justify-center w-full mt-80"
 			>
 				<TextFieldFormsy
 					className="mb-16"
@@ -62,6 +62,7 @@ function JWTLoginTab(props) {
 						minLength: 'Min character length is 4'
 					}}
 					InputProps={{
+						className: 'pr-2 mb-32',
 						endAdornment: (
 							<InputAdornment position="end">
 								<Icon className="text-20" color="action">
@@ -87,7 +88,7 @@ function JWTLoginTab(props) {
 						minLength: 'Min character length is 4'
 					}}
 					InputProps={{
-						className: 'pr-2',
+						className: 'pr-2 mb-32',
 						type: showPassword ? 'text' : 'password',
 						endAdornment: (
 							<InputAdornment position="end">
@@ -107,7 +108,7 @@ function JWTLoginTab(props) {
 					type="submit"
 					variant="contained"
 					color="primary"
-					className="w-full mx-auto mt-16 normal-case"
+					className="w-full mx-auto mt-16 normal-case mt-40"
 					aria-label="LOG IN"
 					disabled={!isFormValid}
 					value="legacy"
@@ -116,7 +117,7 @@ function JWTLoginTab(props) {
 				</Button>
 			</Formsy>
 
-			<div className="flex flex-col items-center pt-24">
+			{/* <div className="flex flex-col items-center pt-24">
 				<Typography className="text-14 font-600 py-8">Credentials</Typography>
 
 				<Divider className="mb-16 w-256" />
@@ -166,7 +167,7 @@ function JWTLoginTab(props) {
 						</tr>
 					</tbody>
 				</table>
-			</div>
+			</div> */}
 		</div>
 	);
 }

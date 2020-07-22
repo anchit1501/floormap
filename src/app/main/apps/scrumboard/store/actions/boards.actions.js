@@ -5,6 +5,7 @@ import BoardModel from '../../model/BoardModel';
 export const GET_BOARDS = '[SCRUMBOARD APP] GET BOARDS';
 export const RESET_BOARDS = '[SCRUMBOARD APP] RESET BOARDS';
 export const NEW_BOARD = '[SCRUMBOARD APP] NEW BOARD';
+export const GET_PROJECTS = '[SCRUMBOARD APP] NEW BOARD';
 
 export function getBoards() {
 	const request1 = axios.get('https://floorplanner.com/api/v2/projects/search.json ', {
@@ -13,7 +14,7 @@ export function getBoards() {
 			password: 'EcbWyhc8.-Jg7@TFmqdqY2uHb'
 		}
 	});
-	request1.then(response=>console.log(response))
+	request1.then(response => console.log(response));
 	const request = axios.get('/api/scrumboard-app/boards');
 	return dispatch =>
 		request1.then(response =>

@@ -31,8 +31,8 @@ function UserMenu(props) {
 				{user.data.photoURL ? (
 					<Avatar className="" alt="user photo" src={user.data.photoURL} />
 				) : (
-					<Avatar className="">{user.data.displayName[0]}</Avatar>
-				)}
+						<Avatar className="">{user.data.displayName[0]}</Avatar>
+					)}
 
 				<div className="hidden md:flex flex-col mx-12 items-start">
 					<Typography component="span" className="normal-case font-600 flex">
@@ -80,8 +80,8 @@ function UserMenu(props) {
 						</MenuItem>
 					</>
 				) : (
-					<>
-						<MenuItem component={Link} to="/pages/profile" onClick={userMenuClose} role="button">
+						<>
+							{/* <MenuItem component={Link} to="/pages/profile" onClick={userMenuClose} role="button">
 							<ListItemIcon className="min-w-40">
 								<Icon>account_circle</Icon>
 							</ListItemIcon>
@@ -92,20 +92,20 @@ function UserMenu(props) {
 								<Icon>mail</Icon>
 							</ListItemIcon>
 							<ListItemText primary="Inbox" />
-						</MenuItem>
-						<MenuItem
-							onClick={() => {
-								dispatch(authActions.logoutUser());
-								userMenuClose();
-							}}
-						>
-							<ListItemIcon className="min-w-40">
-								<Icon>exit_to_app</Icon>
-							</ListItemIcon>
-							<ListItemText primary="Logout" />
-						</MenuItem>
-					</>
-				)}
+						</MenuItem> */}
+							<MenuItem
+								onClick={() => {
+									dispatch(authActions.logoutUser());
+									userMenuClose();
+								}}
+							>
+								<ListItemIcon className="min-w-40">
+									<Icon>exit_to_app</Icon>
+								</ListItemIcon>
+								<ListItemText primary="Logout" />
+							</MenuItem>
+						</>
+					)}
 			</Popover>
 		</>
 	);

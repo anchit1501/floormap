@@ -14,6 +14,8 @@ import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+// import Image from '/assets/images/kitchen.jpg';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -22,6 +24,15 @@ const useStyles = makeStyles(theme => ({
     },
     divider: {
         backgroundColor: theme.palette.divider
+    },
+    table: {
+        borderWidth: 2,
+        borderBottomWidth: 2,
+        borderColor: 'black'
+    },
+    image: {
+        width: '400px',
+        height: '300px'
     }
 }));
 const BorderLinearProgress = withStyles({
@@ -53,28 +64,7 @@ function Detailed() {
             });
     }, []);
 
-    // const calcTotal = (itemList = []) => {
-    //     let sum = 0
 
-    //     if (itemList.length < 1)
-    //         return null
-
-    //     itemList.forEach(function (value, index, arry) {
-
-    //         sum += parseFloat(value.total);
-
-    //     })
-
-    //     var tax = sum * 0.1
-    //     console.log('tot', sum, tax)
-    //     var subTotal = tax + sum
-
-    //     return ({
-    //         sum: sum,
-    //         tax: tax,
-    //         subTotal: subTotal
-    //     })
-    // }
     return (
         <div className={clsx(classes.root, 'flex-grow flex-shrink-0 p-0 sm:p-64 print:p-0')}>
             {invoice && (
@@ -89,7 +79,7 @@ function Detailed() {
                                             <tbody>
                                                 <tr>
                                                     <td className="pb-32">
-                                                        <Typography className="font-light" variant="h4" color="textSecondary">
+                                                        <Typography className="font-light" variant="h3" color="textSecondary">
                                                             PROGRESS REPORT
 												</Typography>
                                                         <Typography color="textSecondary">{invoice.client.title}</Typography>
@@ -122,7 +112,53 @@ function Detailed() {
                                     alt="logo"
                                 />
                             </div>
+                            <div className="mt-16 print:mt-0">
+                                <Table className="simple" className={classes.table}>
+                                    <TableBody>
+                                        <TableRow>
+                                            <TableCell align="right">Project :</TableCell>
+                                            <TableCell align="left">Alfareeda Residential</TableCell>
+                                            <TableCell align="right">Zone :</TableCell>
+                                            <TableCell align="left">Zone 1</TableCell>
+                                            <TableCell align="right">Plot # :</TableCell>
+                                            <TableCell align="left">0310</TableCell>
+                                        </TableRow>
+
+                                        <TableRow>
+                                            <TableCell align="right">Client :</TableCell>
+                                            <TableCell align="left">Alfareeda Residential</TableCell>
+                                            <TableCell align="right">Group # :</TableCell>
+                                            <TableCell align="left">GR-07</TableCell>
+                                            <TableCell align="right">BUA :</TableCell>
+                                            <TableCell align="left">1000 sqm</TableCell>
+                                        </TableRow>
+
+                                        <TableRow>
+                                            <TableCell align="right">Villa Code :</TableCell>
+                                            <TableCell align="left">21-Z1</TableCell>
+                                            <TableCell align="right">Sales Status :</TableCell>
+                                            <TableCell align="left">Sold</TableCell>
+                                            <TableCell align="right">Land Area :</TableCell>
+                                            <TableCell align="left">1200 sqm</TableCell>
+                                        </TableRow>
+
+
+                                        <TableRow>
+                                            <TableCell align="right">Contractor :</TableCell>
+                                            <TableCell align="left">GLobal 1</TableCell>
+                                            <TableCell align="right">Type :</TableCell>
+                                            <TableCell align="left">C1</TableCell>
+                                            <TableCell align="right">Style :</TableCell>
+                                            <TableCell align="left">Tunisian</TableCell>
+                                        </TableRow>
+
+                                    </TableBody>
+                                </Table>
+                            </div>
                             <div className="mt-96 print:mt-0">
+                                <Typography className="font-light" variant="h5" color="textSecondary">
+                                    {"  "}Room1
+								</Typography>
                                 <Table className="simple">
                                     <TableHead>
                                         <TableRow>
@@ -160,6 +196,26 @@ function Detailed() {
                                         ))}
                                     </TableBody>
                                 </Table>
+
+                            </div>
+                            <div className="mt-96 print:mt-0">
+                                <Typography className="font-light" variant="h5" color="textSecondary">
+                                    Comments
+								</Typography>
+                                <Box component="div" m={1} style={{ borderColor: 'black', borderWidth: 1, height: '120px' }}>
+                                    {/* <Button /> */}
+                                    {/* Comments */}
+                                </Box>
+                            </div>
+                            <div className="mt-80 print:mt-0">
+                                <Typography className="font-light" variant="h5" color="textSecondary">
+                                    Images
+								</Typography>
+                                <div className="mt-48 print:mt-0">
+                                    <img src="/assets/images/kitchen.jpg" alt="kitchen" className={classes.image} />
+                                    <img src="/assets/images/kitchen.jpg" alt="kitchen" className={classes.image} />
+                                    <img src="/assets/images/kitchen.jpg" alt="kitchen" className={classes.image} />
+                                </div>
 
                             </div>
 

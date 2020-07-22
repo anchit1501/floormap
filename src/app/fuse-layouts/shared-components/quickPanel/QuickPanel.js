@@ -68,11 +68,10 @@ function QuickPanel(props) {
 			anchor="right"
 			onClose={ev => {
 				dispatch(Actions.toggleQuickPanel());
-				dispatch(Actions.getQuickPanelData());
 			}}
 		>
 			<FuseScrollbars>
-				<ListSubheader component="div">{data ? data.name : ''}</ListSubheader>
+				<Typography className={classes.heading}>{data ? data.name + ',(' + data.Sum + ')USD' : ''}</Typography>
 				<Divider />
 				{data
 					? data.floors.floor.map(floor => (
@@ -86,14 +85,16 @@ function QuickPanel(props) {
 								</ExpansionPanelSummary>
 
 								{floor.area
-									? floor.area.map(area => (
+									? floor.area.map((area, i) => (
 											<ExpansionPanel>
 												<ExpansionPanelSummary
 													expandIcon={<ExpandMoreIcon />}
 													aria-controls="panel1a-content"
 													id="panel1a-header"
 												>
-													<Typography className={classes.heading}>{area.name[0]}</Typography>
+													<Typography className={classes.heading}>
+														{area.name ? area.name[0] : 'Area ' + (i + 1)}
+													</Typography>
 												</ExpansionPanelSummary>
 												<ExpansionPanelDetails>
 													<Typography>Length : {area.point.length} M</Typography>
@@ -102,7 +103,20 @@ function QuickPanel(props) {
 													<Typography>Width : {area.point.width} M</Typography>
 												</ExpansionPanelDetails>
 												<ExpansionPanelDetails>
-													<Typography>Area : {area.point.area} SQM</Typography>
+													<Typography>Area : {area.point.area.toFixed(2)} SQM</Typography>
+												</ExpansionPanelDetails>
+
+												<ExpansionPanelDetails>
+													<Typography>
+														{' '}
+														Material : {area.material ? area.material : 'Default'}{' '}
+													</Typography>
+												</ExpansionPanelDetails>
+
+												<ExpansionPanelDetails>
+													<Typography>
+														Amount : {(area.point.area * 15).toFixed(2)} USD
+													</Typography>
 												</ExpansionPanelDetails>
 											</ExpansionPanel>
 									  ))
@@ -125,7 +139,13 @@ function QuickPanel(props) {
 														id="panel1a-header"
 													>
 														<Typography className={classes.heading}>
-															WAll {i + 1}
+															WAll {i + 1} {', '}
+															{(
+																parseFloat(wall.height).toFixed(2) *
+																parseFloat(wall.length).toFixed(2) *
+																10
+															).toFixed(2)}{' '}
+															USD
 														</Typography>
 													</ExpansionPanelSummary>
 													<ExpansionPanelDetails>
@@ -141,8 +161,36 @@ function QuickPanel(props) {
 													</ExpansionPanelDetails>
 													<ExpansionPanelDetails>
 														<Typography>
-															Area : {parseFloat(wall.height) * parseFloat(wall.length)}{' '}
+															Area :{' '}
+															{(
+																parseFloat(wall.height) * parseFloat(wall.length)
+															).toFixed(2)}{' '}
 															SQM
+														</Typography>
+													</ExpansionPanelDetails>
+													{wall.left ? (
+														<ExpansionPanelDetails>
+															<Typography>Outer Material : {wall.left} </Typography>
+														</ExpansionPanelDetails>
+													) : (
+														''
+													)}
+													{wall.right ? (
+														<ExpansionPanelDetails>
+															<Typography>Inner Material : {wall.right} </Typography>
+														</ExpansionPanelDetails>
+													) : (
+														''
+													)}
+													<ExpansionPanelDetails>
+														<Typography>
+															Amount :{' '}
+															{(
+																parseFloat(wall.height).toFixed(2) *
+																parseFloat(wall.length).toFixed(2) *
+																10
+															).toFixed(2)}{' '}
+															USD
 														</Typography>
 													</ExpansionPanelDetails>
 												</ExpansionPanel>
@@ -161,7 +209,7 @@ function QuickPanel(props) {
 								</ExpansionPanelDetails>
 							</ExpansionPanel>
 					  ))
-					: 'No data Available Yet '}
+					: 'Loading... '}
 				{data ? <ArchitectDialog /> : ''}
 			</FuseScrollbars>
 		</Drawer>

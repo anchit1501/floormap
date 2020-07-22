@@ -12,6 +12,7 @@ export default class MapContainer extends Component {
 			area: 0
 		};
 	}
+
 	render() {
 		// const position = this.props.center;
 
@@ -106,7 +107,7 @@ export default class MapContainer extends Component {
 		};
 
 		const handleSelect = id => {
-			//   this.props.updateActiveSB(id);
+			localStorage.setItem('Plot', id);
 		};
 		if (size(this.props.data) < 1) return <p>hii</p>;
 
@@ -137,7 +138,7 @@ export default class MapContainer extends Component {
 							onMouseOut={e => {
 								e.target.closePopup();
 							}}
-							//   onclick={() => handleSelect(value.id)}
+							onclick={() => handleSelect(this.props.data[0].name + (index + 1))}
 						>
 							<Popup>
 								<div style={popupContent}></div>
