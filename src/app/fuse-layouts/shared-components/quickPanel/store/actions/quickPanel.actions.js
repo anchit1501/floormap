@@ -5,6 +5,7 @@ import history from '@history';
 export const TOGGLE_QUICK_PANEL = '[QUICK PANEL] TOGGLE QUICK PANEL';
 export const GET_QUICK_PANEL_DATA = '[QUICK PANEL] GET DATA';
 
+var TotalSum = 0;
 export function getQuickPanelData() {
 	if (window.fpEditor) {
 		const id = window.fpEditor.project.id;
@@ -21,14 +22,17 @@ export function getQuickPanelData() {
 			request.then(response => {
 				parser.parseString(response.data, function (err, result) {
 					fpData = result;
+					console.log(fpData);
 				});
+				TotalSum = 0;
 				var Obj = {
 					id: fpData.project.id[0]._,
 					name: fpData.project.name[0],
 					floors: {
 						TotalFloors: fpData.project.floors[0].floor.length,
 						floor: getFloor(fpData.project.floors[0].floor)
-					}
+					},
+					Sum: TotalSum
 				};
 				dispatch({
 					type: GET_QUICK_PANEL_DATA,
@@ -36,7 +40,6 @@ export function getQuickPanelData() {
 				});
 			});
 	} else {
-		console.log('xyz');
 		return dispatch =>
 			dispatch({
 				type: GET_QUICK_PANEL_DATA,
@@ -60,9 +63,15 @@ function getFloor(val) {
 
 function getAreas(val) {
 	let tempArr = [];
+	console.log(val);
 	val.map(item => {
 		if (item.points[0].split(',').length === 4) {
-			tempArr.push({ name: item.name, point: getArea(item.points[0]) });
+			tempArr.push({
+				name: item.name,
+				point: getArea(item.points[0]),
+				material: item.asset ? item.asset[0].$.refid : null
+			});
+			TotalSum = TotalSum + (getArea(item.points[0]).area ? getArea(item.points[0]).area.toFixed(2) * 15 : 0);
 		}
 	});
 	return tempArr;
@@ -74,8 +83,14 @@ function getwalls(val) {
 	val1.map(item => {
 		tempArr.push({
 			thickness: item.thickness[0],
-			height: val.height[0]._
+			height: val.height[0]._,
+			length: getlength(item.points[0].split(',')[0]),
+			left: item.left ? item.left[0].$.refid : null,
+			right: item.right ? item.right[0].$.refid : null
 		});
+		TotalSum =
+			TotalSum +
+			(parseFloat(val.height[0]._) * parseFloat(getlength(item.points[0].split(',')[0]))).toFixed(2) * 15;
 	});
 	return tempArr;
 }
@@ -92,17 +107,20 @@ function getlength(val) {
 
 function getObjects(val) {
 	let tempArr = [];
-	console.log(val);
+
 	val.map(item => {
-		tempArr.push({ name: item.type[0], area: item.points[0], size: item.size[0] });
+		console.log(item);
+		tempArr.push({
+			name: item.type ? item.type[0] : '',
+			area: item.points ? item.points[0] : '',
+			size: item.size ? item.size[0] : ''
+		});
 	});
 	return tempArr;
 }
 
 function getArea(val) {
-	console.log(val);
 	let temparr = val.split(',');
-	console.log(temparr);
 	let arr1 = temparr[0].split(' ');
 	let arr2 = temparr[1].split(' ');
 	let arr3 = temparr[2].split(' ');

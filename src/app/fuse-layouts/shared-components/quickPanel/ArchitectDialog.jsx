@@ -1,5 +1,7 @@
 import React from 'react';
+import history from '@history';
 import { withStyles } from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -7,10 +9,16 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import MuiAlert from '@material-ui/lab/Alert';
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Architect from '../../../main/pages/arrchitect/architect';
+import * as UserActions from '../../../auth/store/actions/index';
+
+function Alert(props) {
+	return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const styles = theme => ({
 	root: {
@@ -53,12 +61,14 @@ const DialogActions = withStyles(theme => ({
 
 export default function ArchitectDialog() {
 	const [open, setOpen] = React.useState(false);
+	const [sbopen, sbsetOpen] = React.useState(false);
 	const Projectdata = useSelector(({ quickPanel }) => quickPanel.data);
 	const UserData = useSelector(({ auth }) => auth.user);
+	const dispatch = useDispatch();
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
-	const handleClose = () => {
+	const submitData = () => {
 		Axios.get('http://localhost:3001/project/')
 			.then(resp => {
 				let filteredArray = resp.data.filter(item => {
@@ -68,17 +78,27 @@ export default function ArchitectDialog() {
 				if (filteredArray.length > 0) {
 					Axios.put('http://localhost:3001/project/' + Projectdata.id, {
 						...filteredArray[0],
-						data: Projectdata
+						data: Projectdata,
+						Completed: true
 					}).then(resp => {
+						dispatch(UserActions.setProjectsData());
 						console.log(resp);
+						history.push({
+							pathname: '/'
+						});
 					});
 				} else {
 					Axios.post('http://localhost:3001/project/', {
 						id: Projectdata.id,
 						...UserData,
-						data: Projectdata
+						data: Projectdata,
+						Completed: true
 					}).then(resp => {
+						dispatch(UserActions.setProjectsData());
 						console.log(resp);
+						history.push({
+							pathname: '/'
+						});
 					});
 				}
 			})
@@ -86,11 +106,28 @@ export default function ArchitectDialog() {
 				console.log(resp);
 			});
 		console.log(Projectdata);
+
+		handleClose();
+		handleClick();
+	};
+
+	const handleClose = () => {
 		setOpen(false);
 	};
 
+	const handleCloseAlert = () => {
+		sbsetOpen(false);
+	};
+	const handleClick = () => {
+		sbsetOpen(true);
+	};
 	return (
 		<div>
+			<Snackbar open={sbopen} autoHideDuration={6000}>
+				<Alert onClose={handleCloseAlert} severity="success">
+					Project Submitted Successfully
+				</Alert>
+			</Snackbar>
 			<Button variant="contained" color="primary" onClick={handleClickOpen}>
 				Select Architect
 			</Button>
@@ -102,8 +139,14 @@ export default function ArchitectDialog() {
 					<Architect />
 				</DialogContent>
 				<DialogActions>
-					<Button autoFocus onClick={handleClose} color="primary">
-						FINISH
+					<Button
+						autoFocus
+						onClick={() => {
+							submitData();
+						}}
+						color="secondary"
+					>
+						Submit Project
 					</Button>
 				</DialogActions>
 			</Dialog>

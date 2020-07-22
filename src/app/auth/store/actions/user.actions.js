@@ -6,9 +6,11 @@ import jwtService from 'app/services/jwtService';
 import * as MessageActions from 'app/store/actions/fuse/message.actions';
 import * as FuseActions from 'app/store/actions/fuse';
 import firebase from 'firebase/app';
+import axios from 'axios';
 
 export const SET_USER_DATA = '[USER] SET DATA';
 export const SET_PROJECT_ARCHITECT = '[USER] PROJECT ARCHITECT';
+export const SET_PROJECTS = '[USER] PROJECTS DATA';
 export const REMOVE_USER_DATA = '[USER] REMOVE DATA';
 export const USER_LOGGED_OUT = '[USER] LOGGED OUT';
 
@@ -102,8 +104,9 @@ export function setUserData(user) {
 		/*
         Set User Settings
          */
-		dispatch(FuseActions.setDefaultSettings(user.data.settings));
 
+		dispatch(FuseActions.setDefaultSettings(user.data.settings));
+		dispatch(setProjectsData());
 		/*
         Set User Data
          */
@@ -133,6 +136,18 @@ export function setProjectArchitect(val) {
 		type: SET_PROJECT_ARCHITECT,
 		payload: val
 	};
+}
+
+export function setProjectsData() {
+	const request = axios.get('http://localhost:3001/project/');
+
+	return dispatch =>
+		request.then(response =>
+			dispatch({
+				type: SET_PROJECTS,
+				payload: response.data
+			})
+		);
 }
 /**
  * Update User Shortcuts
