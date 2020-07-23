@@ -13,6 +13,7 @@ function QuickPanelToggleButton(props) {
 			onClick={ev => {
 				dispatch(quickPanelActions.getQuickPanelData());
 				dispatch(quickPanelActions.toggleQuickPanel());
+				dispatch(quickPanelActions.getExportData());
 			}}
 		>
 			{props.children}

@@ -4,6 +4,7 @@ import history from '@history';
 
 export const TOGGLE_QUICK_PANEL = '[QUICK PANEL] TOGGLE QUICK PANEL';
 export const GET_QUICK_PANEL_DATA = '[QUICK PANEL] GET DATA';
+export const IMAGE_IMPORT_DATA = '[QUICK PANEL] IMPORT DATA';
 
 var TotalSum = 0;
 export function getQuickPanelData() {
@@ -22,7 +23,6 @@ export function getQuickPanelData() {
 			request.then(response => {
 				parser.parseString(response.data, function (err, result) {
 					fpData = result;
-					console.log(fpData);
 				});
 				TotalSum = 0;
 				var Obj = {
@@ -63,7 +63,6 @@ function getFloor(val) {
 
 function getAreas(val) {
 	let tempArr = [];
-	console.log(val);
 	val.map(item => {
 		if (item.points[0].split(',').length === 4) {
 			tempArr.push({
@@ -142,6 +141,41 @@ function getArea(val) {
 	// val.map(item => {
 	// 	tempArr.push({ name: item.type[0], area: getAreas(), size: item.size[0] });
 	// });
+}
+
+export function getExportData() {
+	if (window.fpEditor) {
+		const id = window.fpEditor.project.id;
+		const request = axios.get('https://floorplanner.com/api/v2/exports.json', {
+			auth: {
+				username: '9d2dc53e34994a7ea8b16b4292dab6cbefcb4cf4',
+				password: 'EcbWyhc8.-Jg7@TFmqdqY2uHb'
+			}
+		});
+
+		return dispatch =>
+			request.then(response => {
+				const filteredArray = response.data.filter(item => item.project_id === id && item.fmt === 'jpg');
+
+				let ImageArray = [];
+				filteredArray.map(item => {
+					let x = item.result ? Object.values(item.result.design) : [];
+					x.map(item => {
+						ImageArray.push(item[0]);
+					});
+				});
+				dispatch({
+					type: IMAGE_IMPORT_DATA,
+					payload: ImageArray
+				});
+			});
+	} else {
+		return dispatch =>
+			dispatch({
+				type: IMAGE_IMPORT_DATA,
+				payload: null
+			});
+	}
 }
 export function toggleQuickPanel() {
 	return {

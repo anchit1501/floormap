@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { createBrowserHistory } from 'history';
 import Axios from 'axios';
+import FuseLoading from '@fuse/core/FuseLoading';
 
 const hist = createBrowserHistory();
 function Error404Page(props) {
@@ -54,7 +55,10 @@ function Error404Page(props) {
 	}, []);
 	return (
 		<div className="flex flex-col flex-1 items-center justify-center p-16">
-			<div id="fp-editor-container" style={{ width: '100%', height: '100%', marginTop: '64px' }}></div>
+			<FuseLoading />
+			<div id="fp-editor-container" style={{ width: '100%', height: '100%', marginTop: '64px' }}>
+				Loading....
+			</div>
 		</div>
 	);
 }

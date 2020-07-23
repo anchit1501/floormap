@@ -33,11 +33,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function QuickPanel(props) {
-	console.log(props);
 	const dispatch = useDispatch();
 	const data = useSelector(({ quickPanel }) => quickPanel.data);
 	const state = useSelector(({ quickPanel }) => quickPanel.state);
-	console.log(data);
+	const imageArray = useSelector(({ quickPanel }) => quickPanel.importData);
+	console.log(imageArray);
 	const classes = useStyles();
 	const [checked, setChecked] = useState('notifications');
 	// const noOfWindows = data
@@ -70,68 +70,24 @@ function QuickPanel(props) {
 				dispatch(Actions.toggleQuickPanel());
 			}}
 		>
-			<FuseScrollbars>
-				<Typography className={classes.heading}>{data ? data.name + ',(' + data.Sum + ')USD' : ''}</Typography>
-				<Divider />
-				{data
-					? data.floors.floor.map(floor => (
-							<ExpansionPanel>
-								<ExpansionPanelSummary
-									expandIcon={<ExpandMoreIcon />}
-									aria-controls="panel1a-content"
-									id="panel1a-header"
-								>
-									<Typography className={classes.heading}>{floor.name}</Typography>
-								</ExpansionPanelSummary>
-
-								{floor.area
-									? floor.area.map((area, i) => (
-											<ExpansionPanel>
-												<ExpansionPanelSummary
-													expandIcon={<ExpandMoreIcon />}
-													aria-controls="panel1a-content"
-													id="panel1a-header"
-												>
-													<Typography className={classes.heading}>
-														{area.name ? area.name[0] : 'Area ' + (i + 1)}
-													</Typography>
-												</ExpansionPanelSummary>
-												<ExpansionPanelDetails>
-													<Typography>Length : {area.point.length} M</Typography>
-												</ExpansionPanelDetails>
-												<ExpansionPanelDetails>
-													<Typography>Width : {area.point.width} M</Typography>
-												</ExpansionPanelDetails>
-												<ExpansionPanelDetails>
-													<Typography>Area : {area.point.area.toFixed(2)} SQM</Typography>
-												</ExpansionPanelDetails>
-
-												<ExpansionPanelDetails>
-													<Typography>
-														{' '}
-														Material : {area.material ? area.material : 'Default'}{' '}
-													</Typography>
-												</ExpansionPanelDetails>
-
-												<ExpansionPanelDetails>
-													<Typography>
-														Amount : {(area.point.area * 15).toFixed(2)} USD
-													</Typography>
-												</ExpansionPanelDetails>
-											</ExpansionPanel>
-									  ))
-									: ''}
+			{window.fpEditor ? (
+				<FuseScrollbars>
+					<Typography className={classes.heading}>
+						{data ? data.name + ',(' + data.Sum.toFixed(2) + ')USD' : ''}
+					</Typography>
+					<Divider />
+					{data
+						? data.floors.floor.map(floor => (
 								<ExpansionPanel>
 									<ExpansionPanelSummary
 										expandIcon={<ExpandMoreIcon />}
 										aria-controls="panel1a-content"
 										id="panel1a-header"
 									>
-										<Typography className={classes.heading}>Walls</Typography>
+										<Typography className={classes.heading}>{floor.name}</Typography>
 									</ExpansionPanelSummary>
-
-									{floor.walls
-										? floor.walls.map((wall, i) => (
+									{floor.area
+										? floor.area.map((area, i) => (
 												<ExpansionPanel>
 													<ExpansionPanelSummary
 														expandIcon={<ExpandMoreIcon />}
@@ -139,79 +95,151 @@ function QuickPanel(props) {
 														id="panel1a-header"
 													>
 														<Typography className={classes.heading}>
-															WAll {i + 1} {', '}
-															{(
-																parseFloat(wall.height).toFixed(2) *
-																parseFloat(wall.length).toFixed(2) *
-																10
-															).toFixed(2)}{' '}
-															USD
+															{area.name ? area.name[0] : 'Area ' + (i + 1)}
 														</Typography>
 													</ExpansionPanelSummary>
 													<ExpansionPanelDetails>
-														<Typography>Height : {wall.height} M</Typography>
+														<Typography>Length : {area.point.length} M</Typography>
 													</ExpansionPanelDetails>
 													<ExpansionPanelDetails>
-														<Typography>length : {wall.length} M</Typography>
+														<Typography>Width : {area.point.width} M</Typography>
 													</ExpansionPanelDetails>
+													<ExpansionPanelDetails>
+														<Typography>Area : {area.point.area.toFixed(2)} SQM</Typography>
+													</ExpansionPanelDetails>
+
 													<ExpansionPanelDetails>
 														<Typography>
-															Thickness : {parseFloat(wall.thickness).toFixed(2)} M
+															{' '}
+															Material : {area.material ? area.material : 'Default'}{' '}
 														</Typography>
 													</ExpansionPanelDetails>
+
 													<ExpansionPanelDetails>
 														<Typography>
-															Area :{' '}
-															{(
-																parseFloat(wall.height) * parseFloat(wall.length)
-															).toFixed(2)}{' '}
-															SQM
-														</Typography>
-													</ExpansionPanelDetails>
-													{wall.left ? (
-														<ExpansionPanelDetails>
-															<Typography>Outer Material : {wall.left} </Typography>
-														</ExpansionPanelDetails>
-													) : (
-														''
-													)}
-													{wall.right ? (
-														<ExpansionPanelDetails>
-															<Typography>Inner Material : {wall.right} </Typography>
-														</ExpansionPanelDetails>
-													) : (
-														''
-													)}
-													<ExpansionPanelDetails>
-														<Typography>
-															Amount :{' '}
-															{(
-																parseFloat(wall.height).toFixed(2) *
-																parseFloat(wall.length).toFixed(2) *
-																10
-															).toFixed(2)}{' '}
-															USD
+															Amount : {(area.point.area * 15).toFixed(2)} USD
 														</Typography>
 													</ExpansionPanelDetails>
 												</ExpansionPanel>
 										  ))
 										: ''}
+									<ExpansionPanel>
+										<ExpansionPanelSummary
+											expandIcon={<ExpandMoreIcon />}
+											aria-controls="panel1a-content"
+											id="panel1a-header"
+										>
+											<Typography className={classes.heading}>Walls</Typography>
+										</ExpansionPanelSummary>
+
+										{floor.walls
+											? floor.walls.map((wall, i) => (
+													<ExpansionPanel>
+														<ExpansionPanelSummary
+															expandIcon={<ExpandMoreIcon />}
+															aria-controls="panel1a-content"
+															id="panel1a-header"
+														>
+															<Typography className={classes.heading}>
+																WAll {i + 1} {', '}
+																{(
+																	parseFloat(wall.height).toFixed(2) *
+																	parseFloat(wall.length).toFixed(2) *
+																	10
+																).toFixed(2)}{' '}
+																USD
+															</Typography>
+														</ExpansionPanelSummary>
+														<ExpansionPanelDetails>
+															<Typography>Height : {wall.height} M</Typography>
+														</ExpansionPanelDetails>
+														<ExpansionPanelDetails>
+															<Typography>length : {wall.length} M</Typography>
+														</ExpansionPanelDetails>
+														<ExpansionPanelDetails>
+															<Typography>
+																Thickness : {parseFloat(wall.thickness).toFixed(2)} M
+															</Typography>
+														</ExpansionPanelDetails>
+														<ExpansionPanelDetails>
+															<Typography>
+																Area :{' '}
+																{(
+																	parseFloat(wall.height) * parseFloat(wall.length)
+																).toFixed(2)}{' '}
+																SQM
+															</Typography>
+														</ExpansionPanelDetails>
+														{wall.left ? (
+															<ExpansionPanelDetails>
+																<Typography>Outer Material : {wall.left} </Typography>
+															</ExpansionPanelDetails>
+														) : (
+															''
+														)}
+														{wall.right ? (
+															<ExpansionPanelDetails>
+																<Typography>Inner Material : {wall.right} </Typography>
+															</ExpansionPanelDetails>
+														) : (
+															''
+														)}
+														<ExpansionPanelDetails>
+															<Typography>
+																Amount :{' '}
+																{(
+																	parseFloat(wall.height).toFixed(2) *
+																	parseFloat(wall.length).toFixed(2) *
+																	10
+																).toFixed(2)}{' '}
+																USD
+															</Typography>
+														</ExpansionPanelDetails>
+													</ExpansionPanel>
+											  ))
+											: ''}
+									</ExpansionPanel>
+									<ExpansionPanelDetails>
+										<Typography className={classes.heading}>
+											No. OF Windows :{' '}
+											{floor.Objects.filter(item => item.name === 'window').length}
+										</Typography>
+									</ExpansionPanelDetails>
+									<ExpansionPanelDetails>
+										<Typography className={classes.heading}>
+											No. OF Doors : {floor.Objects.filter(item => item.name === 'door').length}
+										</Typography>
+									</ExpansionPanelDetails>
 								</ExpansionPanel>
-								<ExpansionPanelDetails>
-									<Typography className={classes.heading}>
-										No. OF Windows : {floor.Objects.filter(item => item.name === 'window').length}
-									</Typography>
-								</ExpansionPanelDetails>
-								<ExpansionPanelDetails>
-									<Typography className={classes.heading}>
-										No. OF Doors : {floor.Objects.filter(item => item.name === 'door').length}
-									</Typography>
-								</ExpansionPanelDetails>
-							</ExpansionPanel>
-					  ))
-					: 'Loading... '}
-				{data ? <ArchitectDialog /> : ''}
-			</FuseScrollbars>
+						  ))
+						: 'Loading... '}
+					{imageArray ? (
+						<ExpansionPanel>
+							<ExpansionPanelSummary
+								expandIcon={<ExpandMoreIcon />}
+								aria-controls="panel1a-content"
+								id="panel1a-header"
+							>
+								<Typography className={classes.heading}>Exported Images</Typography>
+							</ExpansionPanelSummary>
+							{imageArray
+								? imageArray.map((image, i) => (
+										<ExpansionPanelDetails>
+											<a href={image} target="_blank">
+												<Typography>Image {i + 1}</Typography>
+											</a>
+										</ExpansionPanelDetails>
+								  ))
+								: ''}
+						</ExpansionPanel>
+					) : (
+						''
+					)}
+					{data ? <ArchitectDialog /> : ''}
+				</FuseScrollbars>
+			) : (
+				'No Project Selected Yet'
+			)}
 		</Drawer>
 	);
 }

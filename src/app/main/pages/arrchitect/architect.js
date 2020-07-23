@@ -102,9 +102,10 @@ function Architect() {
 										/>
 										<CardContent>
 											<Typography variant="body2" color="textSecondary" component="p">
-												Lorem Ipsum is simply dummy text of the printing and typesetting
-												industry. Lorem Ipsum has been the industry's standard dummy text ever
-												since the 1500
+												Email :{value.email}
+											</Typography>
+											<Typography variant="body2" color="textSecondary" component="p">
+												Mobile :{value.address}
 											</Typography>
 										</CardContent>
 										<CardActions disableSpacing></CardActions>

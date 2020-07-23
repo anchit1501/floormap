@@ -109,6 +109,7 @@ export default function ArchitectDialog() {
 
 		handleClose();
 		handleClick();
+		// dispatch(Actions.toggleQuickPanel());
 	};
 
 	const handleClose = () => {
@@ -128,7 +129,12 @@ export default function ArchitectDialog() {
 					Project Submitted Successfully
 				</Alert>
 			</Snackbar>
-			<Button variant="contained" color="primary" onClick={handleClickOpen}>
+			<Button
+				variant="contained"
+				color="primary"
+				style={{ marginTop: '10vh', marginLeft: '1vw' }}
+				onClick={handleClickOpen}
+			>
 				Select Architect
 			</Button>
 			<Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} maxWidth="xl">

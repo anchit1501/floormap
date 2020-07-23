@@ -1,9 +1,11 @@
 import FuseSearch from '@fuse/core/FuseSearch';
+import history from '@history';
 import FuseShortcuts from '@fuse/core/FuseShortcuts';
 import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
 import ChatPanelToggleButton from 'app/fuse-layouts/shared-components/chatPanel/ChatPanelToggleButton';
 import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarMobileToggleButton';
 import QuickPanelToggleButton from 'app/fuse-layouts/shared-components/quickPanel/QuickPanelToggleButton';
@@ -48,6 +50,17 @@ function ToolbarLayout1(props) {
 						</Hidden> */}
 					</div>
 
+					<Button
+						autoFocus
+						onClick={() => {
+							history.push({
+								pathname: '/'
+							});
+						}}
+					>
+						Dashboard
+					</Button>
+					<div className={classes.separator} />
 					<div className="flex">
 						<UserMenu />
 
@@ -64,7 +77,6 @@ function ToolbarLayout1(props) {
 						{/* <div className={classes.separator} />
 
 						<LanguageSwitcher /> */}
-
 						<div className={classes.separator} />
 
 						<QuickPanelToggleButton />

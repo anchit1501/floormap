@@ -17,12 +17,14 @@ export function getBoards() {
 	request1.then(response => console.log(response));
 	const request = axios.get('/api/scrumboard-app/boards');
 	return dispatch =>
-		request1.then(response =>
+		request1.then(response => {
+			const filteredData = response.data.results.filter(item => item.id != 82114446);
+			console.log(filteredData);
 			dispatch({
 				type: GET_BOARDS,
-				payload: response.data.results
-			})
-		);
+				payload: filteredData
+			});
+		});
 }
 
 export function resetBoards() {

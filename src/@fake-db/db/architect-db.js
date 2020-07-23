@@ -290,51 +290,59 @@ const architect = {
 	about: [
 		{
 			id: 1,
-			first_name: 'Jessika',
-			last_name: 'Harriagn',
-			position: 'Assistant Media Planner',
-			avatar: 'http://dummyimage.com/201x104.png/5fa2dd/ffffff',
-			address: '40 Lawn Plaza'
+			first_name: 'Eng. Arafat ',
+			last_name: 'Farsani',
+			position: 'Tahalof Engineering Consultants Co.',
+			avatar:
+				'https://cdn.now.howstuffworks.com/media-content/0b7f4e9b-f59c-4024-9f06-b3dc12850ab7-1920-1080.jpg',
+			address: '966-56-2937029',
+			email: 'arafat@tahalof.com;info@tahalof.com'
 		},
 		{
 			id: 2,
-			first_name: 'Pietro',
-			last_name: 'Greatbach',
-			position: 'Human Resources',
-			avatar: 'http://dummyimage.com/168x213.png/cc0000/ffffff',
-			address: '42113 Golf View Terrace'
+			first_name: 'Mohammed',
+			last_name: 'Al-Sharief',
+			position: 'Dubai Center Engineering Consultant',
+			avatar:
+				'https://d25rq8gxcq0p71.cloudfront.net/dictionary-images/324/419665d2-74b7-49d4-b3c8-3aea253f966f.jpg',
+			address: '+966-555936611',
+			email: 'mohd@dubai.com.sa;majed@dubai.com.sa;arch.jed@dubai.com.sa;safety.jed@dubai.com.sa'
 		},
 		{
 			id: 3,
-			first_name: 'Rianon',
-			last_name: 'McGray',
-			position: 'Registered Nurse',
-			avatar: 'http://dummyimage.com/142x141.jpg/5fa2dd/ffffff',
-			address: '5972 Lien Pass'
+			first_name: 'Mr. Moath',
+			last_name: '',
+			position: 'Vision Dimension Engineering Consultancy',
+			avatar: 'https://image.shutterstock.com/image-photo/isolated-shot-young-handsome-male-260nw-762790210.jpg',
+			address: '966-568603766',
+			email: 'safety@vision-d2030.com;info@vision-d2030.com'
 		},
 		{
 			id: 4,
-			first_name: 'Elka',
-			last_name: 'McFarland',
-			position: 'Analyst Programmer',
-			avatar: 'http://dummyimage.com/238x195.bmp/ff4444/ffffff',
-			address: '53808 Holy Cross Place'
+			first_name: 'Eng. Muath',
+			last_name: 'Abdulrahman',
+			position: 'Al Hussain Safety Consultant',
+			avatar: 'https://image.shutterstock.com/image-photo/isolated-shot-young-handsome-male-260nw-762790210.jpg',
+			address: '+966-540448201,+966-539222188',
+			email: 'muath.jamal@hec.sa'
 		},
 		{
 			id: 5,
-			first_name: 'Michaeline',
-			last_name: 'Whiscard',
-			position: 'Tax Accountant',
-			avatar: 'http://dummyimage.com/101x201.png/dddddd/000000',
-			address: '31 Loomis Junction'
+			first_name: 'Eng. Samer',
+			last_name: ' Mahmod',
+			position: 'Ziyad Krishan Office for Consulting Engineering',
+			avatar: 'https://image.shutterstock.com/image-photo/isolated-shot-young-handsome-male-260nw-762790210.jpg',
+			address: '0503591511',
+			email: 'samermando@hotmail.com'
 		},
 		{
 			id: 6,
-			first_name: 'Daniella',
-			last_name: 'Van Hesteren',
-			position: 'Operator',
-			avatar: 'http://dummyimage.com/123x246.png/cc0000/ffffff',
-			address: '6851 Esch Trail'
+			first_name: 'Ragab Abdel',
+			last_name: 'Salam',
+			position: 'AZM Engineering Consultances',
+			avatar: 'https://image.shutterstock.com/image-photo/isolated-shot-young-handsome-male-260nw-762790210.jpg',
+			address: '054302584',
+			email: 'azm@saudieng.org'
 		}
 	]
 };

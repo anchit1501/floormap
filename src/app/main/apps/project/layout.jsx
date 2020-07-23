@@ -39,7 +39,7 @@ export default function LayoutCard() {
 		dispatch(ScrumBoardActions.setCurrentProject(val));
 	};
 
-	const arr = [81538917, 80813949];
+	const arr = [82114446];
 	return arr.map(value => (
 		<Grid key={value} item>
 			<Card
@@ -53,7 +53,7 @@ export default function LayoutCard() {
 					<CardMedia className={classes.media} image={Lay} title="Contemplative Reptile" />
 					<CardContent>
 						<Typography gutterBottom variant="h5" component="h2">
-							Layout
+							Rabwa Residential Community Layout
 						</Typography>
 						{/* <Typography variant="body2" color="textSecondary" component="p">
             Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
