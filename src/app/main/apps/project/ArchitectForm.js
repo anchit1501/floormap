@@ -185,6 +185,7 @@ function ArchitectForm(props) {
 	const [isCaptionSubmitted, setIsCaptionSubmitted] = useState(false)
 	const [file, setFile] = useState()
 	const [alertStatus, setAlertStatus] = useState(false)
+	const [comments, setComments] = useState([])
 
 	const handleCaptionChange = (e) => {
 		setCaption(e.target.value)
@@ -220,7 +221,16 @@ function ArchitectForm(props) {
 				  }
 				  return arr;
 	}
-	
+	const handleCommentChange = (e) => {
+		let newcomment = e.target.value
+		let newarr = comments.map((comment, index)=>{
+			if(index===tabValue)
+				return newcomment
+			else
+				return comment
+		})
+		setComments(newarr)
+	}
 	useEffect(()=>{
 		(async () =>{
 			var matchId = props.id
@@ -233,11 +243,12 @@ function ArchitectForm(props) {
 					//fetching report whose id is maximum - meaning the one which was entered last time 
 					let lastestReportId = (Math.max.apply(Math, response.map(function(o) { return o.id; })))
 					let report = response.filter(response=>response.id===lastestReportId)
-					const {floors, rows, columns, floorWiseImages } = report[0]
+					const {floors, rows, columns, floorWiseImages, comments } = report[0]
 					setTabs(floors)
 					setTableData(rows)
 					setColumn(columns)
 					setFloorWiseImages(floorWiseImages)
+					setComments(comments)
 				}
 				else{
 					fetch('http://localhost:3001/project/')
@@ -263,6 +274,7 @@ function ArchitectForm(props) {
 						setTableData(fillArray(rows, floor.length))
 						setColumn(floorWiseData)
 						setFloorWiseImages(fillArray([], floor.length))
+						setComments(fillArray([], floor.length))
 					})
 				}
 			})
@@ -344,6 +356,18 @@ function ArchitectForm(props) {
 		return(
 			<div>
 				<Table columns={column.length>0?column[tabValue]:[]} data={tableData!==undefined?tableData[tabValue]:[]} updateMyData={updateMyData}/>
+				<TextField
+					className="mt-8 mb-16"
+					name="description"
+					onChange={handleCommentChange}
+					label="Comments"
+					type="text"
+					value={comments[tabValue]}
+					multiline
+					rows={5}
+					variant="outlined"
+					fullWidth
+				/>
 				<label> Images for {tabs[tabValue]} </label>
 				<div className="flex justify-center sm:justify-start flex-wrap -mx-8 py-32">
 					<label htmlFor="button-file" className={clsx(classes.productImageUpload, 'flex items-center justify-center relative w-128 h-128 rounded-4 mx-8 mb-16 overflow-hidden cursor-pointer shadow-1 hover:shadow-5')}>
@@ -375,7 +399,7 @@ function ArchitectForm(props) {
 		)
 	}
 	const handleSave = () => {
-		let opts = {projectId : props.id, floors : tabs, columns:column, rows:tableData, floorWiseImages : floorWiseImages, date:new Date()}
+		let opts = {projectId : props.id, floors : tabs, columns:column, rows:tableData, floorWiseImages : floorWiseImages, comments : comments, date:new Date()}
 		axios.post('http://localhost:3001/reports/ ', opts)
 		.then(response=>{
 			if(response.status===201){

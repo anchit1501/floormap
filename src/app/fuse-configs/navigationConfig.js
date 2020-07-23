@@ -869,13 +869,13 @@ const navigationConfig = [
 	// 				}
 	// 			]
 	// 		},
-			{
-				id: 'material-ui-components',
-				title: 'Material UI Components',
-				type: 'collapse',
-				icon: 'layers',
-				children: [...MaterialUIComponentsNavigation]
-			},
+			// {
+			// 	id: 'material-ui-components',
+			// 	title: 'Material UI Components',
+			// 	type: 'collapse',
+			// 	icon: 'layers',
+			// 	children: [...MaterialUIComponentsNavigation]
+			// },
 			// {
 			// 	id: '3rd-party-components',
 			// 	title: '3rd Party Components',

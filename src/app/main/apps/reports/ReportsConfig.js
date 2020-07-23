@@ -8,8 +8,12 @@ const ReportAppConfig = {
     },
     routes: [
         {
-            path: '/apps/report',
+            path: '/apps/reports',
             component: React.lazy(() => import('./Report'))
+        },
+        {
+            path:'/apps/report/:id',
+            component: React.lazy(() => import('./DateWiseReport'))
         }
     ]
 };

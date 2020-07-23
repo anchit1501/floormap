@@ -15,8 +15,10 @@ import React, { useEffect, useState } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-
 // import Image from '/assets/images/kitchen.jpg';
+import { Link, useParams } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -46,19 +48,29 @@ const BorderLinearProgress = withStyles({
         backgroundColor: '#ff6c5c',
     },
 })(LinearProgress);
-function Detailed(props) {
+
+function DateWiseReport(props) {
     const classes = useStyles();
     const [invoice, setInvoice] = useState(null);
 
-    
+    const [floors, setFloors] = useState([])
+    const [columns, setColumns] = useState([])
+    const [rows, setRows] = useState([])
+    const [floorWiseImages, setFloorWiseImages] = useState([])
+    const [comments, setComments] = useState([])
+    const [projectId, setProjectId] = useState(0)
+    const [date, setDate] = useState(null)
 
+    const routeParams = useParams();
+    
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 2
     });
-    
+
     useEffect(() => {
+        console.log(routeParams)
         axios
             .get('/api/report/get-report', {
                 params: { id: '5725a6802d' }
@@ -66,9 +78,110 @@ function Detailed(props) {
             .then(res => {
                 setInvoice(res.data);
             });
+        axios
+            .get('http://localhost:3001/reports',{
+                params:{id:routeParams.id}
+            })
+            .then(res => {
+                if(res.data.length===0)
+                    alert('No such report id')
+                else{
+                    const {rows,columns,comments,floors,floorWiseImages,projectId,date}=res.data[0]
+                    setFloors(floors)
+                    setRows(rows)
+                    setColumns(columns)
+                    setComments(comments)
+                    setFloorWiseImages(floorWiseImages)
+                    setDate(date)
+                    setProjectId(projectId)
+                    console.log('all set')
+                }
+            });
     }, []);
 
+    const getInfo = () => {
 
+        if(rows.length===0 || rows===undefined || columns.length===0 || columns===undefined || floorWiseImages.length===0 || floorWiseImages===undefined || comments===undefined || comments.length===0)
+            return undefined
+        else
+        return floors.map((floor, index)=>{
+            return(
+                <div key={index}>
+                    <div className="mt-96 print:mt-0">
+                        <Typography className="font-light" variant="h5" color="textSecondary">
+                            Progress for {floor} 
+                        </Typography>
+                        <Table className="simple">
+                            <TableHead>
+                                <TableRow>
+                                    {columns[index].map(column=><TableCell key={column.Header}>{column.Header}</TableCell>)
+                                    }
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows[index].map((row,i) => (
+                                    <TableRow key={row.id}>
+                                        {
+                                            columns[index].map(column=>
+                                                <TableCell key={column.accessor}>
+                                                        {row[column.accessor]?row[column.accessor]:'-'}
+                                                </TableCell>
+                                            )
+                                        }
+                                        
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                    <div className="mt-96 print:mt-0">
+                        <Typography className="font-light" variant="h5" color="textSecondary">
+                            Comments of {floor} 
+                        </Typography>
+                        <div className="mt-16 print:mt-0">
+                            <TextField
+                                className="mt-8 mb-16"
+                                name="description"
+                                label="Comments"
+                                type="text"
+                                value={comments[index]}
+                                multiline
+                                rows={5}
+                                variant="outlined"
+                                fullWidth
+                                disabled
+                            />
+                        </div>
+                    </div>
+                    <div className="mt-96 print:mt-0">
+                        <Typography className="font-light" variant="h5" color="textSecondary">
+                            Images of {floor} 
+                        </Typography>
+                        <div className="flex justify-center sm:justify-start flex-wrap -mx-8 py-32">
+                
+                        {
+                            floorWiseImages[index].map(media=>
+                                <div key={media.id}>
+                                    <div
+                                        tabIndex={0}
+                                        className={clsx(
+                                            classes.productImageItem,
+                                            'flex items-center justify-center relative w-128 h-128 rounded-4 mx-8 overflow-hidden cursor-pointer shadow-1 hover:shadow-5'
+                                        )}
+                                        
+                                    >
+                                        <img className="max-w-none w-auto h-full" src={media.url} alt="product" />
+                                    </div>
+                                    <p className="w-128 mx-8 overflow-scroll">{media.caption}</p>
+                                </div>
+                            )
+                        } 
+                        </div>
+                    </div>
+                </div>
+            )
+        })
+    }
     return (
         <div className={clsx(classes.root, 'flex-grow flex-shrink-0 p-0 sm:p-64 print:p-0')}>
             {invoice && (
@@ -85,9 +198,10 @@ function Detailed(props) {
                                                     <td className="pb-32">
                                                         <Typography className="font-light" variant="h3" color="textSecondary">
                                                             PROGRESS REPORT
-                                                </Typography>
-                                                        <Typography color="textSecondary">{invoice.client.title}</Typography>
-
+												        </Typography>
+                                                        {invoice.client.title && (
+                                                            <Typography color="textSecondary">{invoice.client.title}</Typography>
+                                                        )}
                                                         {invoice.client.address && (
                                                             <Typography color="textSecondary">{invoice.client.address}</Typography>
                                                         )}
@@ -159,69 +273,10 @@ function Detailed(props) {
                                     </TableBody>
                                 </Table>
                             </div>
-                            <div className="mt-96 print:mt-0">
-                                <Typography className="font-light" variant="h5" color="textSecondary">
-                                    {"  "}Room1
-                                </Typography>
-                                <Table className="simple">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>ITENARY</TableCell>
-                                            <TableCell align="right">WORK COMPLETED</TableCell>
-                                            <TableCell align="right">WORK PLANNED</TableCell>
-                                            <TableCell align="right">START DATE</TableCell>
-                                            <TableCell align="right">FINISH DATE</TableCell>
-                                            {/* <TableCell align="right">TOTAL</TableCell> */}
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {invoice.services.map(service => (
-                                            <TableRow key={service.id}>
-                                                <TableCell>
-                                                    <Typography className="mb-8" variant="subtitle1">
-                                                        {service.title}
-                                                    </Typography>
-                                                    <Typography variant="caption" color="textSecondary">
-                                                        <BorderLinearProgress
-                                                            className={classes.margin}
-                                                            variant="determinate"
-                                                            color="secondary"
-                                                            value={service.unit}
-                                                        />
-                                                    </Typography>
-                                                </TableCell>
-                                                <TableCell align="right">{service.unit}%</TableCell>
-                                                <TableCell align="right">
-                                                    {service.planned}%
-                                                </TableCell>
-                                                <TableCell align="right">{service.started}</TableCell>
-                                                <TableCell align="right">{service.finish}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
+                                
+                                {getInfo()}
 
-                            </div>
-                            <div className="mt-96 print:mt-0">
-                                <Typography className="font-light" variant="h5" color="textSecondary">
-                                    Comments
-                                </Typography>
-                                <Box component="div" m={1} style={{ borderColor: 'black', borderWidth: 1, height: '120px' }}>
-                                    {/* <Button /> */}
-                                    {/* Comments */}
-                                </Box>
-                            </div>
-                            <div className="mt-80 print:mt-0">
-                                <Typography className="font-light" variant="h5" color="textSecondary">
-                                    Images
-                                </Typography>
-                                <div className="mt-48 print:mt-0">
-                                    <img src="/assets/images/kitchen.jpg" alt="kitchen" className={classes.image} />
-                                    <img src="/assets/images/kitchen.jpg" alt="kitchen" className={classes.image} />
-                                    <img src="/assets/images/kitchen.jpg" alt="kitchen" className={classes.image} />
-                                </div>
-
-                            </div>
+                            
 
 
                         </CardContent>
@@ -232,4 +287,4 @@ function Detailed(props) {
     );
 }
 
-export default Detailed;
+export default DateWiseReport;

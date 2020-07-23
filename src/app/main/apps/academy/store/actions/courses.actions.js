@@ -5,7 +5,7 @@ export const GET_CATEGORIES = '[ACADEMY APP] GET CATEGORIES';
 
 export function getCourses() {
 	const request = axios.get('/api/academy-app/courses');
-	const request1 = axios.get('http://localhost:3001/project/ ', {
+	const request1 = axios.get('http://localhost:3001/report/ ', {
 		auth: {
 			username: '9d2dc53e34994a7ea8b16b4292dab6cbefcb4cf4',
 			password: 'EcbWyhc8.-Jg7@TFmqdqY2uHb'
