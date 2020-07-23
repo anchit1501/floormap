@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import Architect from '../../../main/pages/arrchitect/architect';
 import * as UserActions from '../../../auth/store/actions/index';
+import * as QPActions from './store/actions/index';
 
 function Alert(props) {
 	return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -82,6 +83,7 @@ export default function ArchitectDialog() {
 						Completed: true
 					}).then(resp => {
 						dispatch(UserActions.setProjectsData());
+						dispatch(QPActions.toggleQuickPanel());
 						console.log(resp);
 						history.push({
 							pathname: '/'
@@ -95,6 +97,7 @@ export default function ArchitectDialog() {
 						Completed: true
 					}).then(resp => {
 						dispatch(UserActions.setProjectsData());
+						dispatch(QPActions.toggleQuickPanel());
 						console.log(resp);
 						history.push({
 							pathname: '/'

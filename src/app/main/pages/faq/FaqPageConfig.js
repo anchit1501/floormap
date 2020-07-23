@@ -8,7 +8,7 @@ const FaqPageConfig = {
 	},
 	routes: [
 		{
-			path: '/pages/faq',
+			path: '/app/reports/:id',
 			component: React.lazy(() => import('./FaqPage'))
 		}
 	]

@@ -108,7 +108,6 @@ function getObjects(val) {
 	let tempArr = [];
 
 	val.map(item => {
-		console.log(item);
 		tempArr.push({
 			name: item.type ? item.type[0] : '',
 			area: item.points ? item.points[0] : '',
@@ -155,15 +154,20 @@ export function getExportData() {
 
 		return dispatch =>
 			request.then(response => {
-				const filteredArray = response.data.filter(item => item.project_id === id && item.fmt === 'jpg');
-
+				console.log(response);
+				const filteredArray = response.data.filter(
+					item => parseInt(item.project_id) === parseInt(id) && item.fmt === 'jpg'
+				);
+				console.log(filteredArray);
 				let ImageArray = [];
 				filteredArray.map(item => {
-					let x = item.result ? Object.values(item.result.design) : [];
+					let timeStamp = item.created_at;
+					let x = item.result.design ? Object.values(item.result.design) : [];
 					x.map(item => {
-						ImageArray.push(item[0]);
+						ImageArray.push({ img: item[0], time: timeStamp });
 					});
 				});
+				console.log(ImageArray);
 				dispatch({
 					type: IMAGE_IMPORT_DATA,
 					payload: ImageArray

@@ -72,8 +72,8 @@ function QuickPanel(props) {
 		>
 			{window.fpEditor ? (
 				<FuseScrollbars>
-					<Typography className={classes.heading}>
-						{data ? data.name + ',(' + data.Sum.toFixed(2) + ')USD' : ''}
+					<Typography className={classes.heading} color="secondary">
+						{data ? data.name + ',(' + data.Sum.toFixed(4) + ')$' : ''}
 					</Typography>
 					<Divider />
 					{data
@@ -96,6 +96,9 @@ function QuickPanel(props) {
 													>
 														<Typography className={classes.heading}>
 															{area.name ? area.name[0] : 'Area ' + (i + 1)}
+															<Typography className={classes.heading} color="secondary">
+																{area.point.area.toFixed(4)}$
+															</Typography>
 														</Typography>
 													</ExpansionPanelSummary>
 													<ExpansionPanelDetails>
@@ -105,7 +108,7 @@ function QuickPanel(props) {
 														<Typography>Width : {area.point.width} M</Typography>
 													</ExpansionPanelDetails>
 													<ExpansionPanelDetails>
-														<Typography>Area : {area.point.area.toFixed(2)} SQM</Typography>
+														<Typography>Area : {area.point.area.toFixed(4)} SQM</Typography>
 													</ExpansionPanelDetails>
 
 													<ExpansionPanelDetails>
@@ -116,8 +119,8 @@ function QuickPanel(props) {
 													</ExpansionPanelDetails>
 
 													<ExpansionPanelDetails>
-														<Typography>
-															Amount : {(area.point.area * 15).toFixed(2)} USD
+														<Typography color="secondary">
+															Amount : {(area.point.area * 15).toFixed(4)} $
 														</Typography>
 													</ExpansionPanelDetails>
 												</ExpansionPanel>
@@ -142,12 +145,14 @@ function QuickPanel(props) {
 														>
 															<Typography className={classes.heading}>
 																WAll {i + 1} {', '}
+															</Typography>
+															<Typography className={classes.heading} color="secondary">
 																{(
-																	parseFloat(wall.height).toFixed(2) *
-																	parseFloat(wall.length).toFixed(2) *
+																	parseFloat(wall.height).toFixed(4) *
+																	parseFloat(wall.length).toFixed(4) *
 																	10
-																).toFixed(2)}{' '}
-																USD
+																).toFixed(4)}{' '}
+																$
 															</Typography>
 														</ExpansionPanelSummary>
 														<ExpansionPanelDetails>
@@ -158,7 +163,7 @@ function QuickPanel(props) {
 														</ExpansionPanelDetails>
 														<ExpansionPanelDetails>
 															<Typography>
-																Thickness : {parseFloat(wall.thickness).toFixed(2)} M
+																Thickness : {parseFloat(wall.thickness).toFixed(4)} M
 															</Typography>
 														</ExpansionPanelDetails>
 														<ExpansionPanelDetails>
@@ -166,7 +171,7 @@ function QuickPanel(props) {
 																Area :{' '}
 																{(
 																	parseFloat(wall.height) * parseFloat(wall.length)
-																).toFixed(2)}{' '}
+																).toFixed(4)}{' '}
 																SQM
 															</Typography>
 														</ExpansionPanelDetails>
@@ -188,11 +193,11 @@ function QuickPanel(props) {
 															<Typography>
 																Amount :{' '}
 																{(
-																	parseFloat(wall.height).toFixed(2) *
-																	parseFloat(wall.length).toFixed(2) *
+																	parseFloat(wall.height).toFixed(4) *
+																	parseFloat(wall.length).toFixed(4) *
 																	10
-																).toFixed(2)}{' '}
-																USD
+																).toFixed(4)}{' '}
+																$
 															</Typography>
 														</ExpansionPanelDetails>
 													</ExpansionPanel>
@@ -225,8 +230,8 @@ function QuickPanel(props) {
 							{imageArray
 								? imageArray.map((image, i) => (
 										<ExpansionPanelDetails>
-											<a href={image} target="_blank">
-												<Typography>Image {i + 1}</Typography>
+											<a href={image.img} target="_blank">
+												<Typography>{image.time}</Typography>
 											</a>
 										</ExpansionPanelDetails>
 								  ))

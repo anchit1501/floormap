@@ -15,6 +15,7 @@ function Error404Page(props) {
 			Axios.post('http://localhost:3001/project/', {
 				id: id,
 				plot: localStorage.getItem('Plot'),
+				city: localStorage.getItem('city'),
 				Completed: false
 			}).then(resp => {
 				console.log(resp);
@@ -54,9 +55,9 @@ function Error404Page(props) {
 		};
 	}, []);
 	return (
-		<div className="flex flex-col flex-1 items-center justify-center p-16">
+		<div className="flex flex-col flex-1 items-center justify-center ">
 			<FuseLoading />
-			<div id="fp-editor-container" style={{ width: '100%', height: '100%', marginTop: '64px' }}>
+			<div id="fp-editor-container" style={{ width: '100%', height: '100%', marginTop: '36px' }}>
 				Loading....
 			</div>
 		</div>

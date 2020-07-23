@@ -39,7 +39,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+	return <Slide direction="up" ref={ref} {...props} />;
 });
 const useStyles = makeStyles(theme => ({
 	header: {
@@ -77,9 +77,9 @@ function Courses(props) {
 	const [currentProject, setCurrentProject] = useState('');
 	const [showReportDialog, setShowReportDialog] = useState(false);
 
-	const handleOpen = (id,event) => {
-		event.preventDefault()
-		setCurrentProject(id)
+	const handleOpen = (id, event) => {
+		event.preventDefault();
+		setCurrentProject(id);
 		setOpen(true);
 	};
 
@@ -87,11 +87,11 @@ function Courses(props) {
 		setOpen(false);
 	};
 
-	const handleOpenReports=(id, event)=> {
+	const handleOpenReports = (id, event) => {
 		event.preventDefault();
-		setCurrentProject(id)
-		setShowReportDialog(true)
-	}
+		setCurrentProject(id);
+		setShowReportDialog(true);
+	};
 
 	const handleCloseReports = () => {
 		setShowReportDialog(false);
@@ -152,31 +152,31 @@ function Courses(props) {
 	return (
 		<div className="flex flex-col flex-auto flex-shrink-0 w-full">
 			<Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-		        <AppBar className={classes.appBar}>
-		         	<Toolbar className="flex justify-between">
-			            <Button edge="end" color="inherit">
-			              Project ID : {currentProject}
-			            </Button>
-			            <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
-			              <CloseIcon />
-			            </IconButton>
-			        </Toolbar>
-		        </AppBar>
-		        <ArchitectForm id={currentProject} handleClose={handleClose}/>
-		    </Dialog>
-		    <Dialog fullScreen open={showReportDialog} onClose={handleCloseReports} TransitionComponent={Transition}>
-		        <AppBar className={classes.appBar}>
-		         	<Toolbar className="flex justify-between">
-			            <Button edge="end" color="inherit">
-			              Project ID : {currentProject}
-			            </Button>
-			            <IconButton edge="end" color="inherit" onClick={handleCloseReports} aria-label="close">
-			              <CloseIcon />
-			            </IconButton>
-		          	</Toolbar>
-		        </AppBar>
-		        <ArchitectReportsList id={currentProject} />
-		    </Dialog>
+				<AppBar className={classes.appBar}>
+					<Toolbar className="flex justify-between">
+						<Button edge="end" color="inherit">
+							Project ID : {currentProject}
+						</Button>
+						<IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
+							<CloseIcon />
+						</IconButton>
+					</Toolbar>
+				</AppBar>
+				<ArchitectForm id={currentProject} handleClose={handleClose} />
+			</Dialog>
+			<Dialog fullScreen open={showReportDialog} onClose={handleCloseReports} TransitionComponent={Transition}>
+				<AppBar className={classes.appBar}>
+					<Toolbar className="flex justify-between">
+						<Button edge="end" color="inherit">
+							Project ID : {currentProject}
+						</Button>
+						<IconButton edge="end" color="inherit" onClick={handleCloseReports} aria-label="close">
+							<CloseIcon />
+						</IconButton>
+					</Toolbar>
+				</AppBar>
+				<ArchitectReportsList id={currentProject} />
+			</Dialog>
 			<div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24">
 				<div className="flex flex-col flex-shrink-0 sm:flex-row items-center justify-between py-24">
 					<TextField
@@ -245,23 +245,29 @@ function Courses(props) {
 													<div className="flex items-center justify-center opacity-75">
 														<div className="text-16 whitespace-no-wrap">
 															{category.label}
-															
 														</div>
 													</div>
 												</div>
-												<CardContent className="flex flex-col flex-auto items-center justify-center" style={{background:`url(${course.thumbnail_3d?course.thumbnail_3d:course.thumbnail})`, backgroundSize:'cover'}}>
-												</CardContent>
+												<CardContent
+													className="flex flex-col flex-auto items-center justify-center"
+													style={{
+														background: `url(${
+															course.thumbnail_3d ? course.thumbnail_3d : course.thumbnail
+														})`,
+														backgroundSize: 'cover'
+													}}
+												></CardContent>
 												<Divider />
 												<CardActions className="justify-center">
 													<Button
-														onClick={handleOpen.bind(this,course.id)}
+														onClick={handleOpen.bind(this, course.id)}
 														className="justify-start px-32"
 														color="secondary"
 													>
 														{buttonStatus(course)}
 													</Button>
 													<Button
-														onClick={handleOpenReports.bind(this,course.id)}
+														onClick={handleOpenReports.bind(this, course.id)}
 														className="justify-start px-32"
 														color="secondary"
 													>

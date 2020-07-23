@@ -108,6 +108,11 @@ export default class MapContainer extends Component {
 
 		const handleSelect = id => {
 			localStorage.setItem('Plot', id);
+			if (id.indexOf('Rabwa') >= 0) {
+				localStorage.setItem('city', 'Rabwa');
+			} else {
+				localStorage.setItem('city', 'Jeddah');
+			}
 		};
 		if (size(this.props.data) < 1) return <p>hii</p>;
 

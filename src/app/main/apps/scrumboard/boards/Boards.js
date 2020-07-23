@@ -114,7 +114,7 @@ function Boards(props) {
 						{boards.map(board => (
 							<div className="w-224 h-224 p-16" key={board.id}>
 								<Link
-									to={getredirectpage(board.id) ? '/apps/report' : `/project/${board.id}`}
+									to={getredirectpage(board.id) ? `/app/reports/${board.id}` : `/project/${board.id}`}
 									className={clsx(
 										classes.board,
 										'flex flex-col items-center justify-center w-full h-full rounded py-24'

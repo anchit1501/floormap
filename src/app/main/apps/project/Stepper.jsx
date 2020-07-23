@@ -200,7 +200,7 @@ export default function CustomizedSteppers() {
 								onClick={activeStep === steps.length - 1 ? handleRedirect : handleNext}
 								className={classes.button}
 							>
-								{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+								{activeStep === steps.length - 1 ? 'Go Ahead' : 'Next'}
 							</Button>
 						</div>
 					</div>
