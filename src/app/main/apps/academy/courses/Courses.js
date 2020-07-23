@@ -26,8 +26,21 @@ import reducer from '../store/reducers';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import ProjectSteppers from '../../project/ProjectStepper.jsx';
+import ArchitectForm from '../../project/ArchitectForm';
+import ArchitectReportsList from '../../project/ArchitectReportsList';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+import Dialog from '@material-ui/core/Dialog';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 const useStyles = makeStyles(theme => ({
 	header: {
 		background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
@@ -60,15 +73,30 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Courses(props) {
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
+	const [currentProject, setCurrentProject] = useState('');
+	const [showReportDialog, setShowReportDialog] = useState(false);
 
-	const handleOpen = () => {
+	const handleOpen = (id,event) => {
+		event.preventDefault()
+		setCurrentProject(id)
 		setOpen(true);
 	};
 
 	const handleClose = () => {
 		setOpen(false);
 	};
+
+	const handleOpenReports=(id, event)=> {
+		event.preventDefault();
+		setCurrentProject(id)
+		setShowReportDialog(true)
+	}
+
+	const handleCloseReports = () => {
+		setShowReportDialog(false);
+	};
+
 	const dispatch = useDispatch();
 	const courses = useSelector(({ academyApp }) => academyApp.courses.data);
 	const categories = useSelector(({ academyApp }) => academyApp.courses.categories);
@@ -94,7 +122,7 @@ function Courses(props) {
 				if (selectedCategory !== 'all' && item.status !== selectedCategory) {
 					return false;
 				}
-				return item.name.toLowerCase().includes(searchText.toLowerCase());
+				return item.data.name.toLowerCase().includes(searchText.toLowerCase());
 			});
 		}
 
@@ -123,44 +151,32 @@ function Courses(props) {
 	}
 	return (
 		<div className="flex flex-col flex-auto flex-shrink-0 w-full">
-			<Modal
-							aria-labelledby="transition-modal-title"
-							aria-describedby="transition-modal-description"
-							className={classes.modal}
-							open={open}
-							onClose={handleClose}
-							closeAfterTransition
-							BackdropComponent={Backdrop}
-							BackdropProps={{
-								timeout: 500
-							}}
-						>
-							<Fade in={open}>
-								<div className={classes.paper}>
-									<ProjectSteppers />
-								</div>
-							</Fade>
-						</Modal>
-			<div
-				className={clsx(
-					classes.header,
-					'relative overflow-hidden flex flex-col flex-shrink-0 items-center justify-center text-center p-16 sm:p-24 h-200 sm:h-288'
-				)}
-			>
-				<FuseAnimate animation="transition.slideUpIn" duration={400} delay={100}>
-					<Typography color="inherit" className="text-24 sm:text-40 font-light">
-						WELCOME TO YOUR WORLD OF ARCHITECTURE!
-					</Typography>
-				</FuseAnimate>
-				<FuseAnimate duration={400} delay={600}>
-					<Typography variant="subtitle1" color="inherit" className="mt-8 sm:mt-16 mx-auto max-w-512">
-						<span className="opacity-75">
-							The dashboard will help you through the process of tracking your new and existing projects. It also lets you track and update the progress of your projects.
-						</span>
-					</Typography>
-				</FuseAnimate>
-				<Icon className={classes.headerIcon}> school </Icon>
-			</div>
+			<Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+		        <AppBar className={classes.appBar}>
+		         	<Toolbar className="flex justify-between">
+			            <Button edge="end" color="inherit">
+			              Project ID : {currentProject}
+			            </Button>
+			            <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
+			              <CloseIcon />
+			            </IconButton>
+			        </Toolbar>
+		        </AppBar>
+		        <ArchitectForm id={currentProject} handleClose={handleClose}/>
+		    </Dialog>
+		    <Dialog fullScreen open={showReportDialog} onClose={handleCloseReports} TransitionComponent={Transition}>
+		        <AppBar className={classes.appBar}>
+		         	<Toolbar className="flex justify-between">
+			            <Button edge="end" color="inherit">
+			              Project ID : {currentProject}
+			            </Button>
+			            <IconButton edge="end" color="inherit" onClick={handleCloseReports} aria-label="close">
+			              <CloseIcon />
+			            </IconButton>
+		          	</Toolbar>
+		        </AppBar>
+		        <ArchitectReportsList id={currentProject} />
+		    </Dialog>
 			<div className="flex flex-col flex-1 max-w-2xl w-full mx-auto px-8 sm:px-16 py-24">
 				<div className="flex flex-col flex-shrink-0 sm:flex-row items-center justify-between py-24">
 					<TextField
@@ -224,7 +240,7 @@ function Courses(props) {
 													}}
 												>
 													<Typography className="font-medium truncate" color="inherit">
-														{course.name}
+														{course.data.name}
 													</Typography>
 													<div className="flex items-center justify-center opacity-75">
 														<div className="text-16 whitespace-no-wrap">
@@ -238,11 +254,18 @@ function Courses(props) {
 												<Divider />
 												<CardActions className="justify-center">
 													<Button
-														onClick={handleOpen}
+														onClick={handleOpen.bind(this,course.id)}
 														className="justify-start px-32"
 														color="secondary"
 													>
 														{buttonStatus(course)}
+													</Button>
+													<Button
+														onClick={handleOpenReports.bind(this,course.id)}
+														className="justify-start px-32"
+														color="secondary"
+													>
+														View Reports
 													</Button>
 												</CardActions>
 												<LinearProgress
