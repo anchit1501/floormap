@@ -5,7 +5,7 @@ export const GET_CATEGORIES = '[ACADEMY APP] GET CATEGORIES';
 
 export function getCourses() {
 	const request = axios.get('/api/academy-app/courses');
-	const request1 = axios.get('http://localhost:3001/report/ ', {
+	const request1 = axios.get('http://localhost:3001/project/ ', {
 		auth: {
 			username: '9d2dc53e34994a7ea8b16b4292dab6cbefcb4cf4',
 			password: 'EcbWyhc8.-Jg7@TFmqdqY2uHb'
@@ -17,7 +17,7 @@ export function getCourses() {
 	//var status = ["pending", "completed"];
 	//status[Math.floor(Math.random() * status.length)]
 	
-	request1.then(response=>response.data.map(response=>Object.assign(response,{activeStep:0, totalSteps:5, status:'pending'})))
+	request1.then(response=>response.data.filter(response=>response.Completed===true).map(response=>Object.assign(response,{activeStep:0, totalSteps:5, status:'pending', thumbnail_3d:"https://d2d960jkxzlx7n.cloudfront.net/thumbs/3d/eeb1bcde41ecec2da82cb4024aca5ff61be17e79.png"})))
 	
 	return dispatch =>
 		request1.then(response =>
