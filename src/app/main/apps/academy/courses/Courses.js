@@ -106,6 +106,7 @@ function Courses(props) {
 	const [filteredData, setFilteredData] = useState(null);
 	const [searchText, setSearchText] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState('all');
+	const [selectedCity, setSelectedCity] = useState('all');
 
 	useEffect(() => {
 		dispatch(Actions.getCategories());
@@ -114,13 +115,16 @@ function Courses(props) {
 
 	useEffect(() => {
 		function getFilteredArray() {
-			if (searchText.length === 0 && selectedCategory === 'all') {
+			if (searchText.length === 0 && selectedCategory === 'all' && selectedCity==='all') {
 				return courses;
 			}
 
 			return _.filter(courses, item => {
 				if (selectedCategory !== 'all' && item.status !== selectedCategory) {
 					return false;
+				}
+				if(selectedCity!=='all' && item.city!==selectedCity){
+					return false
 				}
 				return item.data.name.toLowerCase().includes(searchText.toLowerCase());
 			});
@@ -129,10 +133,13 @@ function Courses(props) {
 		if (courses) {
 			setFilteredData(getFilteredArray());
 		}
-	}, [courses, searchText, selectedCategory]);
+	}, [courses, searchText, selectedCategory, selectedCity]);
 
 	function handleSelectedCategory(event) {
 		setSelectedCategory(event.target.value);
+	}
+	function handleSelectedCity(event) {
+		setSelectedCity(event.target.value);
 	}
 
 	function handleSearchText(event) {
@@ -194,6 +201,31 @@ function Courses(props) {
 						}}
 					/>
 					<FormControl className="flex w-full sm:w-320 mx-16" variant="outlined">
+						<InputLabel htmlFor="category-label-placeholder"> City </InputLabel>
+						<Select
+							value={selectedCity}
+							onChange={handleSelectedCity}
+							input={
+								<OutlinedInput
+									labelWidth={'category'.length * 9}
+									name="category"
+									id="category-label-placeholder"
+								/>
+							}
+						>
+							<MenuItem value="all">
+								<em> All </em>
+							</MenuItem>
+							<MenuItem value='Riyadh'>
+									Riyadh
+							</MenuItem>
+							<MenuItem value='Jeddah'>
+									Jeddah
+							</MenuItem>
+							
+						</Select>
+					</FormControl>
+					<FormControl className="flex w-full sm:w-320 mx-16" variant="outlined">
 						<InputLabel htmlFor="category-label-placeholder"> Category </InputLabel>
 						<Select
 							value={selectedCategory}
@@ -240,7 +272,7 @@ function Courses(props) {
 													}}
 												>
 													<Typography className="font-medium truncate" color="inherit">
-														{course.data.name}
+														{course.data.name} ({course.city})
 													</Typography>
 													<div className="flex items-center justify-center opacity-75">
 														<div className="text-16 whitespace-no-wrap">
@@ -288,7 +320,7 @@ function Courses(props) {
 						) : (
 							<div className="flex flex-1 items-center justify-center">
 								<Typography color="textSecondary" className="text-24 my-24">
-									No courses found!
+									No projects found!
 								</Typography>
 							</div>
 						)),

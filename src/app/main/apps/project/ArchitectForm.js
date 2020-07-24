@@ -263,10 +263,19 @@ function ArchitectForm(props) {
 							let totalEntities = (floor[i].area)
 							let midResult = [{Header: '', accessor:'id'}]
 							totalEntities.map(entity=>{
-								midResult.push({
-									Header:entity.name[0],
-									accessor:entity.name[0]
-								})
+								if(entity.hasOwnProperty('name'))
+									midResult.push({
+										Header:entity.name[0],
+										accessor:entity.name[0]
+									})
+								else{
+									let accessor = `Floor${i}-Area${totalEntities.indexOf(entity)+1}`
+									let header = `Area${totalEntities.indexOf(entity)+1}`
+									midResult.push({
+										Header: header,
+										accessor: accessor
+									})
+								}
 							})
 							floorWiseData.push(midResult)
 						}
