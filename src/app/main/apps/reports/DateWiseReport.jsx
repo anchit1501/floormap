@@ -94,7 +94,6 @@ function DateWiseReport(props) {
                     setFloorWiseImages(floorWiseImages)
                     setDate(date)
                     setProjectId(projectId)
-                    console.log('all set')
                 }
             });
     }, []);
@@ -142,7 +141,6 @@ function DateWiseReport(props) {
                             <TextField
                                 className="mt-8 mb-16"
                                 name="description"
-                                label="Comments"
                                 type="text"
                                 value={comments[index]}
                                 multiline
@@ -160,6 +158,7 @@ function DateWiseReport(props) {
                         <div className="flex justify-center sm:justify-start flex-wrap -mx-8 py-32">
                 
                         {
+                            floorWiseImages[index].length>0?
                             floorWiseImages[index].map(media=>
                                 <div key={media.id}>
                                     <div
@@ -175,6 +174,10 @@ function DateWiseReport(props) {
                                     <p className="w-128 mx-8 overflow-scroll">{media.caption}</p>
                                 </div>
                             )
+                            : 
+                            <Typography className="font-light" color="textSecondary">
+                                No images have been uploaded by architect yet!!
+                            </Typography>
                         } 
                         </div>
                     </div>
