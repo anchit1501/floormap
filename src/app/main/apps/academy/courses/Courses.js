@@ -37,6 +37,7 @@ import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
+import axios from 'axios';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
@@ -76,7 +77,7 @@ function Courses(props) {
 	const [open, setOpen] = useState(false);
 	const [currentProject, setCurrentProject] = useState('');
 	const [showReportDialog, setShowReportDialog] = useState(false);
-
+	const [projects, setProjects] = useState([])
 	const handleOpen = (id, event) => {
 		event.preventDefault();
 		setCurrentProject(id);
@@ -98,7 +99,7 @@ function Courses(props) {
 	};
 
 	const dispatch = useDispatch();
-	const courses = useSelector(({ academyApp }) => academyApp.courses.data);
+	//const courses = useSelector(({ academyApp }) => academyApp.courses.data);
 	const categories = useSelector(({ academyApp }) => academyApp.courses.categories);
 
 	const classes = useStyles(props);
@@ -110,16 +111,22 @@ function Courses(props) {
 
 	useEffect(() => {
 		dispatch(Actions.getCategories());
-		dispatch(Actions.getCourses());
+		//dispatch(Actions.getCourses());
 	}, [dispatch]);
+
+	useEffect(()=>{
+		axios.get('http://localhost:3001/project/')
+		.then(response=>response.data.filter(response=>response.Completed===true).map(response=>Object.assign(response,{activeStep:0, totalSteps:5, status:'pending', thumbnail_3d:"https://d2d960jkxzlx7n.cloudfront.net/thumbs/3d/eeb1bcde41ecec2da82cb4024aca5ff61be17e79.png"})))
+		.then(response=>setProjects(response))
+	},[])
 
 	useEffect(() => {
 		function getFilteredArray() {
 			if (searchText.length === 0 && selectedCategory === 'all' && selectedCity==='all') {
-				return courses;
+				return projects;
 			}
 
-			return _.filter(courses, item => {
+			return _.filter(projects, item => {
 				if (selectedCategory !== 'all' && item.status !== selectedCategory) {
 					return false;
 				}
@@ -130,10 +137,10 @@ function Courses(props) {
 			});
 		}
 
-		if (courses) {
+		if (projects) {
 			setFilteredData(getFilteredArray());
 		}
-	}, [courses, searchText, selectedCategory, selectedCity]);
+	}, [projects, searchText, selectedCategory, selectedCity]);
 
 	function handleSelectedCategory(event) {
 		setSelectedCategory(event.target.value);
