@@ -44,7 +44,7 @@ function QuickPanel(props) {
 	// 	? data.project.floors[0].floor[0].designs[0].design[0].objects[0].object.filter(item => item.type === 'val')
 	// 			.length
 	// 	: '';
-	const handleToggle = value => () => {
+	const handleToggle = value => {
 		const currentIndex = checked.indexOf(value);
 		const newChecked = [...checked];
 
@@ -56,7 +56,21 @@ function QuickPanel(props) {
 
 		setChecked(newChecked);
 	};
+	const calculatesum = floor => {
+		console.log(floor);
+		let areaSum = 0;
+		let WallSum = 0;
+		floor.area.map(item => {
+			areaSum += item.point.area * 15;
+			return item;
+		});
 
+		floor.walls.map(item => {
+			WallSum += parseFloat(item.height) * 10 * parseFloat(item.length);
+			return item;
+		});
+		return (parseFloat(areaSum.toFixed(4)) + parseFloat(WallSum.toFixed(4))).toFixed(4);
+	};
 	useEffect(() => {
 		dispatch(Actions.getQuickPanelData());
 	}, [dispatch]);
@@ -84,7 +98,12 @@ function QuickPanel(props) {
 										aria-controls="panel1a-content"
 										id="panel1a-header"
 									>
-										<Typography className={classes.heading}>{floor.name}</Typography>
+										<Typography className={classes.heading}>
+											{floor.name}
+											<Typography className={classes.heading} color="secondary">
+												{calculatesum(floor)}$
+											</Typography>
+										</Typography>
 									</ExpansionPanelSummary>
 									{floor.area
 										? floor.area.map((area, i) => (
@@ -97,7 +116,7 @@ function QuickPanel(props) {
 														<Typography className={classes.heading}>
 															{area.name ? area.name[0] : 'Area ' + (i + 1)}
 															<Typography className={classes.heading} color="secondary">
-																{area.point.area.toFixed(4)}$
+																{(area.point.area * 15).toFixed(4)}$
 															</Typography>
 														</Typography>
 													</ExpansionPanelSummary>

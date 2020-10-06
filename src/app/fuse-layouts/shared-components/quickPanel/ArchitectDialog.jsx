@@ -86,7 +86,7 @@ export default function ArchitectDialog() {
 						dispatch(QPActions.toggleQuickPanel());
 						console.log(resp);
 						history.push({
-							pathname: '/'
+							pathname: '/apps/reports'
 						});
 					});
 				} else {
@@ -100,7 +100,7 @@ export default function ArchitectDialog() {
 						dispatch(QPActions.toggleQuickPanel());
 						console.log(resp);
 						history.push({
-							pathname: '/'
+							pathname: '/apps/reports'
 						});
 					});
 				}

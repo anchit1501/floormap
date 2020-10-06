@@ -89,7 +89,7 @@ function getwalls(val) {
 		});
 		TotalSum =
 			TotalSum +
-			(parseFloat(val.height[0]._) * parseFloat(getlength(item.points[0].split(',')[0]))).toFixed(2) * 15;
+			(parseFloat(val.height[0]._) * parseFloat(getlength(item.points[0].split(',')[0]))).toFixed(2) * 10;
 	});
 	return tempArr;
 }
@@ -122,7 +122,14 @@ function getArea(val) {
 	let arr1 = temparr[0].split(' ');
 	let arr2 = temparr[1].split(' ');
 	let arr3 = temparr[2].split(' ');
+
 	if (arr1[0] === arr2[0]) {
+		return {
+			length: getlength(temparr[0]),
+			width: getlength(temparr[1]),
+			area: parseFloat(getlength(temparr[0])) * parseFloat(getlength(temparr[1]))
+		};
+	} else if (arr1[0] === arr3[0]) {
 		return {
 			length: getlength(temparr[0]),
 			width: getlength(temparr[2]),
@@ -131,8 +138,8 @@ function getArea(val) {
 	} else {
 		return {
 			length: getlength(temparr[0]),
-			width: getlength(temparr[1]),
-			area: parseFloat(getlength(temparr[0])) * parseFloat(getlength(temparr[1]))
+			width: getlength(temparr[3]),
+			area: parseFloat(getlength(temparr[0])) * parseFloat(getlength(temparr[3]))
 		};
 	}
 	// return {};
@@ -162,7 +169,8 @@ export function getExportData() {
 				let ImageArray = [];
 				filteredArray.map(item => {
 					let timeStamp = item.created_at;
-					let x = item.result.design ? Object.values(item.result.design) : [];
+					console.log(item.result);
+					let x = item.result && item.result.design ? Object.values(item.result.design) : [];
 					x.map(item => {
 						ImageArray.push({ img: item[0], time: timeStamp });
 					});

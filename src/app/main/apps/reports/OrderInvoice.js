@@ -43,27 +43,24 @@ function OrderInvoice() {
 	}, []);
 
 	const calcTotal = (itemList = []) => {
-		let sum = 0
+		let sum = 0;
 
-		if (itemList.length < 1)
-			return null
+		if (itemList.length < 1) return null;
 
 		itemList.forEach(function (value, index, arry) {
-
 			sum += parseFloat(value.total);
+		});
 
-		})
+		var tax = sum * 0.1;
+		console.log('tot', sum, tax);
+		var subTotal = tax + sum;
 
-		var tax = sum * 0.1
-		console.log('tot', sum, tax)
-		var subTotal = tax + sum
-
-		return ({
+		return {
 			sum: sum,
 			tax: tax,
 			subTotal: subTotal
-		})
-	}
+		};
+	};
 	return (
 		<div className={clsx(classes.root, 'flex-grow flex-shrink-0 p-0 sm:p-64 print:p-0')}>
 			{invoice && (
@@ -83,9 +80,13 @@ function OrderInvoice() {
 											<tbody>
 												<tr>
 													<td className="pb-32">
-														<Typography className="font-light" variant="h4" color="textSecondary">
-															Report
-												</Typography>
+														<Typography
+															className="font-light"
+															variant="h4"
+															color="textSecondary"
+														>
+															Invoice
+														</Typography>
 													</td>
 													<td className="pb-32 px-16">
 														{/* <Typography className="font-light" variant="h4">
@@ -98,9 +99,10 @@ function OrderInvoice() {
 														<Typography color="textSecondary">TOTAL AMOUNT</Typography>
 													</td>
 													<td className="px-16">
-														<Typography>	{
-															formatter.format(calcTotal(invoice.services).subTotal)
-														}</Typography>
+														<Typography>
+															{' '}
+															{formatter.format(calcTotal(invoice.services).subTotal)}
+														</Typography>
 													</td>
 												</tr>
 
@@ -123,8 +125,6 @@ function OrderInvoice() {
 														{/* <Typography>{invoice.dueDate}</Typography> */}
 													</td>
 												</tr>
-
-
 											</tbody>
 										</table>
 										{/* <div className={clsx(classes.divider, 'mx-48 w-px h-128 print:mx-16')} /> */}
@@ -196,11 +196,7 @@ function OrderInvoice() {
 										</div>
 									</div> */}
 								</div>
-								<img
-									className="w-160 print:w-60"
-									src="assets/images/logos/fuse.svg"
-									alt="logo"
-								/>
+								<img className="w-160 print:w-60" src="assets/images/logos/fuse.svg" alt="logo" />
 								{/* 
 								<table>
 									<tbody>
@@ -298,9 +294,7 @@ function OrderInvoice() {
 													variant="subtitle1"
 													color="textSecondary"
 												>
-													{
-														formatter.format(calcTotal(invoice.services).sum)
-													}
+													{formatter.format(calcTotal(invoice.services).sum)}
 												</Typography>
 											</TableCell>
 										</TableRow>
@@ -320,9 +314,7 @@ function OrderInvoice() {
 													variant="subtitle1"
 													color="textSecondary"
 												>
-													{
-														formatter.format(calcTotal(invoice.services).tax)
-													}
+													{formatter.format(calcTotal(invoice.services).tax)}
 												</Typography>
 											</TableCell>
 										</TableRow>
@@ -354,9 +346,7 @@ function OrderInvoice() {
 											</TableCell>
 											<TableCell align="right">
 												<Typography className="font-light" variant="h4" color="textSecondary">
-													{
-														formatter.format(calcTotal(invoice.services).subTotal)
-													}
+													{formatter.format(calcTotal(invoice.services).subTotal)}
 												</Typography>
 											</TableCell>
 										</TableRow>
